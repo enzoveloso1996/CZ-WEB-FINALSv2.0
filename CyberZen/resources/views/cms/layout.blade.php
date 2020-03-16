@@ -81,69 +81,69 @@
             <nav class="navbar navbar-expand-sm navbar-default">
                 <div id="main-menu" class="main-menu collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        @if(Request::url() == 'http://127.0.0.1:8000/dashboard')
+                        @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/dashboard')
                             <li class="active">
-                                <a href="/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @else
                             <li>
-                                <a href="/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @endif
                         <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/clientlist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist')
                             <li class="active">
-                                <a href="/jeeps/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
+                                <a href="/jeeps/cms/admin/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
+                                <a href="/jeeps/cms/admin/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/clientusers')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers')
                             <li class="active">
-                                <a href="/jeeps/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
+                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
+                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/jeeplist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/jeeplist')
                             <li class="active">
-                                <a href="/jeeps/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
+                                <a href="/jeeps/cms/admin/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
                             </li>
                         @else 
                             <li>
-                                <a href="/jeeps/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
+                                <a href="/jeeps/cms/admin/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/driverlist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist')
                             <li class="active">
-                                <a href="/jeeps/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @endif
                         <li class="menu-title">Tap Cards</li><!-- /.menu-title -->
-                        @if(Request::url() == 'http://127.0.0.1:8000/cards/cardlist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/cards/cms/teller/cardlist')
                             <li class="active">
-                                <a href="/cards/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
+                                <a href="/cards/cms/teller/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @else 
                             <li>
-                                <a href="/cards/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
+                                <a href="/cards/cms/teller/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/cards/reload')
+                        @if(Request::url() == 'http://127.0.0.1:8000/cards/cms/teller/reload')
                             <li class="active">
-                                <a href="/cards/reload"> <i class="menu-icon fa fa-flash"></i>Load Cards</a>
+                                <a href="/cards/cms/teller/reload"> <i class="menu-icon fa fa-flash"></i>Load Cards</a>
                             </li>
                         @else
                             <li>
-                                <a href="/cards/reload"><i class="menu-icon fa fa-flash"></i>Load Cards</a>
+                                <a href="/cards/cms/teller/reload"><i class="menu-icon fa fa-flash"></i>Load Cards</a>
                             </li>
                         @endif
                         <li class="menu-title">Account</li><!-- /.menu-title -->

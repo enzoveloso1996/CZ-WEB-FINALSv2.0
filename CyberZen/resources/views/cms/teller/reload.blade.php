@@ -78,7 +78,6 @@
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
-                            <th class="center"></th>
                             <th class="center">RFID Number</th>
                             <th class="center">Card Balance</th>
                             <th class="center">Full Name</th>
