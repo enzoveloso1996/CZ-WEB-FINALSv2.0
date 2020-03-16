@@ -129,7 +129,6 @@
                                      <!-- href="route('cards.reload', $cardlist->rfid_number)}}" -->
                                     @foreach ($cardlisttbl as $cardlist)
                                     <tr>
-                                        <td class="center" id="ref"></td>
                                         <td class="left">{{$cardlist->rfid_number}}</td>
                                         <td class="center">{{$cardlist->card_balance}}</td>
                                         <td class="left">{{$cardlist->first_name}}</td>
