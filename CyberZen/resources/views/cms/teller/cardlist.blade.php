@@ -163,7 +163,6 @@
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
-                                        <th class="center"></th>
                                         <th class="center">RFID Number</th>
                                         <th class="center">Card Balance</th>
                                         <th class="center">Full Name</th>
@@ -171,12 +170,11 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cardlisttbl2 as $cardlist)
+                                    @foreach ($cardlisttbl2 as $cardlist2)
                                     <tr>
-                                        <td class="center" id="ref"></td>
-                                        <td class="left">{{$cardlist->rfid_number}}</td>
-                                        <td class="center">{{$cardlist->card_balance}}</td>
-                                        <td class="left">{{$cardlist->first_name}}</td>
+                                        <td class="left">{{$cardlist2->rfid_number}}</td>
+                                        <td class="center">{{$cardlist2->card_balance}}</td>
+                                        <td class="left">{{$cardlist2->first_name}}</td>
                                         <td class="center">
                                             <button class="btn-sx btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-edit"></i></button>
                                             <button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i></button>
@@ -317,7 +315,7 @@
                 success: function(data){
                     console.log(client);
                     $('tbody').html(data);
-                    ,
+                },
                 error: function(data){
                     console.log(data);
                     console.log($.ajax());
