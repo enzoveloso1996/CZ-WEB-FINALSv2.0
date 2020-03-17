@@ -95,25 +95,15 @@ class CardListController extends Controller
 
     public function searchInactive(Request $request)
     {
-        if($request->ajax()){
-            $data = $request->all();
             $output="";
             $cardlisttbl = array();
-            if(!empty($data['type']) && !empty($data['is_active']) && !empty($data['search']) ){
-                $cardlisttbl = DB::table('tb_mf_carduser_records')
-                ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-                ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
-                ->where('tb_mf_cardtype.cardtype_id','=',$data['type'])
-                ->where('tb_mf_carduser_records.is_active','=',$data['is_active'])
-                ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$data['search']."%")
-                ->paginate(20);
-            }else{
-                $cardlisttbl = DB::table('tb_mf_carduser_records')
-                ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-                ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id','tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
-                ->where('tb_mf_carduser_records.is_active', '=', 0)
-                ->paginate(20);
-            }
+            $cardlisttbl = DB::table('tb_mf_carduser_records')
+            ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
+            ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
+            ->where('tb_mf_carduser_records.is_active','=',0)
+            ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
+            ->paginate(1);
+
             if($cardlisttbl)
             {
                 foreach ($cardlisttbl as $key => $cardlisttbll) {
@@ -127,8 +117,6 @@ class CardListController extends Controller
             } 
                 return Response($output);
             }
-                
-        }
     }
 
     public function combosearch(Request $request)

@@ -1,0 +1,16 @@
+$.ajax({
+    type : 'get',
+    url : '{{URL::to('cards/searchInactive')}}',
+    data:{ 
+            search:$(this).val(),
+            cardtype: $('#cardtype').val(),
+            is_active: 0
+        },
+    success:function(data){
+        $('tbody').html(data);
+    },
+    error: function(data){
+            console.log(data);
+            console.log($.ajax());
+    }
+});

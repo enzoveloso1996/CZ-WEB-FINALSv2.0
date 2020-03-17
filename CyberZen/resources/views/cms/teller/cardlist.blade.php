@@ -91,60 +91,9 @@
             </div>
             <div class="card-body">
                 <div class="custom-tab">
-                    <nav>
-                        <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                            <a class="nav-item nav-link active" id="custom-nav-active-tab" data-toggle="tab" href="#custom-nav-active" role="tab" aria-controls="custom-nav-active" aria-selected="true">Active Cards</a>
-                            <a class="nav-item nav-link" id="custom-nav-inactive-tab" data-toggle="tab" href="#custom-nav-inactive" role="tab" aria-controls="custom-nav-inactive" aria-selected="false">Inactive Cards</a>
-                        </div>
-                    </nav>
                     <div class="tab-content pl-3 pt-2" id="nav-tabContent">
                          
-                        <div class="tab-pane fade show active" id="custom-nav-active" role="tabpanel" aria-labelledby="custom-nav-active-tab">
-                            <div class="float-left p-3">
-                                <div class="input-group mb-1">
-                                    <div class="input-group-prepend">
-                                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
-                                    </div>
-                                    <input type="text" class="form-control" id="searchActive" placeholder="RFID.." aria-label="search" aria-describedby="basic-addon1">
-                                </div>
-                            </div>
-                            <div class="float-right p-3">
-                                <Select id="cardtype" class="form-control" name="select-type">
-                                    {{-- <option value="">--Type--</option> --}}
-                                    @foreach ($cardtypes as $types)
-                                        <option id="{{$types->cardtype}}" value="{{$types->cardtype_id}}">{{$types->cardtype}}</option>
-                                    @endforeach 
-                                </Select>
-                            </div>
-                            <table id="bootstrap-data-table" class="table table-striped table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th class="center">RFID Number</th>
-                                        <th class="center">Card Balance</th>
-                                        <th class="center">Full Name</th>
-                                        <th class="center">Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                     <!-- href="route('cards.reload', $cardlist->rfid_number)}}" -->
-                                    @foreach ($cardlisttbl as $cardlist)
-                                    <tr>
-                                        <td class="left">{{$cardlist->rfid_number}}</td>
-                                        <td class="center">{{$cardlist->card_balance}}</td>
-                                        <td class="left">{{$cardlist->first_name}}</td>
-                                        <td class="center">
-                                            <button class="btn-md btn-primary" data-toggle="modal"  data-id="{{$cardlist->carduser_id}}" data-toggle="tooltip" data-placement="top" title="Hold card" data-target="#holdcardModal"><i class="fa fa-exclamation"></i></button>
-                                            <button type="submit" value="Delete" class="btn-sx btn-danger" data-toggle="modal" data-target="#holdcardModal" data-toggle="tooltip" data-placement="top" title="Delete this record"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-center">
-                                {{ $cardlisttbl->links() }}
-                            </div>
-                        </div>
-                        <div class="tab-pane fade" id="custom-nav-inactive" role="tabpanel" aria-labelledby="custom-nav-inactive-tab">
+                        <div class="tab-pane fade show active" id="custom-nav-inactive" role="tabpanel" aria-labelledby="custom-nav-inactive-tab">
                             <div class="float-left p-3">
                                 <div class="input-group mb-1">
                                     <div class="input-group-prepend">
@@ -153,13 +102,6 @@
                                     <input type="text" class="form-control" id="searchInactive" placeholder="RFID.." aria-label="search" aria-describedby="basic-addon1">
                                 </div>
                             </div>
-                            <div class="float-right p-3">
-                                <Select id="cardtype" class="form-control" name="select-type">
-                                    @foreach ($cardtypes as $types)
-                                        <option id="{{$types->cardtype}}" value="{{$types->cardtype_id}}">{{$types->cardtype}}</option>
-                                    @endforeach 
-                                </Select>
-                            </div>
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -170,22 +112,9 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach ($cardlisttbl2 as $cardlist2)
-                                    <tr>
-                                        <td class="left">{{$cardlist2->rfid_number}}</td>
-                                        <td class="center">{{$cardlist2->card_balance}}</td>
-                                        <td class="left">{{$cardlist2->first_name}}</td>
-                                        <td class="center">
-                                            <button class="btn-sx btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-edit"></i></button>
-                                            <button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i></button>
-                                        </td>
-                                    </tr>
-                                    @endforeach
+                                    
                                 </tbody>
                             </table>
-                            <div class="d-flex justify-content-center">
-                                {{ $cardlisttbl2->links() }}
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -268,37 +197,17 @@
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-<!-- <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script> -->
-<script type="text/javascript">
-    $('#searchActive').on('keyup',function(){
-        $('tbody').empty();
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('cards/searchActive')}}',
-            data:{ 
-                    search:$(this).val(),
-                    type: $('#cardtype').val(),
-                    is_active: 1
-                },
-            success:function(result){
-                $('tbody').html(result);
-            }
-        });
-    });
-</script>
+<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>-->
 <script type="text/javascript">
     $('#searchInactive').on('keyup',function(){
         $('tbody').empty();
+        $value=$(this).val();
         $.ajax({
             type : 'get',
             url : '{{URL::to('cards/searchInactive')}}',
-            data:{ 
-                    search:$(this).val(),
-                    type: $('#cardtype').val(),
-                    is_active: 0
-                },
-            success:function(result){
-                $('tbody').html(result);
+            data:{'search':$value},
+            success:function(data){
+                $('tbody').html(data);
             }
         });
     });
