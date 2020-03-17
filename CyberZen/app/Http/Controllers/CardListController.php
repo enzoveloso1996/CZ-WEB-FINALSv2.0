@@ -95,14 +95,18 @@ class CardListController extends Controller
 
     public function searchInactive(Request $request)
     {
-            $output="";
-            $cardlisttbl = array();
-            $cardlisttbl = DB::table('tb_mf_carduser_records')
-            ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-            ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
-            ->where('tb_mf_carduser_records.is_active','=',0)
-            ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
-            ->paginate(1);
+            if(!empty($request->search)){
+                $output="";
+                $cardlisttbl = array();
+                $cardlisttbl = DB::table('tb_mf_carduser_records')
+                ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
+                ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
+                ->where('tb_mf_carduser_records.is_active','=',0)
+                ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
+                ->paginate(1);
+            }else{
+                $output="";
+            }
 
             if($cardlisttbl)
             {
@@ -163,17 +167,18 @@ class CardListController extends Controller
 
     public function searchLoad(Request $request)
     {
-        if($request->ajax())
-    {
-        $output="";
 
-        $reload = DB::table('tb_mf_carduser_records')
-        ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-        ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
-        ->where('tb_mf_carduser_records.is_active', '=', 1)
-        ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
-        ->paginate(1);
-
+        if(!empty($request->search)){
+            $output="";
+            $reload = DB::table('tb_mf_carduser_records')
+            ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
+            ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
+            ->where('tb_mf_carduser_records.is_active', '=', 1)
+            ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
+            ->paginate(1);
+        } else {
+            $output="";
+        }
         if($reload)
         {
             foreach ($reload as $key => $cardlist) {
@@ -185,10 +190,8 @@ class CardListController extends Controller
                 '</tr>';
         } 
             return Response($output);
-        }
     }
     }
-
 
 
     /**

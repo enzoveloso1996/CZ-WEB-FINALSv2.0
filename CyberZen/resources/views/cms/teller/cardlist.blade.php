@@ -12,6 +12,9 @@
         min-width: 1em;
         margin-right: 0.5em;
     }
+    #result{
+        display: none;
+    }
 </style>
 @section('content')
 @foreach ($cardsales as $cardsale)
@@ -99,7 +102,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="searchInactive" placeholder="RFID.." aria-label="search" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" id="searchInactive" placeholder="RFID.." aria-label="search" aria-describedby="basic-addon1" autofocus>
                                 </div>
                             </div>
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -112,9 +115,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    
                                 </tbody>
                             </table>
+                            <div id="result">
+                                <div class="jumbotron text-center">
+                                    <h4>No available data</h4>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -208,8 +215,13 @@
             data:{'search':$value},
             success:function(data){
                 $('tbody').html(data);
-            }
+            },
         });
+            if($('#searchInactive').val().length === 0) {
+                $('#result').css('display', 'block');
+            } else {
+                $('#result').css('display', 'none');
+            }
     });
 </script>
 <script>

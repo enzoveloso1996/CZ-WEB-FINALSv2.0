@@ -30,6 +30,9 @@
         background-color: #fff200;
         color:white;
     }
+    #result{
+        display: none;
+    }
 </style>
 @section('content')
 <!-- Breadcrumbs-->
@@ -71,7 +74,7 @@
                         <div class="input-group-prepend">
                           <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                         </div>
-                        <input type="text" class="form-control" id="searchLoad" placeholder="RFID.." aria-label="search" aria-describedby="basic-addon1">
+                        <input type="text" class="form-control" id="searchLoad" placeholder="RFID.." aria-label="search" aria-describedby="basic-addon1" autofocus>
                     </div>
                 </div>
                 
@@ -133,6 +136,11 @@
                         @endforeach
                     </tbody>
                 </table>
+                <div id="result">
+                    <div class="jumbotron text-center">
+                        <h4>No available data</h4>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -251,6 +259,13 @@
                 $('tbody').html(data);
             }
         });
+
+            if($('#searchLoad').val().length === 0) {
+                $('#result').css('display', 'block');
+            } else {
+                $('#result').css('display', 'none');
+            }
+
     })
 </script>
 <script type="text/javascript">
