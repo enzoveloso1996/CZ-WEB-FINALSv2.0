@@ -353,7 +353,7 @@
         var keyword = button.data('keyword');
  
         var modal = $(this);
-        modal.find('.modal-title').text('Are you sure to delete ' + client_name +'?');
+        modal.find('.modal-title').text('Are you sure to Edit ' + client_name +'?');
         modal.find('#client_id').val(client_id);
         modal.find('#client_email').val(client_email);
         modal.find('#client_address').val(client_address);

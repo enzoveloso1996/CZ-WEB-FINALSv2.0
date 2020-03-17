@@ -96,8 +96,8 @@
                                 <thead>
                                     <tr>
                                         <th class="center"></th>
-                                        <th class="center">COMPANY NAME</th>
-                                        <th class="center">PLATE NUMBER</th>
+                                        <th class="center">Company Name</th>
+                                        <th class="center">Plate Number</th>
                                     </tr>
                                 </thead>
                                 <tbody>

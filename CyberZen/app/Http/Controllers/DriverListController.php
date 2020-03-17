@@ -115,7 +115,6 @@ class DriverListController extends Controller
         $driverlists = DB::table('tb_mf_jeep_personnel')
         ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep_personnel.client_id')
         ->join('tb_mf_position', 'tb_mf_jeep_personnel.position_id', '=', 'tb_mf_position.id')
-        ->select('tb_mf_client.client_name', 'tb_mf_position.position', DB::raw("CONCAT(tb_mf_jeep_personnel.firstname,' ',tb_mf_jeep_personnel.lastname) as drivername"))
         ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
         ->where('tb_mf_client.is_archived','=',0)
         ->paginate(10);
@@ -125,8 +124,9 @@ class DriverListController extends Controller
             foreach ($driverlists as $key => $driverList) {
                 $output.='<tr>'.
                 '<td class="center" id="ref"></td>'.
+                '<td class="left">'.$driverList->rfid_number.'</td>'.
                 '<td class="left">'.$driverList->client_name.'</td>'.
-                '<td class="left">'.$driverList->drivername.'</td>'.
+                '<td class="left">'.$driverList->fullname.'</td>'.
                 '<td class="left">'.$driverList->position.'</td>'.
                 '</tr>';
         } 

@@ -85,7 +85,7 @@ class ClientUserController extends Controller
             'is_archived'       =>  "0"
         ]);
 
-        return redirect('cms/admin/clientusers');
+        return redirect('jeeps/cms/admin/clientusers');
     }
 
     /**

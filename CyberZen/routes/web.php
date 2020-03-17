@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('crm/welcome');
+    return view('welcome');
 });
 
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
@@ -38,7 +38,7 @@ Route::prefix('cards')->group(function(){
 
 Route::prefix('jeeps')->group(function(){
     Route::resource('cms/admin/clientlist', 'ClientListController');
-    Route::get('cms/admin//clientlist', 'ClientListController@index')->name('clientlist');
+    Route::get('cms/admin/clientlist', 'ClientListController@index')->name('clientlist');
 
     Route::patch('/client-archive', 'ClientListController@archive')->name('client-archive');
 
@@ -63,14 +63,14 @@ Route::prefix('jeeps')->group(function(){
 
 Route::prefix('company')->group(function(){
 
-    Route::get('/clientdashboard/{id}', ['as' => 'clientdashboard.index', 'uses' => 'ClientDashboardController@index']);
+    Route::get('crm/company/clientdashboard/{id}', ['as' => 'clientdashboard.index', 'uses' => 'ClientDashboardController@index']);
     Route::resource('clientdashboard', 'ClientDashboardController', ['except' => ['index']]);
 
-    Route::get('/clientuseraccount/{id}', ['as' => 'clientuseraccount.index', 'uses' => 'Client_UserAccountController@index']);
+    Route::get('crm/company/clientuseraccount/{id}', ['as' => 'clientuseraccount.index', 'uses' => 'Client_UserAccountController@index']);
     Route::resource('clientuseraccount', 'Client_UserAccountController', ['except' => ['index']]);
     Route::get('/combo-search-position','Client_UserAccountController@combosearch');
 
-    Route::get('/clientjeeplist/{id}', ['as' => 'clientjeeplist.index', 'uses' => 'ClientJeepController@index']);
+    Route::get('crm/company/clientjeeplist/{id}', ['as' => 'clientjeeplist.index', 'uses' => 'ClientJeepController@index']);
     Route::resource('clientjeeplist', 'ClientJeepController', ['except' => ['index']]);
     Route::patch('/client-jeep-archive', 'ClientJeepController@archive')->name('client-jeep-archive');
 
