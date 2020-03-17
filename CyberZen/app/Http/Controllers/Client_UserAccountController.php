@@ -75,18 +75,20 @@ class Client_UserAccountController extends Controller
     public function combosearch(Request $request)
     {
 
-        $accounts = DB::table('tb_mf_client')
-        ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
-        ->where('tb_mf_client_users.user_id', '=', $request->user_id)
-        ->get()->toarray();
-
-        $client_id = array_column($accounts, 'client_id');
+        
 
         if($request->ajax())
         {
+            $accounts = DB::table('tb_mf_client')
+            ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
+            ->where('tb_mf_client_users.user_id', '=', $request->user_id)
+            ->get()->toarray();
+
+            $client_id = array_column($accounts, 'client_id');
+
             $user_position_ids = DB::table('tb_mf_client_users')
             ->select('position_id')
-            ->where('user_id', '=', $id)
+            ->where('user_id', '=', $request->user_id)
             ->get();
     
             foreach ($user_position_ids as $user_position_id) {
@@ -203,9 +205,9 @@ class Client_UserAccountController extends Controller
      * @param  \App\Client_UserAccount  $client_UserAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Client_UserAccount $client_UserAccount)
+    public function update(Request $request, $user_id)
     {
-        //
+        
     }
 
     /**

@@ -48,7 +48,7 @@ class ClientListController extends Controller
         $tabledtl=DB::table('tb_mf_client')->where('client_name','LIKE','%'.$request->search."%")
         ->where('is_archived','=',0)
         ->get();
-
+ 
         if($tabledtl)
         {
             foreach ($tabledtl as $key => $tabledtll) {

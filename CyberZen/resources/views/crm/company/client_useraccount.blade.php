@@ -102,7 +102,153 @@
                                         <td class="center">{{$userlist->client_name}}</td>
                                         <td class="center">{{$userlist->position}}</td>
                                         <td class="center">{{$userlist->username}}</td>
-                                        
+                                        <td>
+                                            <div class="row">
+
+                                                <div class="col-md-3">
+                                                {{-- This is for edit button --}}
+                                                
+
+                                                    <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
+                                                        data-lastname="{{$userlist->lastname}}"
+                                                        data-firstname="{{$userlist->firstname}}"
+                                                        data-middlename="{{$userlist->middlename}}"
+                                                        data-position_id="{{$userlist->position_id}}"
+                                                        data-username="{{$userlist->username}}">
+                                                        <i class="fa fa-edit" data-toggle="tooltip" title="Edit"></i>
+                                                    </button>
+                                                    <div class="modal fade" id="editModal" role="document">
+                                                        <div class="modal-dialog modal-lg">
+                                                        
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    <h4 class="modal-title">Update Account</h4>
+                                                                </div>              
+                                                                <form action="{{Route('clientusers.update', $userlist->user_id)}}" method="post">
+                                                                    @csrf
+                                                                    
+                                                                    <div class="form-group">
+                                                                        <div class="modal-body">
+                                                                            <div class="form-group">
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
+                                                                                    </div>
+                                                                                    <select class="form-control" name="editclientname" id="editclientname_id">
+                                                                                        @foreach ($clientname as $client)
+                                                                                        <option id="{{$client->client_id}}">
+                                                                                            {{$client->client_name}}
+                                                                                        </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <input type="hidden" name="editclient_idtext" id="editclient_id_" value="">
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">First Name</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editfirstname" id="editfirstname_id" placeholder="First Name" class="form-control">
+                                                                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Middle Name</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editmiddlename" id="editmiddlename_id" placeholder="Middle Name" class="form-control">
+                                                                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Last Name</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editlastname" id="editlastname_id" placeholder="Last Name" class="form-control">
+                                                                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
+                                                                                    </div>
+                                                                                    <select class="form-control" name="editposition" id="editposition_id">
+                                                                                        @foreach ($position as $pos)
+                                                                                        <option id="{{$pos->id}}">
+                                                                                            {{$pos->position}}
+                                                                                        </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <input type="hidden" name="editposition_idtext" id="editposition_id_" value="">
+                                                                                </div>    
+                                                
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Username</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editusername" id="editusername_id" placeholder="Username" class="form-control">
+                                                                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Password</span>
+                                                                                    </div>
+                                                                                    <input type="password" name="editpassword" id="editpassword_id" placeholder="Password" class="form-control">
+                                                                                    
+                                                                                </div>      
+                                                                            </div>
+                                                                        </div>
+                                                                        <div class="modal-footer"> 
+                                                                            <button type="submit" class="btn btn-primary">Save changes</button>
+                                                                        </div>    
+                                                                    
+                                                                    </div>
+                                                                </form>
+
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                </div>                                                
+                                                <div class="col-md-3">
+                                                    {{-- This is for delete button --}}
+                                                    <form action="" method="post">
+                                                        @csrf
+                                                        @method('PATCH')
+
+                                                        <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
+                                                            data-fullname="{{$userlist->fullname}}" 
+                                                            data-client_id="{{$userlist->user_id}}">
+                                                            <i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
+                                                        </button>
+                                                        <div class="modal fade" id="deleteModal" role="dialog">
+                                                            <div class="modal-dialog modal-md">
+                                                            
+                                                                <!-- Modal content-->
+                                                                <div class="modal-content">
+                                                                    
+                                                                    <div class="modal-header">
+                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                        <h4 class="modal-title">Delete {{$userlist->fullname}}</h4>
+                                                                    </div>
+                                                                    <input type="hidden" name="delclient_id" id="delclient_id" value="{{$userlist->user_id}}">                                                                
+                                                                    <div class="form-group">
+                                                                        <div class="modal-body">
+                                                                            Are you sure to Delete?
+                                                                            
+                                                                        </div>
+                                                                        <div class="modal-footer"> 
+                                                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                            <button type="submit" class="btn btn-primary">Yes</button>
+                                                                        </div>    
+                                                                    
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+                                                        </div>   
+                                                    </form>
+                                                </div>
+
+                                            </div>
+                                        </td>
                                         
                                     </tr>    
 
@@ -133,9 +279,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add User Account</h4>
                 </div>
-                <form action="{{Route('clientuseraccount.store')}}" method="post">
+                <form action="{{Route('clientusers.store')}}" method="post">
                     @csrf
-               
+                    
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">
@@ -155,11 +301,62 @@
                                 </div>    
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Plate Number</span>
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">First Name</span>
                                     </div>
                                     <input type="text" name="firstname" id="firstname_id" placeholder="First Name" class="form-control">
                                     
                                 </div>    
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Middle Name</span>
+                                    </div>
+                                    <input type="text" name="middlename" id="middlename_id" placeholder="Middle Name" class="form-control">
+                                    
+                                </div>    
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Last Name</span>
+                                    </div>
+                                    <input type="text" name="lastname" id="lastname_id" placeholder="Last Name" class="form-control">
+                                    
+                                </div>    
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
+                                    </div>
+                                    <select class="form-control" name="position" id="position_id">
+                                        <option value="--">--</option>
+                                        @foreach ($position as $pos)
+                                        <option id="{{$pos->id}}">
+                                            {{$pos->position}}
+                                        </option>
+                                        @endforeach
+                                    </select>
+                                    <input type="hidden" name="position_idtext" id="position_id_" value="">
+                                </div>    
+
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Username</span>
+                                    </div>
+                                    <input type="text" name="username" id="username_id" placeholder="Username" class="form-control">
+                                 
+                                </div>    
+                                <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Password</span>
+                                    </div>
+                                    <input type="password" name="password" id="password_id" placeholder="Password" class="form-control">
+                                  
+                                </div>      
+                                {{-- <div class="input-group mb-3">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Retype Password</span>
+                                    </div>
+                                    <input type="password" name="password2" id="password_id2" placeholder="Retype Password" class="form-control">
+                                    
+                                </div>       --}}
+
                             </div>
                         </div>
                         <div class="modal-footer"> 
@@ -184,7 +381,7 @@
             $value=$(this).val();
             $.ajax({
                 type : 'get',
-                url : '{{URL::to('jeeps/search-client')}}',
+                url : '{{URL::to('company/combo-search-position')}}',
                 data:{'search':$value},
                 success:function(data){
                     $('tbody').html(data);
@@ -245,6 +442,26 @@
             });
         });
        
+        $('#editModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        
+        var lastname = button.data('lastname');
+        var firstname = button.data('firstname'); 
+        var middlename = button.data('middlename');
+        var position_id = button.data('position_id');
+        var username = button.data('username');
+      
+ 
+        var modal = $(this);
+        modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
+        
+        modal.find('#editlastname').val(lastname);
+        modal.find('#editfirstname').val(firstname);
+        modal.find('#editmiddlename').val(middlename);
+        modal.find('#editposition_id').val(position_id);
+        modal.find('#editusername').val(username);
+        
+    })
     </script>
 
     <script type="text/javascript">
