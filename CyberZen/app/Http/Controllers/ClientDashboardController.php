@@ -71,7 +71,7 @@ class ClientDashboardController extends Controller
         $faresale = array_column($faresales, 'totalsales');
 
 
-        return view('/clientdashboard')->with('client_id', $id)
+        return view('crm/company/clientdashboard')->with('client_id', $id)
                     ->with('totalsales', $totalsales)
                     ->with('totalcardusers', $cardusers)
                     ->with('monthyear', json_encode($monthyear, JSON_NUMERIC_CHECK))

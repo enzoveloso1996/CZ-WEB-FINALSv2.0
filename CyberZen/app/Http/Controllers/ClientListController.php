@@ -106,7 +106,7 @@ class ClientListController extends Controller
         
        
 
-        return redirect('jeeps/clientlist');
+        return redirect('jeeps/cms/admin/clientlist');
     }
 
     /**
@@ -151,7 +151,7 @@ class ClientListController extends Controller
           
         ]);
 
-        return redirect('jeeps/clientlist');
+        return redirect('jeeps/cms/admin//clientlist');
     }
 
     public function archive(Request $request){
@@ -159,7 +159,7 @@ class ClientListController extends Controller
         ->where('client_id', $request->client_id)
         ->update(['is_archived' => 1]);
 
-        return redirect('jeeps/clientlist');
+        return redirect('jeeps/cms/admin//clientlist');
     }
     
     /**
