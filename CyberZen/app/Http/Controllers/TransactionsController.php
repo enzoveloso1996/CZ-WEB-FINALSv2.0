@@ -10,8 +10,7 @@ class TransactionsController extends Controller
 {
     public function store(Request $request)
     {
-
-         $this->validate($request, [
+        $this->validate($request, [
             'rfid_number'           => 'required',    
             'updated_by'            => 'required'
         ]);
