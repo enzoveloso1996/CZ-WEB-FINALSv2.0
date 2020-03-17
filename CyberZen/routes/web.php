@@ -27,7 +27,7 @@ Route::prefix('cards')->group(function(){
 
     Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
     Route::get('/searchLoad', 'CardListController@searchLoad');
-    Route::patch('/reload-card', 'CardListController@update')->name('reload-card');
+    Route::post('/reload-card', 'CardListController@store')->name('reload-card');
     Route::patch('/hold-card', 'CardListController@holdCard')->name('hold-card');
     Route::get('/searchInactive','CardListController@searchInactive');
     Route::get('/searchActive','CardListController@searchActive');

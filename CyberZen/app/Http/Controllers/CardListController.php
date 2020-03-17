@@ -211,7 +211,19 @@ class CardListController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->all();
+        DB::table('tb_tr_card_transactions')
+        ->insert([
+            'rfid_number'           => $data['id'],    
+            'transactiontype_id'    => 2,
+            'amount'                => $data['amount2'],
+            'updated_by'            => $data['updated_by'],
+        ]);
+
+        DB::table('tb_mf_carduser_records')->where('rfid_number', $data['id'])
+                                            ->update(['card_balance'=> $data['tot2']]);
+
+        return redirect('cards/cms/teller/reload');
     }
 
     /**
@@ -245,10 +257,8 @@ class CardListController extends Controller
      */
     public function update(Request $request)
     {
-        $reload = DB::table('tb_mf_carduser_records')->where('carduser_id',$request->id)
-                                                    ->update(['card_balance'=>$request->tot2]);
 
-        return redirect('cms/teller/reload');
+        
     }
 
     public function holdCard(Request $request)

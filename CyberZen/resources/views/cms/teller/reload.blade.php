@@ -98,9 +98,10 @@
                                     </div>
                                     <div class="modal-body">
                                     <form method="post" action="{{ route('reload-card')}}">
-                                        @method('PATCH') 
+                                        @method('POST') 
                                         @csrf
                                         <input type="text" class="form-control" name="id" id="id" hidden>
+                                        <input type="text" class="form-control" name="updated_by" id="updated_by" value="ron" hidden>
                                         <div class="container text-center">
                                             <h3 class="modal-title rfid" id="rfid"></h3>
                                         </div>
@@ -110,7 +111,8 @@
                                         </div>
                                         <div class="form-group">
                                             <label for="message-text" class="col-form-label">Amount:</label>
-                                            <input class="form-control" id="amount" disabled>
+                                            <input class="form-control" id="amount" name="amount" disabled>
+                                            <input class="form-control" id="amount2" name="amount2" hidden>
                                         </div>
                                         <div class="form-group">
                                             <label for="message-text" class="col-form-label">Total Balance:</label>
@@ -182,12 +184,13 @@
     var modal = $(this);
     modal.find('#rfid').text(rfid)
     modal.find('.modal-body #bal').val(bal);
-    modal.find('.modal-body #id').val(id);
+    modal.find('.modal-body #id').val(rfid);
   })
 </script>
 <script> 
     $("#twozero").click(function(event) {
         $('#amount').val(20.00);
+        $('#amount2').val(20.00);
         var input = $('[id="bal"],[id="amount"]'),
             input1 = $('[id="bal"]'),
             input2 = $('[id="amount"]'),
@@ -200,6 +203,7 @@
     });
     $("#fivezero").click(function(event) { 
         $('#amount').val(50.00);
+        $('#amount2').val(50.00);
         var input = $('[id="bal"],[id="amount"]'),
             input1 = $('[id="bal"]'),
             input2 = $('[id="amount"]'),
@@ -212,6 +216,7 @@
     }); 
     $("#oneh").click(function(event) { 
         $('#amount').val(100.00);
+        $('#amount2').val(100.00);
         var input = $('[id="bal"],[id="amount"]'),
             input1 = $('[id="bal"]'),
             input2 = $('[id="amount"]'),
@@ -224,6 +229,7 @@
     }); 
     $("#twoh").click(function(event) { 
         $('#amount').val(200.00);
+        $('#amount2').val(200.00);
         var input = $('[id="bal"],[id="amount"]'),
             input1 = $('[id="bal"]'),
             input2 = $('[id="amount"]'),
@@ -236,6 +242,7 @@
     }); 
     $("#fiveh").click(function(event) { 
         $('#amount').val(500.00);
+        $('#amount2').val(500.00);
         var input = $('[id="bal"],[id="amount"]'),
             input1 = $('[id="bal"]'),
             input2 = $('[id="amount"]'),
