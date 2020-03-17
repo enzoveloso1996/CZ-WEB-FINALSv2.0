@@ -81,42 +81,42 @@
             <nav class="navbar navbar-expand-sm navbar-default">
                 <div id="main-menu" class="main-menu collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/dashboard')
+                        @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/clientdashboard/{{$user_id}}')
                             <li class="active">
-                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                                <a href="/company/crm/company/clientdashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @else
                             <li>
-                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                                <a href="/company/crm/company/clientdashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @endif
                         <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
                         
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers')
+                        @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/clientuseraccount/{{$user_id}}')
                             <li class="active">
-                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
+                                <a href="/company/crm/company/clientuseraccount/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>User Accounts</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
+                                <a href="/company/crm/company/clientuseraccount/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>User Accounts</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/jeeplist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/clientjeeplist/{{$user_id}}')
                             <li class="active">
-                                <a href="/jeeps/cms/admin/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
+                                <a href="/company/crm/company/clientjeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Lists</a>
                             </li>
                         @else 
                             <li>
-                                <a href="/jeeps/cms/admin/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
+                                <a href="/company/crm/company/clientjeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Lists</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/driverlist/{{$user_id}}')
                             <li class="active">
-                                <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/company/crm/company/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Personnels Lists</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/company/crm/company/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Personnels Lists</a>
                             </li>
                         @endif
                         

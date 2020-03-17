@@ -1,4 +1,4 @@
-@extends('layout')
+@extends('crm.company.layout')
 <style>
     table {
         counter-reset: rowNumber;
@@ -43,7 +43,7 @@
                             </ol>
                         </div>
                     </div>
-                </div>
+                </div> 
             </div>
         </div>
     </div>
@@ -64,9 +64,9 @@
                                    
                                     <form action="" method="post">
                                     <select name="positions" id="positions_id">
-                                        <option value="{{$client_id}}">ALL</option>
+                                        <option value="{{$user_id}}">ALL</option>
                                         @foreach ($position as $pos)
-                                        <option id="{{$pos->id}}" value="{{$client_id}}">
+                                        <option id="{{$pos->id}}" value="{{$user_id}}">
                                             {{$pos->position}}
                                         </option>
                                         @endforeach
@@ -89,6 +89,7 @@
                                         <th class="center">Company Name</th>
                                         <th class="center">Position</th>
                                         <th class="center">Username</th>
+                                        <th class="center">Action</th>
                                       
                                     </tr>
                                 </thead>
@@ -120,7 +121,6 @@
     </div><!-- .content -->
 
   
-    
 
 
 
@@ -135,7 +135,7 @@
                 </div>
                 <form action="{{Route('clientuseraccount.store')}}" method="post">
                     @csrf
-                    
+               
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">

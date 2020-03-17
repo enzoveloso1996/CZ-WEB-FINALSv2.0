@@ -92,10 +92,10 @@
                                 <thead>
                                     <tr>
                                         <th class="center"></th>
-                                        <th class="center">RFID NUMBER</th>
-                                        <th class="center">FULLNAME</th>
-                                        <th class="center">COMPANY</th>
-                                        <th class="center">POSITION</th>
+                                        <th class="center">RFID Number</th>
+                                        <th class="center">Full Name</th>
+                                        <th class="center">Company</th>
+                                        <th class="center">Position</th>
                                     </tr>
                                 </thead>
                                 <tbody>

@@ -16,17 +16,43 @@ class Client_UserAccountController extends Controller
      */
     public function index($id)
     {
-        $users = DB::table('tb_mf_client_users')
-        ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
-        ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
-        ->where("tb_mf_client.is_archived", "=", "0")
-        ->where("tb_mf_client_users.client_id", "=",$id)
-        ->wherein("tb_mf_client_users.position_id", [3,4])
+        $accounts = DB::table('tb_mf_client')
+        ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
+        ->where('tb_mf_client_users.user_id', '=', $id)
+        ->get()->toarray();
+
+        $client_id = array_column($accounts, 'client_id');
+        
+        $user_position_ids = DB::table('tb_mf_client_users')
+        ->select('position_id')
+        ->where('user_id', '=', $id)
         ->get();
+
+        foreach ($user_position_ids as $user_position_id) {
+            $user_position_id = $user_position_id->position_id;
+        }
+
+        if ( $user_position_id == 3) {
+            $users = DB::table('tb_mf_client_users')
+            ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
+            ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
+            ->where("tb_mf_client.is_archived", "=", "0")
+            ->where("tb_mf_client_users.client_id", "=",$client_id)
+            ->wherein("tb_mf_client_users.position_id", [3,4])
+            ->get();            
+        } else {
+            $users = DB::table('tb_mf_client_users')
+            ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
+            ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
+            ->where("tb_mf_client.is_archived", "=", "0")
+            ->where("tb_mf_client_users.user_id", '=', $id)
+            ->where("tb_mf_client_users.client_id", "=",$client_id)
+            ->get();
+            }
 
         $clientname = DB::table('tb_mf_client')
         ->where("is_archived","=","0")
-        ->where("client_id", "=",$id)
+        ->where("client_id", "=",$client_id)
         ->get();
 
         $position = DB::table('tb_mf_position')
@@ -34,12 +60,12 @@ class Client_UserAccountController extends Controller
         ->get();
 
         $fullname = DB::table('tb_mf_jeep_personnel')
-        ->where("client_id", "=",$id)
+        ->where("client_id", "=",$client_id)
         ->get();
 
         
             
-        return view('client_useraccount')->with('client_id', $id)
+        return view('crm/company/client_useraccount')->with('user_id', $id)
             ->with('userslist', $users)
             ->with('clientname', $clientname)
             ->with('fullname', $fullname)
@@ -48,16 +74,42 @@ class Client_UserAccountController extends Controller
 
     public function combosearch(Request $request)
     {
+
+        $accounts = DB::table('tb_mf_client')
+        ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
+        ->where('tb_mf_client_users.user_id', '=', $request->user_id)
+        ->get()->toarray();
+
+        $client_id = array_column($accounts, 'client_id');
+
         if($request->ajax())
         {
-            $output="";
-            $personnellists = DB::table('tb_mf_client_users')
-            ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
-            ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
-            ->where("tb_mf_client.is_archived", "=", "0")
-            ->where("tb_mf_client_users.client_id", "=",$request->client_id)
-            ->where("tb_mf_position.id", 'LIKE', '%'.$request->position.'%')
+            $user_position_ids = DB::table('tb_mf_client_users')
+            ->select('position_id')
+            ->where('user_id', '=', $id)
             ->get();
+    
+            foreach ($user_position_ids as $user_position_id) {
+                $user_position_id = $user_position_id->position_id;
+            }
+    
+            if ( $user_position_id == 3) {
+                $users = DB::table('tb_mf_client_users')
+                ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
+                ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
+                ->where("tb_mf_client.is_archived", "=", "0")
+                ->where("tb_mf_client_users.client_id", "=",$client_id)
+                ->wherein("tb_mf_client_users.position_id", [3,4])
+                ->get();            
+            } else {
+                $users = DB::table('tb_mf_client_users')
+                ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
+                ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
+                ->where("tb_mf_client.is_archived", "=", "0")
+                ->where("tb_mf_client_users.user_id", '=', $id)
+                ->where("tb_mf_client_users.client_id", "=",$client_id)
+                ->get();
+                }
             
             // if($personnellists)
             // {
@@ -119,7 +171,7 @@ class Client_UserAccountController extends Controller
             'is_archived'       =>  "0"
         ]);
 
-        return redirect("company/clientuseraccount/$request->client_idtext");
+        return redirect("company/crm/company/clientuseraccount/$request->client_idtext");
     }
 
     /**

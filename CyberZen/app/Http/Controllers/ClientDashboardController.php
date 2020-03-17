@@ -14,10 +14,19 @@ class ClientDashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($id)
-    {
+    {   
+        $accounts = DB::table('tb_mf_client')
+        ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
+        ->where('tb_mf_client_users.user_id', '=', $id)
+        ->get()
+        ->toarray();
+
+        $client_id = array_column($accounts, 'client_id');
+        
+
         $totalsales = DB::table('tb_tr_jeep_transactions')
         ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
-        ->where('tb_mf_jeep.client_id','=', $id)
+        ->where('tb_mf_jeep.client_id','=', $client_id)
         ->select(DB::RAW("SUM(tb_tr_jeep_transactions.fare) as totalsales"), DB::raw("year(tb_tr_jeep_transactions.created_at) as year"))
         ->orderBy('tb_tr_jeep_transactions.created_at', 'DESC')
         ->groupBy(  DB::raw("year(tb_tr_jeep_transactions.created_at)"))
@@ -31,7 +40,7 @@ class ClientDashboardController extends Controller
 
         $monthlysales = DB::table('tb_tr_jeep_transactions')
         ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
-        ->where('tb_mf_jeep.client_id','=', $id)
+        ->where('tb_mf_jeep.client_id','=', $client_id)
         ->select(   DB::RAW("SUM(tb_tr_jeep_transactions.fare) as monthlysales"),
                     DB::RAW("DATE_FORMAT(tb_tr_jeep_transactions.created_at, '%Y-%M') as monthyear"))
         ->orderBy('tb_tr_jeep_transactions.created_at','DESC')
@@ -45,7 +54,7 @@ class ClientDashboardController extends Controller
     
         $yearlysales = DB::table('tb_tr_jeep_transactions')
         ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
-        ->where('tb_mf_jeep.client_id','=', $id)
+        ->where('tb_mf_jeep.client_id','=', $client_id)
         ->select(   DB::RAW("SUM(tb_tr_jeep_transactions.fare) as yearlysales"),
                     DB::RAW("YEAR(tb_tr_jeep_transactions.created_at) as year"))
         ->orderBy('tb_tr_jeep_transactions.created_at','DESC')
@@ -61,7 +70,7 @@ class ClientDashboardController extends Controller
         ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
         ->join('tb_mf_carduser_records', 'tb_mf_carduser_records.rfid_number', '=', 'tb_tr_jeep_transactions.rfid_number')
         ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-        ->where('tb_mf_jeep.client_id','=', $id)
+        ->where('tb_mf_jeep.client_id','=', $client_id)
         ->select(DB::RAW("SUM(tb_tr_jeep_transactions.fare) as totalsales"),'tb_mf_cardtype.cardtype')
         ->orderBy('tb_tr_jeep_transactions.created_at','DESC')
         ->groupBy("tb_mf_cardtype.cardtype")
@@ -71,7 +80,7 @@ class ClientDashboardController extends Controller
         $faresale = array_column($faresales, 'totalsales');
 
 
-        return view('crm/company/clientdashboard')->with('client_id', $id)
+        return view('crm/company/clientdashboard')->with('user_id', $id)
                     ->with('totalsales', $totalsales)
                     ->with('totalcardusers', $cardusers)
                     ->with('monthyear', json_encode($monthyear, JSON_NUMERIC_CHECK))
