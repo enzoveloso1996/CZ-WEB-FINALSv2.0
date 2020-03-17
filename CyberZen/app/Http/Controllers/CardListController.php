@@ -115,7 +115,7 @@ class CardListController extends Controller
                     '<td class="left">'.$cardlisttbll->rfid_number.'</td>'.
                     '<td class="center">'.$cardlisttbll->card_balance.'</td>'.
                     '<td class="left">'.$cardlisttbll->first_name.'</td>'.
-                    '<td class="center"><button class="btn-sx btn-primary" data-toggle="modal" data-target="#exampleModalCenter"><i class="fa fa-exclamation"></i></button>&nbsp;'.
+                    '<td class="center"><button class="btn-sx btn-primary" data-toggle="modal" data-target="#holdcardModal" data-rfid='.$cardlisttbll->rfid_number.'><i class="fa fa-exclamation"></i></button>&nbsp;'.
                     '<button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i></button></td>'.
                     '</tr>';
             } 

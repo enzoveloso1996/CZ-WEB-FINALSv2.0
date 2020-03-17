@@ -117,6 +117,32 @@
                                 <tbody>
                                 </tbody>
                             </table>
+                            @foreach($cardlisttbl as $cardlisttbll)
+                            <!-- Hold-->
+                            <div class="modal" tabindex="-1" id="holdcardModal" role="dialog">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Warning</h5>
+                                        </div>
+                                        <div class="modal-body">
+                                            <p>Are you sure you want to hold this card?</p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <form method="post" action="{{ route('sold-card')}}">
+                                                @method('POST')
+                                                @csrf
+                                                <input type="text" class="form-control" name="rfid_number" id="rfid_number" hidden>
+                                                <input type="text" class="form-control" name="updated_by" id="updated_by" value="ron" hidden>
+                                                <button type="submit" class="btn btn-danger">Ok</button>
+                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforeach
+
                             <div id="result">
                                 <div class="jumbotron text-center">
                                     <h4>No available data</h4>
@@ -178,74 +204,60 @@
         </div>
     </div>
 
-    <!-- Hold-->
-    <div class="modal" tabindex="-1" id="holdcardModal" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Warning</h5>
-        </div>
-        <div class="modal-body">
-            <p>Are you sure you want to hold this card?</p>
-        </div>
-        <div class="modal-footer">
-        <form method="post" action="{{ route('hold-card')}}">
-            @method('PATCH') 
-            @csrf
-            <input type="text" class="form-control" name="hold" id="hold" value=0 hidden>
-            <button type="submit" class="btn btn-danger">Confirm</button>
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-        </form>
-        </div>
-        </div>
-    </div>
-    </div>
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
-<!--<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.js"></script>-->
-<script type="text/javascript">
-    $('#searchInactive').on('keyup',function(){
-        $('tbody').empty();
-        $value=$(this).val();
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('cards/searchInactive')}}',
-            data:{'search':$value},
-            success:function(data){
-                $('tbody').html(data);
-            },
-        });
-            if($('#searchInactive').val().length === 0) {
-                $('#result').css('display', 'block');
-            } else {
-                $('#result').css('display', 'none');
-            }
-    });
-</script>
-<script>
-    $(document).ready(function(){
-        $("#cardtype").change(function(){
-            var client = $(this).children(":selected").attr("id");
-            console.log(client);
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
+    <script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+    <script type="text/javascript">
+        $('#searchInactive').on('keyup',function(){
+            $('tbody').empty();
+            $value=$(this).val();
             $.ajax({
-                type: 'get',
-                url: '{{URL::to('cards/combo-sort')}}',
-                data:{'combosearch':client},
-                success: function(data){
-                    console.log(client);
+                type : 'get',
+                url : '{{URL::to('cards/searchInactive')}}',
+                data:{'search':$value},
+                success:function(data){
                     $('tbody').html(data);
                 },
-                error: function(data){
-                    console.log(data);
-                    console.log($.ajax());
+            });
+                if($('#searchInactive').val().length === 0) {
+                    $('#result').css('display', 'block');
+                } else {
+                    $('#result').css('display', 'none');
                 }
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $("#cardtype").change(function(){
+                var client = $(this).children(":selected").attr("id");
+                console.log(client);
+                $.ajax({
+                    type: 'get',
+                    url: '{{URL::to('cards/combo-sort')}}',
+                    data:{'combosearch':client},
+                    success: function(data){
+                        console.log(client);
+                        $('tbody').html(data);
+                    },
+                    error: function(data){
+                        console.log(data);
+                        console.log($.ajax());
+                    }
+                });
             });
         });
-    });
-</script>
-<script type="text/javascript">
-    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-</script>
+    </script>
+    <script>
+    $('#holdcardModal').on('show.bs.modal', function (event) {
+        var button = $(event.relatedTarget);
+        var rfid = button.data('rfid');
+        var modal = $(this);
+        modal.find('.modal-footer #rfid_number').val(rfid);
+        })
+    </script>
+    <script type="text/javascript">
+        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+    </script>
 @endsection

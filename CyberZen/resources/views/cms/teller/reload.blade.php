@@ -105,12 +105,12 @@
                                             <h3 class="modal-title rfid" id="rfid"></h3>
                                         </div>
                                         <div class="form-group">
-                                        <label for="recipient-name" class="col-form-label">Current Balance:</label>
-                                        <input type="text" class="form-control" id="bal" disabled>
+                                            <label for="recipient-name" class="col-form-label">Current Balance:</label>
+                                            <input type="text" class="form-control" id="bal" disabled>
                                         </div>
                                         <div class="form-group">
-                                        <label for="message-text" class="col-form-label">Amount:</label>
-                                        <input class="form-control" id="amount" disabled>
+                                            <label for="message-text" class="col-form-label">Amount:</label>
+                                            <input class="form-control" id="amount" disabled>
                                         </div>
                                         <div class="form-group">
                                             <label for="message-text" class="col-form-label">Total Balance:</label>
@@ -126,10 +126,10 @@
                                         </div>
                                     </div>
                                     <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <button type="submit" onclick="wow()" class="btn btn-primary">Submit</button>
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                        <button type="submit" onclick="wow()" class="btn btn-primary">Submit</button>
                                     </div>
-                                    </form>
+                                </form>
                                 </div>
                                 </div>
                             </div>
