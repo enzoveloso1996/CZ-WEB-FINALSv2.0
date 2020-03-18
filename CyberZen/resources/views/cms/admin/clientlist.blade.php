@@ -92,7 +92,7 @@
                                         <td class="center">
                                             <div class="row">
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-5">
                                                 {{-- This is for edit button --}}
                                                     <form action="{{route('clientlist.update',$detail->client_id)}}" method="post">
                                                         @csrf
@@ -175,7 +175,7 @@
                                                         </div>   
                                                     </form>
                                                 </div>                                                
-                                                <div class="col-md-3">
+                                                <div class="col-md-5">
                                                     {{-- This is for delete button --}}
                                                     <form action="{{route('client-archive')}}" method="post">
                                                         @csrf
@@ -320,7 +320,7 @@
                 $('tbody').html(data);
             }
         });
-    })
+    });
     </script>
     <script type="text/javascript">
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
@@ -337,7 +337,7 @@
         modal.find('.modal-title').text('Delete ' + client_name +'?');
         modal.find('.modal-body').text('Are you sure to delete ' + client_name +'?');
         modal.find('#client_id').val(client_id);
-    })
+    });
 </script>
 
 <script>
@@ -362,7 +362,7 @@
         modal.find('#client_name').val(client_name);
         modal.find('#keyword').val(keyword);
         
-    })
+    });
 </script>
 @endsection
 

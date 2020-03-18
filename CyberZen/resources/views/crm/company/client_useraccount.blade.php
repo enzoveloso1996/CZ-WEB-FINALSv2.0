@@ -63,8 +63,8 @@
                                 <div class="input-group">
                                    
                                     <form action="" method="post">
-                                    <select name="positions" id="positions_id">
-                                        <option value="{{$user_id}}">ALL</option>
+                                    <select name="search-position" id="search-position_id">
+                                        <option id="0" value="{{$user_id}}">ALL</option>
                                         @foreach ($position as $pos)
                                         <option id="{{$pos->id}}" value="{{$user_id}}">
                                             {{$pos->position}}
@@ -105,9 +105,8 @@
                                         <td>
                                             <div class="row">
 
-                                                <div class="col-md-3">
+                                                <div class="col-md-5">
                                                 {{-- This is for edit button --}}
-                                                
 
                                                     <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
                                                         data-lastname="{{$userlist->lastname}}"
@@ -143,7 +142,7 @@
                                                                                         </option>
                                                                                         @endforeach
                                                                                     </select>
-                                                                                    <input type="hidden" name="editclient_idtext" id="editclient_id_" value="">
+                                                                                    <input type="hidden" name="editclient_idtext" id="editclient_id_">
                                                                                 </div>    
                                                                                 <div class="input-group mb-3">
                                                                                     <div class="input-group-prepend">
@@ -177,7 +176,7 @@
                                                                                         </option>
                                                                                         @endforeach
                                                                                     </select>
-                                                                                    <input type="hidden" name="editposition_idtext" id="editposition_id_" value="">
+                                                                                    <input type="hidden" name="editposition_idtext" id="editposition_id_">
                                                                                 </div>    
                                                 
                                                                                 <div class="input-group mb-3">
@@ -207,7 +206,7 @@
                                                         </div>
                                                     </div> 
                                                 </div>                                                
-                                                <div class="col-md-3">
+                                                <div class="col-md-5">
                                                     {{-- This is for delete button --}}
                                                     <form action="" method="post">
                                                         @csrf
@@ -215,7 +214,7 @@
 
                                                         <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
                                                             data-fullname="{{$userlist->fullname}}" 
-                                                            data-client_id="{{$userlist->user_id}}">
+                                                            data-user_id="{{$userlist->user_id}}">
                                                             <i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
                                                         </button>
                                                         <div class="modal fade" id="deleteModal" role="dialog">
@@ -228,7 +227,7 @@
                                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                         <h4 class="modal-title">Delete {{$userlist->fullname}}</h4>
                                                                     </div>
-                                                                    <input type="hidden" name="delclient_id" id="delclient_id" value="{{$userlist->user_id}}">                                                                
+                                                                    <input type="hidden" name="deluser_id" id="deluser_id" value="{{$userlist->user_id}}">                                                                
                                                                     <div class="form-group">
                                                                         <div class="modal-body">
                                                                             Are you sure to Delete?
@@ -289,8 +288,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
                                     </div>
-                                    <select class="form-control" name="clientname" id="clientname_id">
-                                        <option value="--">--</option>
+                                    <select class="form-control" name="clientname" id="clientname_id">                            
                                         @foreach ($clientname as $client)
                                         <option id="{{$client->client_id}}">
                                             {{$client->client_name}}
@@ -324,8 +322,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
                                     </div>
-                                    <select class="form-control" name="position" id="position_id">
-                                        <option value="--">--</option>
+                                    <select class="form-control" name="position" id="position_id">                                        
                                         @foreach ($position as $pos)
                                         <option id="{{$pos->id}}">
                                             {{$pos->position}}
@@ -370,31 +367,6 @@
     </div>   
 
 
-    
-
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    <script type="text/javascript">
-        $('#search-client').on('keyup',function(){
-            $value=$(this).val();
-            $.ajax({
-                type : 'get',
-                url : '{{URL::to('company/combo-search-position')}}',
-                data:{'search':$value},
-                success:function(data){
-                    $('tbody').html(data);
-                }
-            });
-        })
-        </script>
-        <script type="text/javascript">
-            $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-        </script>
-    
-    
-    
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script>
     
@@ -417,17 +389,18 @@
             });
 
 
-            $("#positions_id").change(function(){
+            $("#search-position_id").change(function(){
                 
-                var positions = $(this).children(":selected").attr("id");
-                var client_ids = $(this).children(":selected").attr("value");
-                console.log(client_ids);
-                console.log(positions);
+                var position_id = $(this).children(":selected").attr("id");
+                var user_id = $(this).children(":selected").attr("value");
+                console.log(user_id);
+                console.log(position_id);
                 $.ajax({
                     type: 'get',
                     url: '{{URL::to('company/combo-search-position')}}',
-                    data:{  'position':positions,
-                            'client_id':client_ids },
+                    data:{  'position_id':position_id,
+                            'user_id':user_id 
+                            },
                     success: function(data){
                         console.log(data);
 
@@ -435,13 +408,16 @@
                     },
                     error: function(data){
                         console.log(data);
-                        console.log($.ajax());
+                        console.log("error!!");
                     }
                 });
 
             });
         });
        
+       
+    </script>
+    <script>
         $('#editModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
         
@@ -450,9 +426,10 @@
         var middlename = button.data('middlename');
         var position_id = button.data('position_id');
         var username = button.data('username');
-      
- 
+    
+
         var modal = $(this);
+        console.log(modal);
         modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
         
         modal.find('#editlastname').val(lastname);
@@ -460,10 +437,37 @@
         modal.find('#editmiddlename').val(middlename);
         modal.find('#editposition_id').val(position_id);
         modal.find('#editusername').val(username);
-        
-    })
+    
+        });
     </script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+    
+    <script type="text/javascript">
+        $('#search-client').on('keyup',function(){
+            $value=$(this).val();
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('company/combo-search-position')}}',
+                data:{'search':$value},
+                success:function(data){
+                    $('tbody').html(data);
+                }
+            });
+        })
+        </script>
+        <script type="text/javascript">
+            $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+        </script>
+    
+    
+    
+    
 
+   
     <script type="text/javascript">
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
     </script>

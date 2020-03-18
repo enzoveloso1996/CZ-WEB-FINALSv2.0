@@ -105,8 +105,17 @@ class ClientUserController extends Controller
 
         ]);
 
+        $users_id = DB::table('tb_mf_client_users')
+        ->where('username', '=', $request->username)
+        ->get();
+
+        foreach($users_id as $user_id){
+            $userid = $user_id->user_id;
+        }
+
         DB::table('tb_mf_jeep_personnel')
         ->insert([
+            'user_id'           =>  $userid,
             'client_id'         =>  $request->client_idtext,
             'firstname'         =>  $request->firstname,
             'middlename'        =>  $request->middlename,
