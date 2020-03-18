@@ -45,7 +45,7 @@ Route::prefix('jeeps')->group(function(){
 
     Route::resource('cms/admin/clientusers', 'ClientUserController');
     Route::get('/clientusers','ClientUserController@index')->name('clientusers');
-    
+    Route::get('/search-client-user','ClientUserController@search');
 
     Route::resource('cms/admin/jeeplist', 'JeepListController');
     Route::get('cms/admin/jeeplist', 'JeepListController@index')->name('jeeplist');
