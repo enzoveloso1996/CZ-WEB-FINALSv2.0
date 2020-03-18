@@ -69,12 +69,12 @@
             </div>
             <div class="card-header">
                 <div class="float-left p-3">
-                <div class="input-group mb-1">
-                    <div class="input-group-prepend">
-                      <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                    <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="search-platenumber" placeholder="Search plate number.." aria-label="search" aria-describedby="basic-addon1">
                     </div>
-                    <input type="text" class="form-control" id="search-platenumber" placeholder="Search plate number.." aria-label="search" aria-describedby="basic-addon1">
-                </div>
                 </div>
                 <div class="float-right p-3">
                     <select name="company-list" id="companylist" class="form-control">
@@ -161,7 +161,7 @@
                 },
                 error: function(data) {console.log("error!!");}
             });
-        })
+        });
 </script>
     <script type="text/javascript">
         $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
