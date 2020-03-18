@@ -226,7 +226,7 @@
             console.log($value);
             $.ajax({
                 type : 'get',
-                url : '{{URL::to('jeeps/search-client-user')}}',
+                url : '{{URL::to('jeeps/search-user')}}',
                 data:{'search':$value},
                 success:function(data){
                     $('tbody').html(data);
