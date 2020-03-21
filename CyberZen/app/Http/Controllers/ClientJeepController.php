@@ -34,7 +34,8 @@ class ClientJeepController extends Controller
         $jeepcount = array_column($jeepcount, 'count');
 
         
-        return view('client_jeep')->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
+        return view('crm/company/client_jeep')->with('user_id', $id)
+                            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
                             ->with('clientname', $clientname)
                             ->with('jeeplists', $jeeplists);
                             

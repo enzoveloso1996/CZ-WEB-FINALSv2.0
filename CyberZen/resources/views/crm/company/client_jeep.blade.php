@@ -1,4 +1,4 @@
-@extends('crm.company.layouts')
+@extends('crm.company.layout')
 <style>
     table {
         counter-reset: rowNumber;

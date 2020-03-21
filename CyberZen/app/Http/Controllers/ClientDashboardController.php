@@ -79,7 +79,7 @@ class ClientDashboardController extends Controller
         $cardtype = array_column($faresales, 'cardtype');
         $faresale = array_column($faresales, 'totalsales');
 
-
+ 
         return view('crm/company/clientdashboard')->with('user_id', $id)
                     ->with('totalsales', $totalsales)
                     ->with('totalcardusers', $cardusers)

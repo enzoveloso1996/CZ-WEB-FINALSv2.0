@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/clientlogin', 'ClientLoginController@index');
+Route::resource('client-login', 'ClientLoginController');
+Route::get('client-login-check', 'ClientLoginController@login')->name('client-login-check');
 
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 Route::resource('sales', 'SalesController');
