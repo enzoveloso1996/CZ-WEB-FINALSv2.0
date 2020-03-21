@@ -15,20 +15,29 @@ class ClientJeepController extends Controller
      */
     public function index($id)
     {
+        $accounts = DB::table('tb_mf_client')
+        ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
+        ->where('tb_mf_client_users.user_id', '=', $id)
+        ->get();
+        foreach ($accounts as $account) {
+            $client_id = $account->client_id;
+            $client_name = $account->client_name;
+        }
+
         $clientname = DB::table('tb_mf_client')
         ->where("is_archived","=","0")
-        ->where("client_id", "=",$id)
+        ->where("client_id", "=",$client_id)
         ->get();
 
         $jeeplists = DB::table('tb_mf_jeep')
         ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
         ->where('tb_mf_client.is_archived','=',0)
-        ->where('tb_mf_client.client_id','=',$id)
+        ->where('tb_mf_client.client_id','=',$client_id)
         ->paginate(5);
 
         $jeepcount = DB::table('tb_mf_jeep')
         ->select(DB::raw('COUNT(plate_number) as count'))
-        ->where('client_id','=',$id)
+        ->where('client_id','=',$client_id)
         ->get()->toarray();
        
         $jeepcount = array_column($jeepcount, 'count');

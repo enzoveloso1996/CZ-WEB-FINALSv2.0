@@ -18,11 +18,11 @@ class ClientDashboardController extends Controller
         $accounts = DB::table('tb_mf_client')
         ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
         ->where('tb_mf_client_users.user_id', '=', $id)
-        ->get()
-        ->toarray();
-
-        $client_id = array_column($accounts, 'client_id');
-        
+        ->get();
+        foreach ($accounts as $account) {
+            $client_id = $account->client_id;
+            $client_name = $account->client_name;
+        }
 
         $totalsales = DB::table('tb_tr_jeep_transactions')
         ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
@@ -80,7 +80,7 @@ class ClientDashboardController extends Controller
         $faresale = array_column($faresales, 'totalsales');
 
  
-        return view('crm/company/clientdashboard')->with('user_id', $id)
+        return view('crm/company/clientdashboard')->with('user_id', $id)->with('client_name', $client_name)
                     ->with('totalsales', $totalsales)
                     ->with('totalcardusers', $cardusers)
                     ->with('monthyear', json_encode($monthyear, JSON_NUMERIC_CHECK))

@@ -91,17 +91,25 @@ class ClientLoginController extends Controller
         ->where('username', '=', $request->username)
         ->get();
         
-        foreach ($hashpw as $hashpword) {
-            $hashpw = $hashpword->password;
-            $user_id = $hashpword->user_id;
-        }
-
-        if(Hash::check($request->password, $hashpw)){
-            return redirect()->route('clientdashboard.index', ['id' => $user_id]);
+        
+        if (COUNT($hashpw)>0) {
+            foreach ($hashpw as $hashpword) {
+                $hashpw = $hashpword->password;
+                $user_id = $hashpword->user_id;
+            }
+            if(Hash::check($request->password, $hashpw)){
+                return redirect()->route('clientdashboard.index', ['id' => $user_id]);
+            }
+            else{
+               
+                return redirect('clientlogin')->with('status', "Incorrect Password!!");
+            }
         }
         else{
-            return redirect('clientlogin');
+            return redirect('clientlogin')->with('status', "Incorrect Username!!");
+            
         }
 
+        
     }
 }

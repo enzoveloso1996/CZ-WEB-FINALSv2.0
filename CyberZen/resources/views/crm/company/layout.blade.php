@@ -148,18 +148,22 @@
             
             <!-- Header-->
             <header id="header" class="header">
+        
+                    
+               
                 <div class="top-left">
                     <div class="navbar-header">
                         <a class="menutoggle" id="menuToggle"><img id="logo-header" src="{{ asset('new/img/logo.png') }}" alt="Logo"></a>
                     </div>
                 </div>
+                <h2 style="display:inline;">{{$client_name}}</h2>
                 <div class="top-right">
                     <div class="header-menu">
                         <div class="header-left">
                             <div class="form-inline">
                             </div>
     
-                            <div class="dropdown for-notification">
+                            {{-- <div class="dropdown for-notification">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="notification" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-bell"></i>
                                     <span class="count bg-danger">3</span>
@@ -179,9 +183,9 @@
                                         <p>Server #3 overloaded.</p>
                                     </a>
                                 </div>
-                            </div>
+                            </div> --}}
     
-                            <div class="dropdown for-message">
+                            {{-- <div class="dropdown for-message">
                                 <button class="btn btn-secondary dropdown-toggle" type="button" id="message" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                     <i class="fa fa-envelope"></i>
                                     <span class="count bg-primary">4</span>
@@ -221,7 +225,7 @@
                                         </div>
                                     </a>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
                         <!--
                         <div class="user-area dropdown float-right">

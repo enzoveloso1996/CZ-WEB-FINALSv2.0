@@ -74,7 +74,7 @@
 
 </head>
 	<body class="">
-
+	
 		<div class="container">
 			<div class="card w-50 ml-auto mr-auto"  style="margin-top:100px;">
 				<div class="card-header text-center">
@@ -96,6 +96,11 @@
 							<div class="row m-3">
 								<input type="submit" class="btn btn-lg btn-primary btn-block" value="login">
 							</div>
+							@if (session('status'))
+							<div class="alert alert-danger">
+								{{ session('status') }}
+							</div>
+						@endif
 						</div>	
 					</form>
 				</div>

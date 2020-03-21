@@ -19,9 +19,11 @@ class Client_UserAccountController extends Controller
         $accounts = DB::table('tb_mf_client')
         ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
         ->where('tb_mf_client_users.user_id', '=', $id)
-        ->get()->toarray();
-
-        $client_id = array_column($accounts, 'client_id');
+        ->get();
+        foreach ($accounts as $account) {
+            $client_id = $account->client_id;
+            $client_name = $account->client_name;
+        }
         
         $user_position_ids = DB::table('tb_mf_client_users')
         ->select('position_id')
@@ -67,7 +69,7 @@ class Client_UserAccountController extends Controller
         ->wherein('id',$position)
         ->get();      
             
-        return view('crm/company/client_useraccount')->with('user_id', $id)
+        return view('crm/company/client_useraccount')->with('user_id', $id)->with('client_name', $client_name)
             ->with('userslist', $users)
             ->with('clientname', $clientname)
             ->with('position', $position);
