@@ -43,6 +43,7 @@ class Client_UserAccountController extends Controller
             ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
             ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
             ->where("tb_mf_client.is_archived", "=", "0")
+            ->where("tb_mf_client_users.is_archived", "=", "0")
             ->where("tb_mf_client_users.client_id", "=",$client_id)
             ->wherein("tb_mf_client_users.position_id", $position)
             ->get();            
@@ -51,6 +52,7 @@ class Client_UserAccountController extends Controller
             ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
             ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
             ->where("tb_mf_client.is_archived", "=", "0")
+            ->where("tb_mf_client_users.is_archived", "=", "0")
             ->where("tb_mf_client_users.user_id", '=', $id)
             ->where("tb_mf_client_users.client_id", "=",$client_id)
             ->get();
@@ -209,7 +211,7 @@ class Client_UserAccountController extends Controller
             'is_archived'       =>  "0"
         ]);
 
-        return redirect("company/crm/company/clientuseraccount/$request->client_idtext");
+        return redirect("company/crm/company/clientuseraccount/$request->addcurrent_user_id");
     }
 
     /**
@@ -241,7 +243,7 @@ class Client_UserAccountController extends Controller
      * @param  \App\Client_UserAccount  $client_UserAccount
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user_id)
+    public function update(Request $request, $cur_user_id)
     {
         $pass = Hash::make($request->editpassword);
             
@@ -271,7 +273,18 @@ class Client_UserAccountController extends Controller
             'is_archived'       =>  "0"
         ]);
 
-        return redirect("company/crm/company/clientuseraccount/$user_id");
+        return redirect("company/crm/company/clientuseraccount/$cur_user_id");
+    }
+    public function archive(Request $request){
+        DB::table('tb_mf_client_users')
+        ->where('user_id', $request->deluser_id)
+        ->update(['is_archived' => 1]);
+
+        DB::table('tb_mf_jeep_personnel')
+        ->where('user_id', $request->deluser_id)
+        ->update(['is_archived' => 1]);
+
+        return redirect("company/crm/company/clientuseraccount/$request->delcurrent_user_id");
     }
 
     /**

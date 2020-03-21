@@ -153,7 +153,7 @@
                                                 </div>
                                                 <div class="col-md-3">
                                                     <!-- Delete Button -->
-                                                    <form action="{{route('client-jeep-archive')}}" method="post">
+                                                    <form action="{{route('client-jeep-archive', $user_id)}}" method="post">
                                                         @csrf
                                                         @method('PATCH')
                                                         <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal"

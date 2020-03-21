@@ -103,6 +103,7 @@
                                         <td class="center">{{$userlist->position}}</td>
                                         <td class="center">{{$userlist->username}}</td>
                                         <td>
+                                      
                                             <div class="row">
 
                                                 <div class="col-md-5">
@@ -126,7 +127,8 @@
                                                                 <div class="modal-header">
                                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                     <h4 class="modal-title">Update Account</h4>
-                                                                </div>              
+                                                                </div>    
+                                                                      
                                                                 <form action="{{Route('clientuseraccount.update', $user_id)}}" method="post">
                                                                     @csrf
                                                                     @method('PATCH')
@@ -147,6 +149,7 @@
                                                                                         @endforeach
                                                                                     </select>
                                                                                     <input type="hidden" name="editclient_idtext" id="editclient_id_">
+                                                                                    
                                                                                 </div>    
                                                                                 <div class="input-group mb-3">
                                                                                     <div class="input-group-prepend">
@@ -210,30 +213,37 @@
                                                             </div>
                                                         </div>
                                                     </div> 
-                                                </div>                                                
+                                                </div>         
+                                                                             
                                                 <div class="col-md-5">
-                                                    {{-- This is for delete button --}}
-                                                    <form action="" method="post">
-                                                        @csrf
-                                                        @method('PATCH')
-
-                                                        <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
-                                                            data-fullname="{{$userlist->fullname}}" 
-                                                            data-user_id="{{$userlist->user_id}}">
-                                                            <i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
-                                                        </button>
-                                                        <div class="modal fade" id="deleteModal" role="dialog">
-                                                            <div class="modal-dialog modal-md">
+                                                {{-- This is for delete button --}}
+                                                
+                                                        
+                                                    <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
+                                                       
+                                                        data-delfullname="{{$userlist->fullname}}" 
+                                                        data-deluser_id="{{$userlist->user_id}}">
+                                                        <i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
+                                                    </button>
+                                                    
+                                                    <div class="modal fade" id="deleteModal" role="document">
+                                                        <div class="modal-dialog modal-md">
                                                             
-                                                                <!-- Modal content-->
-                                                                <div class="modal-content">
-                                                                    
-                                                                    <div class="modal-header">
-                                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                                        <h4 class="modal-title">Delete {{$userlist->fullname}}</h4>
-                                                                    </div>
-                                                                    <input type="hidden" name="deluser_id" id="deluser_id" value="{{$userlist->user_id}}">                                                                
+                                                            <!-- Modal content-->
+                                                            <div class="modal-content">
+                                                                
+                                                                <div class="modal-header">
+                                                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                                    <h4 class="modal-title">Delete User</h4>
+                                                                </div>
+                                                                
+                                                                <form action="{{Route('client-useraccount-archive')}}" method="post">
+                                                                    @csrf
+                                                                    @method('PATCH')
                                                                     <div class="form-group">
+                                                                        <input type="hidden" name="delcurrent_user_id" id="delcurrent_user_id" value="{{$user_id}}">                                                                
+                                                                        <input type="hidden" name="deluser_id" id="deluser_id">                                                                
+                                                                        
                                                                         <div class="modal-body">
                                                                             Are you sure to Delete?
                                                                             
@@ -283,13 +293,15 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add User Account</h4>
                 </div>
-                <form action="{{Route('clientusers.store')}}" method="post">
+                <form action="{{Route('clientuseraccount.store')}}" method="post">
                     @csrf
                    
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">
                                 <div class="input-group mb-3">
+                                    <input type="hidden" name="addcurrent_user_id" id="addcurrent_user_id" value="{{$user_id}}">                                                                
+                                                                        
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
                                     </div>
@@ -379,7 +391,9 @@
     
       
         $(document).ready(function(){
-         
+            $("#clientname_id option[id="+{{$client->client_id}}+"]").attr('selected', 'selected');
+            
+            $('#client_id_').val({{$client->client_id}})
             $('#clientname_id').change(function(){
                 
                 var idval = $(this).children(":selected").attr("id");
@@ -468,18 +482,21 @@
             $('#edituser_id_').val(user_id);
             $('#editclient_id_').val(client_id);
             $('#editclientname_id').val(client_id);
-            $("#editclientname_id > option:first-child").val(client_id);
+            $("#editclientname_id option[id="+client_id+"]").attr('selected', 'selected');
+
             $('#editfirstname_id').val(firstname);
             $('#editmiddlename_id').val(middlename);
             $('#editlastname_id').val(lastname);
             $('#editposition_id_').val(position_id);
+            $("#editposition_id option[id="+position_id+"]").attr('selected', 'selected');
+
             $('#editusername_id').val(username);
 
         });
         
         
-        // modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
-        
+        modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
+        // modal.find('.modal-body').text('Are you sure to edit user for ' + username +'?');
         // modal.find('#editlastname').val(lastname);
         // modal.find('#editfirstname').val(firstname);
         // modal.find('#editmiddlename').val(middlename);
@@ -488,7 +505,25 @@
     
         });
     </script>
-   
+    <script>
+        $('#deleteModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); // Button that triggered the modal
+            var delfullname = button.data('delfullname'); 
+            var deluser_id = button.data('deluser_id');
+          
+           
+            console.log(delfullname);
+            console.log(deluser_id);
+
+            var modal = $(this);
+            $(document).ready(function(){
+                // $('#deluser_id').val(deluser_id);
+             });
+            modal.find('.modal-body').text('Are you sure to delete user for ' + delfullname +'?');
+            modal.find('#deluser_id').val(deluser_id);
+
+        })
+    </script>
     
     <script type="text/javascript">
         $('#search-client').on('keyup',function(){
