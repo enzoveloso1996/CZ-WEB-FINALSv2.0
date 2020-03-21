@@ -131,11 +131,11 @@
                             </li>
                         @endif
                         <li>
-                            <a href="widgets.html"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
+                            <a href="/clientlogin"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
                         @if(Request::path() == '/widgets')
                         <li>
-                            <a href="widgets.html"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
+                            <a href="/clientlogin"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
                         @endif
                     </ul>
