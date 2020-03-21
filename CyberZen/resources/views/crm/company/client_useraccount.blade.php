@@ -109,11 +109,13 @@
                                                 {{-- This is for edit button --}}
 
                                                     <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
-                                                        data-lastname="{{$userlist->lastname}}"
-                                                        data-firstname="{{$userlist->firstname}}"
-                                                        data-middlename="{{$userlist->middlename}}"
-                                                        data-position_id="{{$userlist->position_id}}"
-                                                        data-username="{{$userlist->username}}">
+                                                        data-edituser_id = "{{$userlist->user_id}}"
+                                                        data-editlastname="{{$userlist->lastname}}"
+                                                        data-editfirstname="{{$userlist->firstname}}"
+                                                        data-editmiddlename="{{$userlist->middlename}}"
+                                                        data-editposition_id="{{$userlist->position_id}}"
+                                                        data-editclient_id ="{{$userlist->client_id}}"
+                                                        data-editusername="{{$userlist->username}}">
                                                         <i class="fa fa-edit" data-toggle="tooltip" title="Edit"></i>
                                                     </button>
                                                     <div class="modal fade" id="editModal" role="document">
@@ -125,17 +127,19 @@
                                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                     <h4 class="modal-title">Update Account</h4>
                                                                 </div>              
-                                                                <form action="{{Route('clientusers.update', $userlist->user_id)}}" method="post">
+                                                                <form action="{{Route('clientuseraccount.update', $user_id)}}" method="post">
                                                                     @csrf
-                                                                    
+                                                                    @method('PATCH')
                                                                     <div class="form-group">
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
+                                                                                <input type="hidden" name="edituser_id" id="edituser_id_">
                                                                                 <div class="input-group mb-3">
                                                                                     <div class="input-group-prepend">
                                                                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
                                                                                     </div>
                                                                                     <select class="form-control" name="editclientname" id="editclientname_id">
+                                                                                        <option value="">SELECT COMPANY</option>
                                                                                         @foreach ($clientname as $client)
                                                                                         <option id="{{$client->client_id}}">
                                                                                             {{$client->client_name}}
@@ -170,6 +174,7 @@
                                                                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
                                                                                     </div>
                                                                                     <select class="form-control" name="editposition" id="editposition_id">
+                                                                                        <option value="">SELECT POSITION</option>
                                                                                         @foreach ($position as $pos)
                                                                                         <option id="{{$pos->id}}">
                                                                                             {{$pos->position}}
@@ -280,7 +285,7 @@
                 </div>
                 <form action="{{Route('clientusers.store')}}" method="post">
                     @csrf
-                    
+                   
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">
@@ -288,9 +293,10 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
                                     </div>
-                                    <select class="form-control" name="clientname" id="clientname_id">                            
+                                    <select class="form-control" name="clientname" id="clientname_id">     
+                                        <option value="">SELECT COMPANY</option>                       
                                         @foreach ($clientname as $client)
-                                        <option id="{{$client->client_id}}">
+                                        <option id="{{$client->client_id}}" value="{{$client->client_id}}" >
                                             {{$client->client_name}}
                                         </option>
                                         @endforeach
@@ -322,7 +328,8 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
                                     </div>
-                                    <select class="form-control" name="position" id="position_id">                                        
+                                    <select class="form-control" name="position" id="position_id">
+                                        <option value="">SELECT POSITION</option>                                        
                                         @foreach ($position as $pos)
                                         <option id="{{$pos->id}}">
                                             {{$pos->position}}
@@ -372,7 +379,7 @@
     
       
         $(document).ready(function(){
-            
+         
             $('#clientname_id').change(function(){
                 
                 var idval = $(this).children(":selected").attr("id");
@@ -380,6 +387,12 @@
                 $('#client_id_').val(idval);
             });
 
+            $('#editclientname_id').change(function(){
+                
+                var idval = $(this).children(":selected").attr("id");
+                console.log(idval);
+                $('#editclient_id_').val(idval);
+            });
             
             $('#position_id').change(function(){
                 
@@ -388,6 +401,12 @@
                 $('#position_id_').val(idval);
             });
 
+            $('#editposition_id').change(function(){
+                
+                var idval = $(this).children(":selected").attr("id");
+                console.log(idval);
+                $('#editposition_id_').val(idval);
+            });
 
             $("#search-position_id").change(function(){
                 
@@ -417,34 +436,59 @@
        
        
     </script>
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    
     <script>
         $('#editModal').on('show.bs.modal', function (event) {
         var button = $(event.relatedTarget);
+        var user_id = button.data('edituser_id')
+        var lastname = button.data('editlastname');
+        var firstname = button.data('editfirstname'); 
+        var middlename = button.data('editmiddlename');
+        var position_id = button.data('editposition_id');
+        var client_id = button.data('editclient_id');
+        var username = button.data('editusername');
         
-        var lastname = button.data('lastname');
-        var firstname = button.data('firstname'); 
-        var middlename = button.data('middlename');
-        var position_id = button.data('position_id');
-        var username = button.data('username');
-    
+        console.log(user_id);
+        console.log(lastname);
+        console.log(firstname);
+        console.log(middlename);
+        console.log(position_id);
+        console.log(client_id);
+        console.log(username);
 
         var modal = $(this);
         console.log(modal);
-        modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
+        $(document).ready(function(){
+            $('#edituser_id_').val(user_id);
+            $('#editclient_id_').val(client_id);
+            $('#editclientname_id').val(client_id);
+            $("#editclientname_id > option:first-child").val(client_id);
+            $('#editfirstname_id').val(firstname);
+            $('#editmiddlename_id').val(middlename);
+            $('#editlastname_id').val(lastname);
+            $('#editposition_id_').val(position_id);
+            $('#editusername_id').val(username);
+
+        });
         
-        modal.find('#editlastname').val(lastname);
-        modal.find('#editfirstname').val(firstname);
-        modal.find('#editmiddlename').val(middlename);
-        modal.find('#editposition_id').val(position_id);
-        modal.find('#editusername').val(username);
+        
+        // modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
+        
+        // modal.find('#editlastname').val(lastname);
+        // modal.find('#editfirstname').val(firstname);
+        // modal.find('#editmiddlename').val(middlename);
+        // modal.find('#editposition_id').val(position_id);
+        // modal.find('#editusername').val(username);
     
         });
     </script>
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script> --}}
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-    
+   
     
     <script type="text/javascript">
         $('#search-client').on('keyup',function(){

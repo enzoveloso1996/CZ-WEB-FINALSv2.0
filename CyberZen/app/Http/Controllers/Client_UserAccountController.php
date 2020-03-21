@@ -243,10 +243,10 @@ class Client_UserAccountController extends Controller
      */
     public function update(Request $request, $user_id)
     {
-        $pass = Hash::make($request->password);
+        $pass = Hash::make($request->editpassword);
             
         DB::table('tb_mf_client_users')
-        ->where('user_id', '=', $user_id)
+        ->where('user_id', '=', $request->edituser_id)
         ->update([
             'client_id'         =>  $request->editclient_idtext,
             'firstname'         =>  $request->editfirstname,
@@ -260,7 +260,7 @@ class Client_UserAccountController extends Controller
         ]);
     
         DB::table('tb_mf_jeep_personnel')
-        ->where('user_id', '=', $user_id)
+        ->where('user_id', '=', $request->edituser_id)
         ->update([
             'client_id'         =>  $request->editclient_idtext,
             'firstname'         =>  $request->editfirstname,
@@ -271,7 +271,7 @@ class Client_UserAccountController extends Controller
             'is_archived'       =>  "0"
         ]);
 
-        return redirect("company/crm/company/clientuseraccount/$request->editclient_idtext");
+        return redirect("company/crm/company/clientuseraccount/$user_id");
     }
 
     /**
