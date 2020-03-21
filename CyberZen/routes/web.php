@@ -14,6 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+Route::get('/clientlogin', 'ClientLoginController@index');
+Route::resource('client-login', 'ClientLoginController');
+Route::get('client-login-check', 'ClientLoginController@login')->name('client-login-check');
 
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 Route::resource('sales', 'SalesController');
@@ -46,7 +49,7 @@ Route::prefix('jeeps')->group(function(){
 
     Route::resource('cms/admin/clientusers', 'ClientUserController');
     Route::get('/clientusers','ClientUserController@index')->name('clientusers');
-    
+    Route::get('/search-user','ClientUserController@search');
 
     Route::resource('cms/admin/jeeplist', 'JeepListController');
     Route::get('cms/admin/jeeplist', 'JeepListController@index')->name('jeeplist');
@@ -68,6 +71,7 @@ Route::prefix('company')->group(function(){
 
     Route::get('crm/company/clientuseraccount/{id}', ['as' => 'clientuseraccount.index', 'uses' => 'Client_UserAccountController@index']);
     Route::resource('clientuseraccount', 'Client_UserAccountController', ['except' => ['index']]);
+    Route::patch('/client-useraccount-archive', 'Client_UserAccountController@archive')->name('client-useraccount-archive');
     Route::get('/combo-search-position','Client_UserAccountController@combosearch');
 
     Route::get('crm/company/clientjeeplist/{id}', ['as' => 'clientjeeplist.index', 'uses' => 'ClientJeepController@index']);

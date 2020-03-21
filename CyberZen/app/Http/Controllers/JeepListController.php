@@ -104,31 +104,60 @@ class JeepListController extends Controller
     {
         //
     }
+    public function search(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output="";
+            $jeeplists = DB::table('tb_mf_jeep')
+            ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+            ->select('tb_mf_client.client_name','tb_mf_jeep.plate_number')
+            ->where('tb_mf_jeep.plate_number', 'LIKE', '%'.$request->search.'%')
+            ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->client_name.'%')
+            ->where('tb_mf_client.is_archived','=',0)
+            ->paginate(10);
+            
+            if($jeeplists)
+            {
+                foreach ($jeeplists as $key => $jeeplist) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$jeeplist->client_name.'</td>'.
+                    '<td class="left">'.$jeeplist->plate_number.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+                
+        }
+    }
 
     public function combosearch(Request $request)
     {
         if($request->ajax())
-    {
-        $output="";
-        $jeeplists = DB::table('tb_mf_jeep')
-        ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
-        ->select('tb_mf_client.client_name','tb_mf_jeep.plate_number')
-        ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
-        ->where('tb_mf_client.is_archived','=',0)
-        ->paginate(10);
-        
-        if($jeeplists)
         {
-            foreach ($jeeplists as $key => $jeeplist) {
-                $output.='<tr>'.
-                '<td class="center" id="ref"></td>'.
-                '<td class="left">'.$jeeplist->client_name.'</td>'.
-                '<td class="left">'.$jeeplist->plate_number.'</td>'.
-                '</tr>';
-        } 
-            return Response($output);
-        }
+            $output="";
+            $jeeplists = DB::table('tb_mf_jeep')
+            ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+            ->select('tb_mf_client.client_name','tb_mf_jeep.plate_number')
+            ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
+            ->where('tb_mf_client.is_archived','=',0)
+            ->paginate(10);
             
-    }
+            if($jeeplists)
+            {
+                foreach ($jeeplists as $key => $jeeplist) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$jeeplist->client_name.'</td>'.
+                    '<td class="left">'.$jeeplist->plate_number.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+                
+        }
     }
 }

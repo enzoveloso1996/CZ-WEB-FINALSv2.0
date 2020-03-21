@@ -42,29 +42,30 @@ class ClientListController extends Controller
     public function search(Request $request)
     {
         if($request->ajax())
-    {
-        $output="";
-
-        $tabledtl=DB::table('tb_mf_client')->where('client_name','LIKE','%'.$request->search."%")
-        ->where('is_archived','=',0)
-        ->get();
- 
-        if($tabledtl)
         {
-            foreach ($tabledtl as $key => $tabledtll) {
-                $output.='<tr>'.
-                '<td class="center" id="ref"></td>'.
-                '<td class="left">'.$tabledtll->client_name.'</td>'.
-                '<td class="center">'.$tabledtll->contact_number.'</td>'.
-                '<td class="left">'.$tabledtll->client_email.'</td>'.
-                '<td class="center"><button type="submit" value="Edit" class="btn-sx btn-primary"><i class="fa fa-edit"></i>&nbsp; Edit</button>'.
-                '<button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i>&nbsp; Delete</button></td>'.
-                '</tr>';
-        } 
-            return Response($output);
-        }
+            $output="";
+
+            $tabledtl=DB::table('tb_mf_client')->where('client_name','LIKE','%'.$request->search."%")
+            ->where('is_archived','=',0)
+            ->get();
+    
+            if($tabledtl)
+            {
+                foreach ($tabledtl as $key => $tabledtll) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$tabledtll->client_name.'</td>'.
+                    '<td class="center">'.$tabledtll->contact_number.'</td>'.
+                    '<td class="left">'.$tabledtll->client_email.'</td>'.
+                    '<td class="center"><button type="submit" value="Edit" class="btn-sx btn-primary"><i class="fa fa-edit"></i>&nbsp; Edit</button>'.
+                    '<button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i>&nbsp; Delete</button></td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
             
-    }
+        }
     }
     
     /**

@@ -74,8 +74,38 @@
 
 </head>
 	<body class="">
-
-
+	
+		<div class="container">
+			<div class="card w-50 ml-auto mr-auto"  style="margin-top:100px;">
+				<div class="card-header text-center">
+					Sign IN
+				</div>
+				<div class="card-body">
+					<form action="{{Route('client-login-check')}}" method="post">
+						@csrf
+						@method('GET')
+						<div class="form-group">
+							<div class="row m-3">
+								<label for="username">Username</label>
+								<input type="text" class="form-control" name="username" id="username_id">
+							</div>
+							<div class="row m-3">
+								<label for="password">Password</label>
+								<input type="password" class="form-control" name="password" id="password_id">
+							</div>
+							<div class="row m-3">
+								<input type="submit" class="btn btn-lg btn-primary btn-block" value="login">
+							</div>
+							@if (session('status'))
+							<div class="alert alert-danger">
+								{{ session('status') }}
+							</div>
+						@endif
+						</div>	
+					</form>
+				</div>
+			</div>
+		</div>
 
 
 

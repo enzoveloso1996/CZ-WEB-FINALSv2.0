@@ -62,7 +62,7 @@
                                     <div class="input-group-prepend">
                                       <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                                     </div>
-                                    <input type="text" class="form-control" id="search-client" placeholder="Search.." aria-label="search" aria-describedby="basic-addon1">
+                                    <input type="text" class="form-control" id="search-user" placeholder="Search.." aria-label="search" aria-describedby="basic-addon1">
                                 </div>
                             </div>
                             <div class="float-right p-3">
@@ -221,15 +221,17 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script type="text/javascript">
-        $('#search-client').on('keyup',function(){
+        $('#search-user').on('keyup',function(){
             $value=$(this).val();
+            console.log($value);
             $.ajax({
                 type : 'get',
-                url : '{{URL::to('jeeps/search-client')}}',
+                url : '{{URL::to('jeeps/search-user')}}',
                 data:{'search':$value},
                 success:function(data){
                     $('tbody').html(data);
-                }
+                },
+                error: function(data) {console.log("error!!");}
             });
         })
         </script>

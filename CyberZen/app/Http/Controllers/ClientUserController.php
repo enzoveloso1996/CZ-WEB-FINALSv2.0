@@ -40,6 +40,37 @@ class ClientUserController extends Controller
             ->with('position', $position);
     }
 
+    public function search(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output="";
+
+            $tabledtl=DB::table('tb_mf_client_users')
+            ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
+            ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
+            ->where("tb_mf_client.is_archived", "=", "0")
+            ->where('firstname','LIKE','%'.$request->search."%")
+            ->get();
+   
+                foreach ($tabledtl as $key => $tabledtll) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$tabledtll->fullname.'</td>'.
+                    '<td class="center">'.$tabledtll->client_name.'</td>'.
+                    '<td class="left">'.$tabledtll->position.'</td>'.
+                    '<td class="left">'.$tabledtll->username.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            
+            
+        }
+    }
+    
+
+
     /**
      * Show the form for creating a new resource.
      *
@@ -74,8 +105,17 @@ class ClientUserController extends Controller
 
         ]);
 
+        $users_id = DB::table('tb_mf_client_users')
+        ->where('username', '=', $request->username)
+        ->get();
+
+        foreach($users_id as $user_id){
+            $userid = $user_id->user_id;
+        }
+
         DB::table('tb_mf_jeep_personnel')
         ->insert([
+            'user_id'           =>  $userid,
             'client_id'         =>  $request->client_idtext,
             'firstname'         =>  $request->firstname,
             'middlename'        =>  $request->middlename,
@@ -132,4 +172,6 @@ class ClientUserController extends Controller
     {
         //
     }
+
+
 }

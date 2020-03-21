@@ -71,7 +71,16 @@
                 <h4>Personnels</h4>
             </div>
             <div class="card-header">
-                
+
+                <div class="float-left p-3">
+                    <div class="input-group mb-1">
+                        <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
+                        </div>
+                        <input type="text" class="form-control" id="search-employee-name" placeholder="Search Employee Name.." aria-label="search" aria-describedby="basic-addon1">
+                    </div>
+                </div>
+
                 <div class="float-right p-3">
                     <select name="company-list" id="companylist" class="form-control">
                         <option value="">All</option>
@@ -79,7 +88,6 @@
                             <option id="{{$list->client_name}}" value="{{$list->client_id}}">{{$list->client_name}}</option>
                         @endforeach    
                     </select>
-
                 </div>
             
             </div>
@@ -145,21 +153,29 @@
             });
         });
     });
+    $('#search-employee-name').on('keyup',function(){
+            $value = $(this).val();
+            $client_name = $('#companylist').children(':selected').attr('id');
+            console.log($client_name);
+            console.log($value);
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('jeeps/search-driver')}}',
+                data:{  'search':$value,
+                        'client_name':$client_name
+                        },
+                success:function(data){
+                    $('tbody').html(data);
+                },
+                error: function(data) {console.log("error!!");}
+            });
+        });
+    
+</script>
+<script>
+    
 </script>
 <script type="text/javascript">
-    $('#search-card').on('keyup',function(){
-        $value=$(this).val();
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('search-card')}}',
-            data:{'search':$value},
-            success:function(data){
-                $('tbody').html(data);
-            }
-        });
-    })
-    </script>
-    <script type="text/javascript">
-        $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
-    </script>
+    $.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script>
 @endsection

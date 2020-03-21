@@ -107,32 +107,65 @@ class DriverListController extends Controller
         //
     }
 
+    public function search(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output="";
+            $driverlists = DB::table('tb_mf_jeep_personnel')
+            ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep_personnel.client_id')
+            ->join('tb_mf_position', 'tb_mf_jeep_personnel.position_id', '=', 'tb_mf_position.id')
+            ->where('tb_mf_jeep_personnel.fullname', 'LIKE', '%'.$request->search.'%')
+            ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->client_name.'%')
+            ->where('tb_mf_client.is_archived','=',0)
+            ->paginate(10);
+            
+            if($driverlists)
+            {
+                foreach ($driverlists as $key => $driverList) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$driverList->rfid_number.'</td>'.
+                    '<td class="left">'.$driverList->client_name.'</td>'.
+                    '<td class="left">'.$driverList->fullname.'</td>'.
+                    '<td class="left">'.$driverList->position.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+                
+        }
+    }
+
+
     public function combosearch(Request $request)
     {
         if($request->ajax())
-    {
-        $output="";
-        $driverlists = DB::table('tb_mf_jeep_personnel')
-        ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep_personnel.client_id')
-        ->join('tb_mf_position', 'tb_mf_jeep_personnel.position_id', '=', 'tb_mf_position.id')
-        ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
-        ->where('tb_mf_client.is_archived','=',0)
-        ->paginate(10);
-        
-        if($driverlists)
         {
-            foreach ($driverlists as $key => $driverList) {
-                $output.='<tr>'.
-                '<td class="center" id="ref"></td>'.
-                '<td class="left">'.$driverList->rfid_number.'</td>'.
-                '<td class="left">'.$driverList->client_name.'</td>'.
-                '<td class="left">'.$driverList->fullname.'</td>'.
-                '<td class="left">'.$driverList->position.'</td>'.
-                '</tr>';
-        } 
-            return Response($output);
-        }
+            $output="";
+            $driverlists = DB::table('tb_mf_jeep_personnel')
+            ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep_personnel.client_id')
+            ->join('tb_mf_position', 'tb_mf_jeep_personnel.position_id', '=', 'tb_mf_position.id')
+            ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
+            ->where('tb_mf_client.is_archived','=',0)
+            ->paginate(10);
             
-    }
+            if($driverlists)
+            {
+                foreach ($driverlists as $key => $driverList) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$driverList->rfid_number.'</td>'.
+                    '<td class="left">'.$driverList->client_name.'</td>'.
+                    '<td class="left">'.$driverList->fullname.'</td>'.
+                    '<td class="left">'.$driverList->position.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+                
+        }
     }
 }
