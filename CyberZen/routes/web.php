@@ -84,6 +84,11 @@ Route::prefix('company')->group(function(){
     Route::get('crm/company/clientjeeplist/{id}', ['as' => 'clientjeeplist.index', 'uses' => 'ClientJeepController@index']);
     Route::resource('clientjeeplist', 'ClientJeepController', ['except' => ['index']]);
     Route::patch('/client-jeep-archive', 'ClientJeepController@archive')->name('client-jeep-archive');
-    Route::get('/search-jeep','Client_UserAccountController@combosearch');
+    Route::get('/search-jeep','ClientJeepController@search');
+
+    Route::get('crm/company/clientpersonnel/{id}', ['as' => 'clientpersonnel.index', 'uses' => 'ClientPersonnelController@index']);
+    Route::resource('clientpersonnel', 'ClientPersonnelController', ['except' => ['index']]);
+    Route::patch('/client-personnel-archive', 'ClientPersonnelController@archive')->name('client-personnel-archive');
+    Route::get('/search-personnel','ClientPersonnelController@search');
 
 });

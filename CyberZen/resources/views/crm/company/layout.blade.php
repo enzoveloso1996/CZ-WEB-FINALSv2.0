@@ -111,13 +111,13 @@
                                 <a href="/company/crm/company/clientjeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Lists</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/driverlist/{{$user_id}}')
+                        @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/clientpersonnel/{{$user_id}}')
                             <li class="active">
-                                <a href="/company/crm/company/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Personnels Lists</a>
+                                <a href="/company/crm/company/clientpersonnel/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Personnels Lists</a>
                             </li>
                         @else
                             <li>
-                                <a href="/company/crm/company/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Personnels Lists</a>
+                                <a href="/company/crm/company/clientpersonnel/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Personnels Lists</a>
                             </li>
                         @endif
                         
