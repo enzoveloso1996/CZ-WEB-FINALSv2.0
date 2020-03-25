@@ -219,7 +219,8 @@ class Client_UserAccountController extends Controller
         DB::table('tb_mf_client_users_log')
         ->insert([
             'user_id'       =>  $request->addcurrent_user_id,
-            'actions'       => 'Add User "'.$request->username.'" for company_id '.$request->client_idtext.' by '.$request->addcurrent_user_id
+            'action_id'     =>  1,
+            'remarks'       => 'Add User "'.$request->username.'" for company_id '.$request->client_idtext.' by '.$request->addcurrent_user_id
         ]);
 
         return redirect("company/crm/company/clientuseraccount/$request->addcurrent_user_id");
@@ -287,7 +288,8 @@ class Client_UserAccountController extends Controller
         DB::table('tb_mf_client_users_log')
         ->insert([
             'user_id'       =>  $cur_user_id,
-            'actions'       => 'Edit User "'.$request->editusername.'" for company_id '.$request->editclient_idtext.' by '.$cur_user_id
+            'action_id'     =>  2,
+            'remarks'       => 'Edit User "'.$request->editusername.'" for company_id '.$request->editclient_idtext.' by '.$cur_user_id
         ]);
 
         return redirect("company/crm/company/clientuseraccount/$cur_user_id");
@@ -304,7 +306,8 @@ class Client_UserAccountController extends Controller
         DB::table('tb_mf_client_users_log')
         ->insert([
             'user_id'       =>  $request->delcurrent_user_id,
-            'actions'       => 'Archived User with user_id "'.$request->deluser_id.' " by '.$request->delcurrent_user_id
+            'action_id'     =>  3,
+            'remarks'       => 'Archived User with user_id "'.$request->deluser_id.' " by '.$request->delcurrent_user_id
         ]);
 
         return redirect("company/crm/company/clientuseraccount/$request->delcurrent_user_id");

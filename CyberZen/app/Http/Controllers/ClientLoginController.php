@@ -85,6 +85,10 @@ class ClientLoginController extends Controller
         //
     }
 
+    public function logout(Request $request){
+
+    }
+
     public function login(Request $request){
 
         $hashpw = DB::table('tb_mf_client_users')
@@ -101,7 +105,8 @@ class ClientLoginController extends Controller
                 DB::table('tb_mf_client_users_log')
                 ->insert([
                     'user_id'       =>  $user_id,
-                    'actions'       => 'Log In' 
+                    'action_id'     =>  4,
+                    'remarks'       => 'Log In' 
                 ]);
                 return redirect()->route('clientdashboard.index', ['id' => $user_id]);
             }

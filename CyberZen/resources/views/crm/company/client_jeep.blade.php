@@ -110,11 +110,12 @@
                                                 
                                                 <div class="col-md-3">
                                                     <!-- Edit Button -->
-                                                    <form action="" method="post">
+                                                    <form action="{{Route('clientjeeplist.update', $user_id)}}" method="post">
                                                         @csrf
                                                         @method('PATCH')
                                                         <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
-                                                            data-editplatenumber = "{{$jeeplist->plate_number}}">
+                                                        data-editjeep_id="{{$jeeplist->jeep_id}}"    
+                                                        data-editplatenumber = "{{$jeeplist->plate_number}}">
                                                             <i class="fa fa-edit" data-toggle="tooltip" title="Edit"></i>
                                                         </button>
                                                         <div class="modal fade" id="editModal" role="document">
@@ -131,6 +132,7 @@
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
                                                                                 <input type="hidden" name="edituser_id" id="edituser_id" value={{$user_id}}>
+                                                                                <input type="hidden" name="editjeep_id" id="editjeep_id">
                                                                                 <div class="input-group mb-3">
                                                                                     <div class="input-group-prepend">
                                                                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
@@ -150,6 +152,8 @@
                                                                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Plate Number</span>
                                                                                     </div>
                                                                                     <input type="text" name="editplatenumber" id="editplatenumber_id" placeholder="Plate Number" class="form-control">                           
+                                                                                    <input type="hidden" name="editoldplatenumber" id="editoldplatenumber_id" class="form-control">                           
+
                                                                                 </div>    
                                                                             </div>
                                                                         </div>
@@ -182,16 +186,18 @@
                                                             
                                                                 <!-- Modal content-->
                                                                 <div class="modal-content">
-                                                                    <input type="hidden" name="deluser_id" id="deluser_id" value={{$user_id}}>
+                                                                    <input type="hidden" name="deluser_id" id="deluser_id" value="{{$user_id}}">
+                                                                    <input type="hidden" name="delplatenumber" id="delplatenumber_id">
+                                                                    <input type="hidden" name="delclient_id" id="delclient_id">
 
                                                                     <div class="modal-header">
                                                                         <button type="button" class="close" data-dismiss="modal">&times;</button>
                                                                         <h4 class="modal-title">Delete Ejeep</h4>
                                                                     </div>
-                                                                    <input type="text" name="deljeep_id" id="deljeep_id" value="{{$jeeplist->jeep_id}}">                                                                
+                                                                    <input type="hidden" name="deljeep_id" id="deljeep_id">                                                                
                                                                     <div class="form-group">
                                                                         <div class="modal-body">
-                                                                            Are you sure to Delete?
+                                                                            Are you sure to Delete Ejeep with Plate Number {{$jeeplist->plate_number}}?
                                                                             
                                                                         </div>
                                                                         <div class="modal-footer"> 
@@ -340,12 +346,17 @@
             $('#editModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget);
                 var platenumber = button.data('editplatenumber');
+                var jeep_id = button.data('editjeep_id');
                 var user_id = $('#edituser_id').val();
                 console.log(platenumber);
                 console.log(user_id);
+                console.log(jeep_id);
 
                 var modal = $(this);
-                $('#editplatenumber_id').val(platenumber);    
+                $('#editplatenumber_id').val(platenumber);  
+                $('#editoldplatenumber_id').val(platenumber);  
+                $('#editjeep_id').val(jeep_id);  
+                  
                 modal.find('.modal-title').text('Are you sure to Edit ejeep with plate number ' + platenumber +'?');
             });
     
@@ -354,20 +365,25 @@
                 var delplatenumber = button.data('delplatenumber'); 
                 var deluser_id = $('#deluser_id').val();
                 var deljeep_id = button.data('deljeep_id');
+                var delclient_id = button.data('delclient_id'); 
             
                 console.log(delplatenumber);
+                console.log(delclient_id);
                 console.log(deluser_id);
                 console.log(deljeep_id);
+               
+
+                var modal = $(this);
+
                 $('#deljeep_id').val(deljeep_id);
+                $('#delplatenumber_id').val(delplatenumber);
+                $('#delclient_id').val(delclient_id);
+                
                 modal.find('.modal-body').text('Are you sure to delete EJeep with Plate number ' + delplatenumber +'?');
          
             });
     
         });
     </script>
-    <script>
-        $(document).ready(function(){
-
-        })
-    </script>
+   
 @endsection

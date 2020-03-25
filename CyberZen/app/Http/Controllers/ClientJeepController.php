@@ -33,11 +33,13 @@ class ClientJeepController extends Controller
         ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
         ->where('tb_mf_client.is_archived','=',0)
         ->where('tb_mf_client.client_id','=',$client_id)
+        ->where("tb_mf_jeep.is_archived","=","0")
         ->paginate(5);
 
         $jeepcount = DB::table('tb_mf_jeep')
         ->select(DB::raw('COUNT(plate_number) as count'))
         ->where('client_id','=',$client_id)
+        ->where("is_archived","=","0")
         ->get()->toarray();
        
         $jeepcount = array_column($jeepcount, 'count');
@@ -100,6 +102,14 @@ class ClientJeepController extends Controller
             'client_id'     =>  $request->client_idtext,
             'plate_number'  =>  $request->platenumber
         ]);
+
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $request->adduser_id,
+            'action_id'     =>  1,
+            'remarks'       => 'Add Ejeep with Plate Number "'.$request->platenumber.' " by '.$request->adduser_id
+        ]);
+
         return redirect("company/crm/company/clientjeeplist/$request->adduser_id");
     }
 
@@ -132,9 +142,23 @@ class ClientJeepController extends Controller
      * @param  \App\ClientJeep  $clientJeep
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClientJeep $clientJeep)
+    public function update(Request $request, $user_id)
     {
-        //
+        DB::table('tb_mf_jeep')
+        ->where('jeep_id', '=', $request->editjeep_id)
+        ->update([
+            'client_id'     =>  $request->editclient_idtext,
+            'plate_number'  =>  $request->editplatenumber
+        ]);
+
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $request->edituser_id,
+            'action_id'     =>  2,
+            'remarks'       => 'edit Ejeep with Plate Number "'.$request->editoldplatenumber.' " to '.$request->editplatenumber
+        ]);
+
+        return redirect("company/crm/company/clientjeeplist/$request->edituser_id");
     }
 
     /**
@@ -150,9 +174,17 @@ class ClientJeepController extends Controller
 
     public function archive(Request $request){
         DB::table('tb_mf_jeep')
-        ->where('jeep_id', $request->jeep_id)
+        ->where('jeep_id', $request->deljeep_id)
         ->update(['is_archived' => 1]);
 
-        return redirect('company/clientjeeplist');
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $request->deluser_id,
+            'action_id'     =>  3,
+            'remarks'       => 'Archived Ejeep with Plate Number "'.$request->delplatenumber.' " by '.$request->deluser_id
+        ]);
+
+
+        return redirect("company/crm/company/clientjeeplist/$request->deluser_id");
     }
 }
