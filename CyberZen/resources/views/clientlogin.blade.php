@@ -1,114 +1,89 @@
 
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
-            <!-- bootstrap & fontawesome -->
-		<link rel="stylesheet" href="{{  asset('css/bootstrap.min.css')  }}" />
-		<link rel="stylesheet" href="{{  asset('font-awesome/4.5.0/css/font-awesome.min.css')   }}" />
-
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
-
-        <!-- jQuery library -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
-        <!-- Latest compiled JavaScript -->
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-		<!-- page specific plugin styles -->
-
-		<!-- text fonts -->
-		<link rel="stylesheet" href="{{ asset('css/fonts.googleapis.com.css') }}" />
-
-		<!-- ace styles -->
-		<link rel="stylesheet" href="{{ asset('css/ace.min.css') }}" class="ace-main-stylesheet" id="main-ace-style" />
-
-		<!--[if lte IE 9]>
-			<link rel="stylesheet" href="assets/css/ace-part2.min.css" class="ace-main-stylesheet" />
-		<![endif]-->
-		<link rel="stylesheet" href="{{ asset('css/ace-skins.min.css') }}" />
-		<link rel="stylesheet" href="{{ asset('css/ace-rtl.min.css') }}" />
-
-		<!--[if lte IE 9]>
-		  <link rel="stylesheet" href="assets/css/ace-ie.min.css" />
-		<![endif]-->
-
-		<!-- inline styles related to this page -->
-
-		<!-- ace settings handler -->
-		<!-- basic scripts -->
-
-		<!--[if !IE]> -->
-		<script src="{{ asset('js/jquery-2.1.4.min.js') }}"></script>
-
-		<!-- <![endif]-->
-
-		<!--[if IE]>
-<script src="assets/js/jquery-1.11.3.min.js"></script>
-<![endif]-->
-		<script type="text/javascript">
-			if('ontouchstart' in document.documentElement) document.write("<script src='{{ asset('js/jquery.mobile.custom.min.js') }}'>"+"<"+"/script>");
-		</script>
-		<script src="{{ asset('js/bootstrap.min.js') }}"></script>
-
-		<!-- page specific plugin scripts -->
-
-		<!--[if lte IE 8]>
-		  <script src="assets/js/excanvas.min.js"></script>
-		<![endif]-->
-		<script src="{{ asset('js/jquery-ui.custom.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.ui.touch-punch.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.easypiechart.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.sparkline.index.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.flot.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.flot.pie.min.js') }}"></script>
-		<script src="{{ asset('js/jquery.flot.resize.min.js') }}"></script>
-
-		<!-- ace scripts -->
-		<script src="{{ asset('js/ace-elements.min.js') }}"></script>
-		<script src="{{ asset('js/ace.min.js') }}"></script>
-
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Login</title>
-
+	<title>Login</title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <link href="{{ asset('log/images/icons/favicon.ico') }}" rel="stylesheet">
+    <link href="{{ asset('log/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('log/fonts/font-awesome-4.7.0/css/font-awesome.min.cs') }}" rel="stylesheet">
+    <link href="{{ asset('log/fonts/Linearicons-Free-v1.0.0/icon-font.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('log/vendor/animate/animate.csss') }}" rel="stylesheet">
+    <link href="{{ asset('log/vendor/css-hamburgers/hamburgers.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('log/vendor/animsition/css/animsition.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('log/vendor/select2/select2.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('log/vendor/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
+	<link href="{{ asset('log/css/util.css') }}" rel="stylesheet">
+    <link href="{{ asset('log/css/main.css') }}" rel="stylesheet">
 </head>
-	<body class="">
+<body>
 	
-		<div class="container">
-			<div class="card w-50 ml-auto mr-auto"  style="margin-top:100px;">
-				<div class="card-header text-center">
-					Sign IN
-				</div>
-				<div class="card-body">
-					<form action="{{Route('client-login-check')}}" method="post">
-						@csrf
-						@method('GET')
-						<div class="form-group">
-							<div class="row m-3">
-								<label for="username">Username</label>
-								<input type="text" class="form-control" name="username" id="username_id">
-							</div>
-							<div class="row m-3">
-								<label for="password">Password</label>
-								<input type="password" class="form-control" name="password" id="password_id">
-							</div>
-							<div class="row m-3">
-								<input type="submit" class="btn btn-lg btn-primary btn-block" value="login">
-							</div>
-							@if (session('status'))
-							<div class="alert alert-danger">
-								{{ session('status') }}
-							</div>
-						@endif
-						</div>	
-					</form>
-				</div>
+	<div class="limiter">
+		<div class="container-login100">
+			<div class="wrap-login100 p-t-50 p-b-90">
+				<form action="{{Route('client-login-check')}}" method="post" class="login100-form validate-form flex-sb flex-w">
+					@csrf
+					@method('GET')
+				
+					<span class="login100-form-title p-b-51">
+						lOGIN
+					</span>
+					
+					<div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
+						<input class="input100" type="text" name="username" placeholder="Username">
+						<span class="focus-input100"></span>
+					</div>
+					
+					
+					<div class="wrap-input100 validate-input m-b-16" data-validate = "Password is required">
+						<input class="input100" type="password" name="password" placeholder="Password">
+						<span class="focus-input100"></span>
+					</div>
+					
+					<div class="flex-sb-m w-full p-t-3 p-b-24">
+						{{-- <div class="contact100-form-checkbox">
+							<input class="input-checkbox100" id="ckb1" type="checkbox" name="remember-me">
+							<label class="label-checkbox100" for="ckb1">
+								Remember me
+							</label>
+						</div> --}}
+						<div>
+							<a href="#" class="txt1">
+								Forgot password?
+							</a>
+						</div>
+					</div>
+
+					<div class="container-login100-form-btn m-t-17">
+						<button class="login100-form-btn">
+							Login
+						</button>
+					</div>
+					@if (session('status'))
+					<div class="alert alert-danger">
+						{{ session('status') }}
+					</div>
+					@endif
+				</form>
 			</div>
 		</div>
+	</div>
+	
 
-
-
-
-	</body>
+	<div id="dropDownSelect1"></div>
+    <script type="text/javascript" src="{{ asset('log/vendor/jquery/jquery-3.2.1.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/animsition/js/animsition.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/bootstrap/js/popper.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/bootstrap/js/bootstrap.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/select2/select2.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/daterangepicker/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/daterangepicker/daterangepicker.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/vendor/countdowntime/countdowntime.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('log/js/main.js') }}"></script>
+</body>
 </html>
