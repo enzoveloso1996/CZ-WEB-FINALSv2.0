@@ -50,6 +50,33 @@ class ClientJeepController extends Controller
                             
     }
 
+    public function search(Request $request)
+    {
+        if($request->ajax())
+        {
+            $output="";
+
+            $jeeplists = DB::table('tb_mf_jeep')
+            ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+            ->where('tb_mf_client.is_archived','=',0)
+            ->where('tb_mf_client.client_id','=',$client_id)
+            ->paginate(5);
+   
+                foreach ($tabledtl as $key => $tabledtll) 
+                {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$tabledtll->fullname.'</td>'.
+                    '<td class="center">'.$tabledtll->client_name.'</td>'.
+                    '<td class="left">'.$tabledtll->position.'</td>'.
+                    '<td class="left">'.$tabledtll->username.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            
+            
+        }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -70,10 +97,10 @@ class ClientJeepController extends Controller
     {
         DB::table('tb_mf_jeep')
         ->insert([
-            'client_id'     =>  $request->client_id,
+            'client_id'     =>  $request->client_idtext,
             'plate_number'  =>  $request->platenumber
         ]);
-        return redirect('company/clientjeeplist');
+        return redirect("company/crm/company/clientjeeplist/$request->adduser_id");
     }
 
     /**
