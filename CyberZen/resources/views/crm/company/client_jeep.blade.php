@@ -177,7 +177,7 @@
                                                             <i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
                                                         </button>
                                                         
-                                                        <div class="modal fade" id="deleteModal" role="dialog">
+                                                        <div class="modal fade" id="deleteModal" role="document">
                                                             <div class="modal-dialog modal-md">
                                                             
                                                                 <!-- Modal content-->
@@ -349,11 +349,6 @@
                 modal.find('.modal-title').text('Are you sure to Edit ejeep with plate number ' + platenumber +'?');
             });
     
-    
-        });
-    </script>
-    <script>
-        $(document).ready(function(){
             $('#deleteModal').on('show.bs.modal', function (event) {
                 var button = $(event.relatedTarget); // Button that triggered the modal
                 var delplatenumber = button.data('delplatenumber'); 
@@ -367,6 +362,11 @@
                 modal.find('.modal-body').text('Are you sure to delete EJeep with Plate number ' + delplatenumber +'?');
          
             });
+    
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
 
         })
     </script>
