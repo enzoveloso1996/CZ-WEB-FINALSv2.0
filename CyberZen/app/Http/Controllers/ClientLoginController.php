@@ -16,7 +16,7 @@ class ClientLoginController extends Controller
      */
     public function index()
     {
-        return view('clientlogin');
+        return view('crm/company/clientlogin');
     }
 
     /**
@@ -85,8 +85,14 @@ class ClientLoginController extends Controller
         //
     }
 
-    public function logout(Request $request){
-
+    public function logout($user_id){
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $user_id,
+            'action_id'     =>  4,
+            'remarks'       => 'Log Out' 
+        ]);
+        return redirect('/clientlogin');
     }
 
     public function login(Request $request){

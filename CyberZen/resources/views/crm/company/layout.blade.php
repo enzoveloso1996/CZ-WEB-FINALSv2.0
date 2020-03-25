@@ -81,6 +81,7 @@
             <nav class="navbar navbar-expand-sm navbar-default">
                 <div id="main-menu" class="main-menu collapse navbar-collapse">
                     <ul class="nav navbar-nav">
+                        
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/clientdashboard/{{$user_id}}')
                             <li class="active">
                                 <a href="/company/crm/company/clientdashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
@@ -129,13 +130,14 @@
                             <li>
                                 <a href="widgets.html"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
                             </li>
-                        @endif
+                        @endif 
+                        
                         <li>
-                            <a href="/clientlogin"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
+                            <a href="{{Route('client-logout-check', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
                         @if(Request::path() == '/widgets')
                         <li>
-                            <a href="/clientlogin"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
+                            <a href="{{Route('client-logout-check', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
                         @endif
                     </ul>
@@ -143,7 +145,7 @@
             </nav>
         </aside>
         <!-- /#left-panel -->
-
+        
         <div id="right-panel" class="right-panel">
             
             <!-- Header-->

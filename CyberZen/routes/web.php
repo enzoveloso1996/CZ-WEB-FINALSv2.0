@@ -17,7 +17,9 @@ Route::get('/', function () {
 Route::get('/clientlogin', 'ClientLoginController@index');
 Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@login')->name('client-login-check');
-Route::get('client-logout-check', 'ClientLoginController@logout')->name('client-logout-check');
+// Route::get('client-logout-check', 'ClientLoginController@logout')->name('client-logout-check');
+Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@logout']);
+
 
 Route::get('/login', function () {
     return view('cms/login');
