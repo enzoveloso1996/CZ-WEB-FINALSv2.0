@@ -62,17 +62,17 @@
                             <div class="float-left p-3">
                                 <div class="input-group">
                                    
-                                    <form action="" method="post">
-                                    <select name="search-position" id="search-position_id">
+                                    
+                                    {{-- <select name="search-position" id="search-position_id">
                                         <option id="0" value="{{$user_id}}">ALL</option>
                                         @foreach ($position as $pos)
                                         <option id="{{$pos->id}}" value="{{$user_id}}">
                                             {{$pos->position}}
                                         </option>
                                         @endforeach
-                                    </select>
+                                    </select> --}}
                                     
-                                    </form>
+                                   
                                 </div>
                             </div>
                             <div class="float-right p-3">

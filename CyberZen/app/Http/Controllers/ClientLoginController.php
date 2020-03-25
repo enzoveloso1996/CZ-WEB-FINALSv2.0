@@ -98,6 +98,11 @@ class ClientLoginController extends Controller
                 $user_id = $hashpword->user_id;
             }
             if(Hash::check($request->password, $hashpw)){
+                DB::table('tb_mf_client_users_log')
+                ->insert([
+                    'user_id'       =>  $user_id,
+                    'actions'       => 'Log In' 
+                ]);
                 return redirect()->route('clientdashboard.index', ['id' => $user_id]);
             }
             else{

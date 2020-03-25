@@ -14,7 +14,7 @@ class ClientJeepController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index($id)
-    {
+    { 
         $accounts = DB::table('tb_mf_client')
         ->join('tb_mf_client_users', 'tb_mf_client_users.client_id', '=', 'tb_mf_client.client_id')
         ->where('tb_mf_client_users.user_id', '=', $id)
@@ -43,7 +43,7 @@ class ClientJeepController extends Controller
         $jeepcount = array_column($jeepcount, 'count');
 
         
-        return view('crm/company/client_jeep')->with('user_id', $id)
+        return view('crm/company/client_jeep')->with('user_id', $id)->with('client_name', $client_name)
                             ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
                             ->with('clientname', $clientname)
                             ->with('jeeplists', $jeeplists);

@@ -69,6 +69,8 @@ class Client_UserAccountController extends Controller
         ->wherein('id',$position)
         ->get();      
             
+        
+
         return view('crm/company/client_useraccount')->with('user_id', $id)->with('client_name', $client_name)
             ->with('userslist', $users)
             ->with('clientname', $clientname)
@@ -110,6 +112,7 @@ class Client_UserAccountController extends Controller
                 ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
                 ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
                 ->where("tb_mf_client.is_archived", "=", "0")
+                ->where("tb_mf_client_users.is_archived", "=", "0")
                 ->where("tb_mf_client_users.client_id", "=",$client_id)
                 ->wherein("tb_mf_client_users.position_id", $position)
                 ->get();            
@@ -118,11 +121,11 @@ class Client_UserAccountController extends Controller
                 ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
                 ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
                 ->where("tb_mf_client.is_archived", "=", "0")
-                ->wherein("tb_mf_client_users.position_id", $position)
-                ->where("tb_mf_client_users.user_id", '=', $request->user_id)
+                ->where("tb_mf_client_users.is_archived", "=", "0")
+                ->where("tb_mf_client_users.user_id", '=', $id)
                 ->where("tb_mf_client_users.client_id", "=",$client_id)
                 ->get();
-                }
+                } 
             
             // if($personnellists)
             // {
@@ -180,7 +183,7 @@ class Client_UserAccountController extends Controller
     public function store(Request $request)
     {
         $pass = Hash::make($request->password);
-            
+
         DB::table('tb_mf_client_users')
         ->insert([
             'client_id'         =>  $request->client_idtext,
@@ -191,8 +194,8 @@ class Client_UserAccountController extends Controller
             'position_id'       =>  $request->position_idtext,
             'username'          =>  $request->username,
             'password'          =>  $pass
-
         ]);
+
         $users_id = DB::table('tb_mf_client_users')
         ->where('username', '=', $request->username)
         ->get();
@@ -211,6 +214,12 @@ class Client_UserAccountController extends Controller
             'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
             'position_id'       =>  $request->position_idtext,
             'is_archived'       =>  "0"
+        ]);
+
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $request->addcurrent_user_id,
+            'actions'       => 'Add User "'.$request->username.'" for company_id '.$request->client_idtext.' by '.$request->addcurrent_user_id
         ]);
 
         return redirect("company/crm/company/clientuseraccount/$request->addcurrent_user_id");
@@ -275,6 +284,12 @@ class Client_UserAccountController extends Controller
             'is_archived'       =>  "0"
         ]);
 
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $cur_user_id,
+            'actions'       => 'Edit User "'.$request->editusername.'" for company_id '.$request->editclient_idtext.' by '.$cur_user_id
+        ]);
+
         return redirect("company/crm/company/clientuseraccount/$cur_user_id");
     }
     public function archive(Request $request){
@@ -286,8 +301,14 @@ class Client_UserAccountController extends Controller
         ->where('user_id', $request->deluser_id)
         ->update(['is_archived' => 1]);
 
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $request->delcurrent_user_id,
+            'actions'       => 'Archived User with user_id "'.$request->deluser_id.' " by '.$request->delcurrent_user_id
+        ]);
+
         return redirect("company/crm/company/clientuseraccount/$request->delcurrent_user_id");
-    }
+    } 
 
     /**
      * Remove the specified resource from storage.
