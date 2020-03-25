@@ -15,6 +15,10 @@ Route::get('/', function () {
     return view('crm/welcome');
 });
 
+Route::get('/login', function () {
+    return view('cms/login');
+});
+
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 Route::resource('sales', 'SalesController');
 
