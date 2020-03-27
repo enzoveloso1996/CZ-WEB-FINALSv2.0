@@ -20,7 +20,7 @@ Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('cli
 Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@clientlogout']);
 Route::get('admin-login-check', 'ClientLoginController@adminlogin')->name('admin-login-check');
 Route::get('adminlogout/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
-Route::get('admin-register-index/{id}', 'ClientLoginController@register_index')->name('admin-register-index');
+Route::get('admin-register-index', 'ClientLoginController@register_index')->name('admin-register-index');
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
 

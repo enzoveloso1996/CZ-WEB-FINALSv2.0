@@ -7,6 +7,7 @@
     @endforeach
     @foreach ($cardsales as $cardsale)
     @endforeach
+   
     <div class="row">
         <div class="col-lg-4 col-md-6">
             <div class="card">

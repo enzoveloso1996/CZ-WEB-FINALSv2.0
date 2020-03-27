@@ -131,7 +131,7 @@ class ClientLoginController extends Controller
 
 
     public function adminlogout($user_id){
-        DB::table('tb_mf_users_log')
+        DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $user_id,
             'action_id'     =>  4,
@@ -142,7 +142,7 @@ class ClientLoginController extends Controller
 
     public function adminlogin(Request $request){
 
-        $hashpw = DB::table('tb_mf_users')
+        $hashpw = DB::table('tb_users')
         ->where('username', '=', $request->username)
         ->get();
         
@@ -153,13 +153,13 @@ class ClientLoginController extends Controller
                 $user_id = $hashpword->user_id;
             }
             if(Hash::check($request->password, $hashpw)){
-                DB::table('tb_mf_users_log')
+                DB::table('tb_users_log')
                 ->insert([
                     'user_id'       =>  $user_id,
                     'action_id'     =>  4,
                     'remarks'       => 'Log In' 
                 ]);
-                return redirect()->route('dashboard.index', ['id' => $user_id]);
+                return redirect()->route('dashboard', ['user_id' => $user_id]);
             }
             else{
                
@@ -179,7 +179,7 @@ class ClientLoginController extends Controller
     {
         $access_level = DB::table('tb_access_level')->get();
         
-        return view("/cms/register/$user_id")->with('access_levels', $access_level);
+        return view("/cms/register")->with('access_levels', $access_level)->with('user_id', $user_id);
     }
 
     public function register(Request $request)
