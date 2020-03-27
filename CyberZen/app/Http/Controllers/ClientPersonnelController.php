@@ -32,8 +32,14 @@ class ClientPersonnelController extends Controller
         $personnels = DB::table('tb_mf_jeep_personnel')
         ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep_personnel.client_id')
         ->join('tb_mf_position', 'tb_mf_position.id', '=', 'tb_mf_jeep_personnel.position_id')
+        ->select(
+           'tb_mf_jeep_personnel.id','tb_mf_jeep_personnel.firstname','tb_mf_jeep_personnel.middlename','tb_mf_jeep_personnel.lastname',
+           'tb_mf_jeep_personnel.position_id','tb_mf_jeep_personnel.client_id','tb_mf_jeep_personnel.rfid_number','tb_mf_jeep_personnel.fullname',
+           'tb_mf_jeep_personnel.user_id','tb_mf_position.position','tb_mf_client.client_name'
+        )
         ->where("tb_mf_jeep_personnel.client_id", "=",$client_id)
-        ->get();
+        ->orderby('tb_mf_jeep_personnel.id', 'ASC')
+        ->paginate(10);
 
         $position = DB::table('tb_mf_position')
         ->get();      
@@ -62,7 +68,19 @@ class ClientPersonnelController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        DB::table('tb_mf_jeep_personnel')
+        ->insert([
+            'rfid_number'       =>  $request->rfid_number,
+            'firstname'         =>  $request->firstname,
+            'middlename'        =>  $request->middlename,
+            'lastname'          =>  $request->lastname,
+            'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
+            'position_id'       =>  $request->position_idtext,
+            'client_id'         =>  $request->client_idtext,
+            'is_archived'       =>  0
+        ]);
+
+        return redirect("company/crm/company/clientpersonnel/$request->addcurrent_user_id");
     }
 
     /**
@@ -94,10 +112,43 @@ class ClientPersonnelController extends Controller
      * @param  \App\ClientPersonnel  $clientPersonnel
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ClientPersonnel $clientPersonnel)
+    public function update(Request $request, $user_id)
     {
-        //
+        DB::table('tb_mf_jeep_personnel')
+        ->where('id', '=', $request->editpersonnel_id)
+        ->update([
+            'rfid_number'       =>  $request->editrfid_number,
+            'firstname'         =>  $request->editfirstname,
+            'middlename'        =>  $request->editmiddlename,
+            'lastname'          =>  $request->editlastname,
+            'fullname'          =>  $request->editfirstname.' '.$request->editmiddlename.' '.$request->editlastname,
+            'position_id'       =>  $request->editposition_idtext,
+            'client_id'         =>  $request->editclient_idtext,
+            
+        ]);
+
+        return redirect("company/crm/company/clientpersonnel/$request->editcurrent_user_id");
     }
+
+    public function archive(Request $request){
+        DB::table('tb_mf_client_users')
+        ->where('user_id', $request->deluser_id)
+        ->update(['is_archived' => 1]);
+
+        DB::table('tb_mf_jeep_personnel')
+        ->where('id', $request->delpersonnel_id)
+        ->update(['is_archived' => 1]);
+
+        DB::table('tb_mf_client_users_log')
+        ->insert([
+            'user_id'       =>  $request->delcurrent_user_id,
+            'action_id'     =>  3,
+            'remarks'       => 'Archived User with user_id "'.$request->deluser_id.' " by '.$request->delcurrent_user_id
+        ]);
+
+        return redirect("company/crm/company/clientpersonnel/$request->delcurrent_user_id");
+    } 
+
 
     /**
      * Remove the specified resource from storage.

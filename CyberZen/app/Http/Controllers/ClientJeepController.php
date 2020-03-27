@@ -34,7 +34,8 @@ class ClientJeepController extends Controller
         ->where('tb_mf_client.is_archived','=',0)
         ->where('tb_mf_client.client_id','=',$client_id)
         ->where("tb_mf_jeep.is_archived","=","0")
-        ->paginate(5);
+        ->orderby('tb_mf_jeep.jeep_id', 'ASC')
+        ->paginate(10);
 
         $jeepcount = DB::table('tb_mf_jeep')
         ->select(DB::raw('COUNT(plate_number) as count'))

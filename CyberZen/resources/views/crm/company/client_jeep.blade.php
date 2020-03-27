@@ -218,6 +218,7 @@
                                     {{$jeeplists->links()}}
                                 </tbody>
                             </table>
+                            {{$jeeplists->links()}}
                         </div>
                     </div>
 

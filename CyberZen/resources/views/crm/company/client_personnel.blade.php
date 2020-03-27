@@ -110,12 +110,14 @@
                                                 {{-- This is for edit button --}}
 
                                                     <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
-                                                        data-edituser_id = "{{$personnel->user_id}}"
                                                         data-editlastname="{{$personnel->lastname}}"
                                                         data-editfirstname="{{$personnel->firstname}}"
                                                         data-editmiddlename="{{$personnel->middlename}}"
                                                         data-editposition_id="{{$personnel->position_id}}"
                                                         data-editclient_id ="{{$personnel->client_id}}"
+                                                        data-editrfidnumber ="{{$personnel->rfid_number}}"
+                                                        data-editfullname ="{{$personnel->fullname}}"
+                                                        data-editpersonnel_id ="{{$personnel->id}}"
                                                         >
                                                         <i class="fa fa-edit" data-toggle="tooltip" title="Edit"></i>
                                                     </button>
@@ -129,14 +131,67 @@
                                                                     <h4 class="modal-title">Update Employee Details</h4>
                                                                 </div>    
                                                                       
-                                                                <form action="" method="post">
+                                                                <form action="{{Route('clientpersonnel.update', $user_id)}}" method="post">
                                                                     @csrf
                                                                     @method('PATCH')
                                                                     <div class="form-group">
                                                                         <div class="modal-body">
                                                                             <div class="form-group">
-                                                                                <input type="hidden" name="edituser_id" id="edituser_id_">
-                                                                                    
+                                                                                <div class="input-group mb-3">
+                                                                                    <input type="hidden" name="editcurrent_user_id" id="editcurrent_user_id" value="{{$user_id}}">                                                                
+                                                                                    <input type="hidden" name="editpersonnel_id" id="editpersonnel_id">                                                                
+                                                                                                                        
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
+                                                                                    </div>
+                                                                                    <select class="form-control" name="editclientname" id="editclientname_id">                           
+                                                                                        @foreach ($clientname as $client)
+                                                                                        <option id="{{$client->client_id}}" value="{{$client->client_id}}" >
+                                                                                            {{$client->client_name}}
+                                                                                        </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <input type="hidden" name="editclient_idtext" id="editclient_id_" value="">
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">First Name</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editfirstname" id="editfirstname_id" placeholder="First Name" class="form-control">                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Middle Name</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editmiddlename" id="editmiddlename_id" placeholder="Middle Name" class="form-control">                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Last Name</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editlastname" id="editlastname_id" placeholder="Last Name" class="form-control">                                    
+                                                                                </div>    
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
+                                                                                    </div>
+                                                                                    <select class="form-control" name="editposition" id="editposition_id">
+                                                                                        <option id="0">SELECT POSITION</option>                                        
+                                                                                        @foreach ($position as $pos)
+                                                                                        <option id="{{$pos->id}}">
+                                                                                            {{$pos->position}}
+                                                                                        </option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                    <input type="hidden" name="editposition_idtext" id="editposition_id_" value="">
+                                                                                </div>    
+                                                
+                                                                                <div class="input-group mb-3">
+                                                                                    <div class="input-group-prepend">
+                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">RFID Number</span>
+                                                                                    </div>
+                                                                                    <input type="text" name="editrfid_number" id="editrfid_number_id" placeholder="RFID Number" class="form-control">                                 
+                                                                                </div>                                 
                                                                             </div>
                                                                         </div>
                                                                         <div class="modal-footer"> 
@@ -156,9 +211,9 @@
                                                 
                                                         
                                                     <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
-                                                       
                                                         data-delfullname="{{$personnel->fullname}}" 
-                                                        data-deluser_id="{{$personnel->user_id}}">
+                                                        data-deluser_id="{{$personnel->user_id}}" 
+                                                        data-delpersonnel_id="{{$personnel->id}}">
                                                         <i class="fa fa-trash" data-toggle="tooltip" title="Delete"></i>
                                                     </button>
                                                     
@@ -173,12 +228,13 @@
                                                                     <h4 class="modal-title">Delete Personnel</h4>
                                                                 </div>
                                                                 
-                                                                <form action="" method="post">
+                                                                <form action="{{Route('client-personnel-archive')}}" method="post">
                                                                     @csrf
                                                                     @method('PATCH')
                                                                     <div class="form-group">
-                                                                        <input type="hidden" name="delcurrent_user_id" id="delcurrent_user_id" value="{{$user_id}}">                                                                
-                                                                        <input type="hidden" name="deluser_id" id="deluser_id">                                                                
+                                                                        <input type="text" name="delcurrent_user_id" id="delcurrent_user_id" value="{{$user_id}}">                                                                
+                                                                        <input type="text" name="delpersonnel_id" id="delpersonnel_id">                                                                
+                                                                        <input type="text" name="deluser_id" id="deluser_id">                                                                
                                                                         
                                                                         <div class="modal-body">
                                                                             Are you sure to Delete?
@@ -204,9 +260,10 @@
 
 
                                     @endforeach
-
+                                {{$personnels->links()}}
                                 </tbody>
                             </table>
+                            {{$personnels->links()}}
                         </div>
                     </div>
                 </div>
@@ -229,9 +286,9 @@
                     <button type="button" class="close" data-dismiss="modal">&times;</button>
                     <h4 class="modal-title">Add Personnel</h4>
                 </div>
-                <form action="" method="post">
+                <form action="{{Route('clientpersonnel.store')}}" method="post">
                     @csrf
-                   
+                    
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">
@@ -241,8 +298,7 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Company</span>
                                     </div>
-                                    <select class="form-control" name="clientname" id="clientname_id">     
-                                        <option value="">SELECT COMPANY</option>                       
+                                    <select class="form-control" name="clientname" id="clientname_id">                           
                                         @foreach ($clientname as $client)
                                         <option id="{{$client->client_id}}" value="{{$client->client_id}}" >
                                             {{$client->client_name}}
@@ -255,29 +311,26 @@
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">First Name</span>
                                     </div>
-                                    <input type="text" name="firstname" id="firstname_id" placeholder="First Name" class="form-control">
-                                    
+                                    <input type="text" name="firstname" id="firstname_id" placeholder="First Name" class="form-control">                                    
                                 </div>    
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Middle Name</span>
                                     </div>
-                                    <input type="text" name="middlename" id="middlename_id" placeholder="Middle Name" class="form-control">
-                                    
+                                    <input type="text" name="middlename" id="middlename_id" placeholder="Middle Name" class="form-control">                                    
                                 </div>    
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Last Name</span>
                                     </div>
-                                    <input type="text" name="lastname" id="lastname_id" placeholder="Last Name" class="form-control">
-                                    
+                                    <input type="text" name="lastname" id="lastname_id" placeholder="Last Name" class="form-control">                                    
                                 </div>    
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Position</span>
                                     </div>
                                     <select class="form-control" name="position" id="position_id">
-                                        <option value="">SELECT POSITION</option>                                        
+                                        <option id="0">SELECT POSITION</option>                                        
                                         @foreach ($position as $pos)
                                         <option id="{{$pos->id}}">
                                             {{$pos->position}}
@@ -289,26 +342,10 @@
 
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Username</span>
+                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">RFID Number</span>
                                     </div>
-                                    <input type="text" name="username" id="username_id" placeholder="Username" class="form-control">
-                                 
-                                </div>    
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Password</span>
-                                    </div>
-                                    <input type="password" name="password" id="password_id" placeholder="Password" class="form-control">
-                                  
-                                </div>      
-                                {{-- <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">Retype Password</span>
-                                    </div>
-                                    <input type="password" name="password2" id="password_id2" placeholder="Retype Password" class="form-control">
-                                    
-                                </div>       --}}
-
+                                    <input type="text" name="rfid_number" id="rfid_number_id" placeholder="RFID Number" class="form-control">                                 
+                                </div>                                 
                             </div>
                         </div>
                         <div class="modal-footer"> 
@@ -402,15 +439,19 @@
         var middlename = button.data('editmiddlename');
         var position_id = button.data('editposition_id');
         var client_id = button.data('editclient_id');
-        var username = button.data('editusername');
-        
+        var rfidnumber = button.data('editrfidnumber');
+        var fullname = button.data('editfullname');
+        var personnel_id = button.data('editpersonnel_id');
+
         console.log(user_id);
         console.log(lastname);
         console.log(firstname);
         console.log(middlename);
         console.log(position_id);
         console.log(client_id);
-        console.log(username);
+        console.log(rfidnumber);
+        console.log(fullname);
+        console.log(personnel_id);
 
         var modal = $(this);
         console.log(modal);
@@ -426,12 +467,13 @@
             $('#editposition_id_').val(position_id);
             $("#editposition_id option[id="+position_id+"]").attr('selected', 'selected');
 
-            $('#editusername_id').val(username);
+            $('#editrfidnumber').val(rfidnumber);
+            $('#editpersonnel_id').val(personnel_id);
 
         });
         
         
-        modal.find('.modal-title').text('Are you sure to Edit ' + username +'?');
+        modal.find('.modal-title').text('Are you sure to Edit ' + fullname +'?');
         // modal.find('.modal-body').text('Are you sure to edit user for ' + username +'?');
         // modal.find('#editlastname').val(lastname);
         // modal.find('#editfirstname').val(firstname);
@@ -446,10 +488,12 @@
             var button = $(event.relatedTarget); // Button that triggered the modal
             var delfullname = button.data('delfullname'); 
             var deluser_id = button.data('deluser_id');
+            var delpersonnel_id = button.data('delpersonnel_id');
           
            
             console.log(delfullname);
             console.log(deluser_id);
+            console.log(delpersonnel_id);
 
             var modal = $(this);
             $(document).ready(function(){
@@ -457,7 +501,7 @@
              });
             modal.find('.modal-body').text('Are you sure to delete user for ' + delfullname +'?');
             modal.find('#deluser_id').val(deluser_id);
-
+            modal.find('#delpersonnel_id').val(delpersonnel_id);
         })
     </script>
     

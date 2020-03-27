@@ -48,7 +48,8 @@ class Client_UserAccountController extends Controller
             ->where("tb_mf_client_users.is_archived", "=", "0")
             ->where("tb_mf_client_users.client_id", "=",$client_id)
             ->wherein("tb_mf_client_users.position_id", $position)
-            ->get();            
+            ->orderby('tb_mf_client_users.user_id', 'ASC')
+            ->paginate(10);            
         } else {
             $users = DB::table('tb_mf_client_users')
             ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
@@ -57,7 +58,8 @@ class Client_UserAccountController extends Controller
             ->where("tb_mf_client_users.is_archived", "=", "0")
             ->where("tb_mf_client_users.user_id", '=', $id)
             ->where("tb_mf_client_users.client_id", "=",$client_id)
-            ->get();
+            ->orderby('tb_mf_client_users.user_id', 'ASC')
+            ->paginate(10);
             } 
 
         $clientname = DB::table('tb_mf_client')
@@ -199,22 +201,34 @@ class Client_UserAccountController extends Controller
         $users_id = DB::table('tb_mf_client_users')
         ->where('username', '=', $request->username)
         ->get();
+        
+        $personnels_id = DB::table('tb_mf_jeep_personnel')
+        ->where('firstname', '=', $request->firstname)
+        ->where('middlename', '=', $request->middlename)
+        ->where('lastname', '=', $request->lastname)
+        ->get();
 
         foreach($users_id as $user_id){
             $userid = $user_id->user_id;
         }
 
-        DB::table('tb_mf_jeep_personnel')
-        ->insert([
-            'user_id'           =>  $userid,
-            'client_id'         =>  $request->client_idtext,
-            'firstname'         =>  $request->firstname,
-            'middlename'        =>  $request->middlename,
-            'lastname'          =>  $request->lastname,
-            'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
-            'position_id'       =>  $request->position_idtext,
-            'is_archived'       =>  "0"
-        ]);
+        $personnelid = "";
+        foreach($personnels_id as $personnel_id){
+            $personnelid = $personnel_id->id;
+        }
+        if(!$personnelid){
+            DB::table('tb_mf_jeep_personnel')
+            ->insert([
+                'user_id'           =>  $userid,
+                'client_id'         =>  $request->client_idtext,
+                'firstname'         =>  $request->firstname,
+                'middlename'        =>  $request->middlename,
+                'lastname'          =>  $request->lastname,
+                'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
+                'position_id'       =>  $request->position_idtext,
+                'is_archived'       =>  "0"
+            ]);  
+        }
 
         DB::table('tb_mf_client_users_log')
         ->insert([
@@ -294,6 +308,7 @@ class Client_UserAccountController extends Controller
 
         return redirect("company/crm/company/clientuseraccount/$cur_user_id");
     }
+
     public function archive(Request $request){
         DB::table('tb_mf_client_users')
         ->where('user_id', $request->deluser_id)

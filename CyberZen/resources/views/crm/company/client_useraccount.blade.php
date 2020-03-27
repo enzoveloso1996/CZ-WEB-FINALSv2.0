@@ -268,9 +268,10 @@
 
 
                                     @endforeach
-
+                                    {{$userslist->links()}}
                                 </tbody>
                             </table>
+                            {{$userslist->links()}}
                         </div>
                     </div>
                 </div>
