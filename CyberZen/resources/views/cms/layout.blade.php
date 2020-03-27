@@ -76,6 +76,7 @@
         </style>
     </head>
     <body>
+        <?php $user_id = ""; ?>
         <!-- Left Panel -->
         <aside id="left-panel" class="left-panel">
             <nav class="navbar navbar-expand-sm navbar-default">
@@ -149,19 +150,19 @@
                         <li class="menu-title">Account</li><!-- /.menu-title -->
                         @if(Request::path() == '/widgets')
                             <li>
-                                <a href="widgets.html"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
+                                <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @else 
                             <li>
-                                <a href="widgets.html"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
+                                <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @endif
                         <li>
-                            <a href="widgets.html"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
+                            <a href="{{Route('admin-logout-check', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
                         @if(Request::path() == '/widgets')
                         <li>
-                            <a href="widgets.html"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
+                            <a href="{{Route('admin-logout-check', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
                         @endif
                     </ul>
