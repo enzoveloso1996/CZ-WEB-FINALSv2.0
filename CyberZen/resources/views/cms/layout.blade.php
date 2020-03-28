@@ -84,14 +84,15 @@
                     <ul class="nav navbar-nav">
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/dashboard')
                             <li class="active">
-                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-bar-chart-o"></i>Dashboard </a>
                             </li>
                         @else
                             <li>
-                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                                <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-bar-chart-o"></i>Dashboard </a>
                             </li>
                         @endif
-                        <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
+                        <li class="menu-title">E-Jeep</li>
+                        <!-- /.menu-title -->
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist')
                             <li class="active">
                                 <a href="/jeeps/cms/admin/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
@@ -126,6 +127,26 @@
                         @else
                             <li>
                                 <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                            </li>
+                        @endif
+                        <li class="menu-title">Reports</li>
+                        <!-- /.menu-title -->
+                        @if(Request::url() == 'http://127.0.0.1:8000/reports/cms/admin/salestransactions')
+                            <li class="active">
+                                <a href="/reports/cms/admin/salestransactions"> <i class="menu-icon fa fa-credit-card"></i>Card Transactions</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/reports/cms/admin/salestransactions"> <i class="menu-icon fa fa-credit-card"></i>Card Transactions</a>
+                            </li>
+                        @endif
+                        @if(Request::url() == 'http://127.0.0.1:8000/reports/cms/admin/jeeptransactions')
+                            <li class="active">
+                                <a href="/reports/cms/admin/jeeptransactions"> <i class="menu-icon fa fa-bus"></i>Jeep Transactions</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/reports/cms/admin/jeeptransactions"> <i class="menu-icon fa fa-bus"></i>Jeep Transactions</a>
                             </li>
                         @endif
                         <li class="menu-title">Tap Cards</li><!-- /.menu-title -->
