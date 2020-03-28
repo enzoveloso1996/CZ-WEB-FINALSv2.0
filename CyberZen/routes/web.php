@@ -35,8 +35,6 @@ Route::get('/jeeptransactions', function () {
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 Route::resource('sales', 'SalesController');
 
-
-
 Route::prefix('cards')->group(function(){
     Route::resource('cms/teller/cardlist', 'CardListController');
     Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
