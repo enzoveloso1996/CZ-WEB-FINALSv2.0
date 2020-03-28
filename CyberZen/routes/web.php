@@ -28,6 +28,10 @@ Route::get('/adminlogin', function () {
     return view('cms/login');
 });
 
+Route::get('/jeeptransactions', function () {
+    return view('cms/admin/jeeptransactions');
+});
+
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 Route::resource('sales', 'SalesController');
 

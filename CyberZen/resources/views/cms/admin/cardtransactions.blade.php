@@ -52,7 +52,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="#">Admin</a></li>
                             <li><a href="#">Reports</a></li>
-                            <li class="active">Jeep Transactions</li>
+                            <li class="active">Card Transactions</li>
                         </ol>
                     </div>
                 </div>
@@ -66,7 +66,7 @@
     <div class="animated fadeIn">
         <div class="card">
             <div class="card-header">
-                <h4>Jeep Transactions</h4>
+                <h4>Card Transactions</h4>
             </div>
             <div class="card-body">
                 <div class="float-left p-3">
