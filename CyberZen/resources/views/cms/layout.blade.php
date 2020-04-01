@@ -102,31 +102,31 @@
                                 <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers/{{$user_id}}')
                             <li class="active">
-                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
+                                <a href="/jeeps/cms/admin/clientusers/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
+                                <a href="/jeeps/cms/admin/clientusers/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/jeeplist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/jeeplist/{{$user_id}}')
                             <li class="active">
-                                <a href="/jeeps/cms/admin/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
+                                <a href="/jeeps/cms/admin/jeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
                             </li>
                         @else 
                             <li>
-                                <a href="/jeeps/cms/admin/jeeplist"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
+                                <a href="/jeeps/cms/admin/jeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
                             </li>
                         @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist')
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist/{{$user_id}}')
                             <li class="active">
-                                <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/cms/admin/driverlist"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @endif
                         <li class="menu-title">Tap Cards</li><!-- /.menu-title -->
@@ -268,7 +268,7 @@
             </div>
         </header>
         <!-- Header -->
-
+ 
         <!--Content-->
         <div class="clearfix">
             <div class="content">

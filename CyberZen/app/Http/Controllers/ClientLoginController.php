@@ -134,7 +134,7 @@ class ClientLoginController extends Controller
         DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $user_id,
-            'action_id'     =>  4,
+            'action_id'     =>  5,
             'remarks'       => 'Log Out' 
         ]);
         return redirect('/adminlogin');
