@@ -110,9 +110,11 @@
                                
                                     </tr>
                                     @endforeach
-                                    {{$jeeplists->links()}}
+                                   
                                 </tbody>
+                                {{$jeeplists->links()}}
                             </table>
+                            {{-- {{$jeeplists->links()}} --}}
                         </div>
                     </div>
 

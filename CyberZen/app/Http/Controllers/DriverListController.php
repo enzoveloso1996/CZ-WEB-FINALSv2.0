@@ -13,7 +13,7 @@ class DriverListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         $companylist = DB::table('tb_mf_client')
         ->select('client_id','client_name')
@@ -25,7 +25,7 @@ class DriverListController extends Controller
         ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep_personnel.client_id')
         ->join('tb_mf_position', 'tb_mf_jeep_personnel.position_id', '=', 'tb_mf_position.id')
         ->where('tb_mf_client.is_archived','=',0)
-        ->paginate(10);
+        ->paginate(5);
 
         $drivercount = DB::table('tb_mf_jeep_personnel')
         ->select(DB::raw('COUNT(id) as count'))
@@ -34,7 +34,8 @@ class DriverListController extends Controller
         $drivercount = array_column($drivercount, 'count');
 
         
-        return view('cms/admin/driverlist')->with('drivercount', json_encode($drivercount, JSON_NUMERIC_CHECK))
+        return view("cms/admin/driverlist")->with('user_id', $user_id)
+                            ->with('drivercount', json_encode($drivercount, JSON_NUMERIC_CHECK))
                             ->with('driverlists', $driverlists)
                             ->with('companylist', $companylist);
 
@@ -118,7 +119,7 @@ class DriverListController extends Controller
             ->where('tb_mf_jeep_personnel.fullname', 'LIKE', '%'.$request->search.'%')
             ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->client_name.'%')
             ->where('tb_mf_client.is_archived','=',0)
-            ->paginate(10);
+            ->paginate(5);
             
             if($driverlists)
             {
@@ -149,7 +150,7 @@ class DriverListController extends Controller
             ->join('tb_mf_position', 'tb_mf_jeep_personnel.position_id', '=', 'tb_mf_position.id')
             ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
             ->where('tb_mf_client.is_archived','=',0)
-            ->paginate(10);
+            ->paginate(5);
             
             if($driverlists)
             {

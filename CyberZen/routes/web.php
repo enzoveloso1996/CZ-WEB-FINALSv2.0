@@ -15,6 +15,8 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/clientlogin', 'ClientLoginController@index');
+Route::get('/adminlogin', 'ClientLoginController@adminindex');
+
 Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('client-login-check');
 Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@clientlogout']);
@@ -23,10 +25,6 @@ Route::get('adminlogin/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLo
 Route::get('admin-register-index', 'ClientLoginController@register_index')->name('admin-register-index');
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
-
-Route::get('/adminlogin', function () {
-    return view('cms/login');
-});
 
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
@@ -83,13 +81,21 @@ Route::prefix('jeeps')->group(function(){
     // Route::get('/clientusers','ClientUserController@index')->name('clientusers');
     Route::get('/search-user','ClientUserController@search');
 
-    Route::resource('cms/admin/jeeplist', 'JeepListController');
-    Route::get('cms/admin/jeeplist', 'JeepListController@index')->name('jeeplist');
+    Route::get('cms/admin/jeeplist/{id}', ['as' => 'jeeplist.index', 'uses' => 'JeepListController@index']);
+    Route::resource('jeeplist', 'JeepListController', ['except' => ['index']]);
+
+    // Route::resource('cms/admin/jeeplist', 'JeepListController');
+    // Route::get('cms/admin/jeeplist', 'JeepListController@index')->name('jeeplist');
+    
     Route::get('/search-jeep','JeepListController@search');
     Route::get('/combo-search-jeep','JeepListController@combosearch');
 
-    Route::resource('cms/admin/driverlist', 'DriverListController');
-    Route::get('cms/admin/driverlist', 'DriverListController@index')->name('driverlist');
+    Route::get('cms/admin/driverlist/{id}', ['as' => 'driverlist.index', 'uses' => 'DriverListController@index']);
+    Route::resource('driverlist', 'DriverListController', ['except' => ['index']]);
+
+    // Route::resource('cms/admin/driverlist', 'DriverListController');
+    // Route::get('cms/admin/driverlist', 'DriverListController@index')->name('driverlist');
+
     Route::get('/search-driver','DriverListController@search');
     Route::get('/combo-search-driver','DriverListController@combosearch');
 });

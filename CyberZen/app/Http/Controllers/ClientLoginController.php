@@ -18,7 +18,10 @@ class ClientLoginController extends Controller
     {
         return view('crm/company/clientlogin');
     }
-
+    public function adminindex()
+    {
+        return view('cms/login');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -96,7 +99,7 @@ class ClientLoginController extends Controller
     }
 
     public function clientlogin(Request $request){
-
+        session_start();
         $hashpw = DB::table('tb_mf_client_users')
         ->where('username', '=', $request->username)
         ->get();
@@ -131,17 +134,19 @@ class ClientLoginController extends Controller
 
 
     public function adminlogout($user_id){
+        
         DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $user_id,
             'action_id'     =>  5,
             'remarks'       => 'Log Out' 
         ]);
+      
         return redirect('/adminlogin');
     }
 
     public function adminlogin(Request $request){
-
+        session_start();
         $hashpw = DB::table('tb_users')
         ->where('username', '=', $request->username)
         ->get();
@@ -163,7 +168,7 @@ class ClientLoginController extends Controller
                 if($access_level == 1){
                     return redirect()->route('dashboard.index', ['user_id' => $user_id]);
                 }
-                return redirect('cards/cms/teller/cardlist');
+                return redirect()->route('cardlist.index', ['user_id' => $user_id]);
 
             }
             else{

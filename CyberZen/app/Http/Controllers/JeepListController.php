@@ -13,10 +13,9 @@ class JeepListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         $companylist = DB::table('tb_mf_client')
-        ->select('client_id','client_name')
         ->where('is_archived','=',0)
         ->get();
 
@@ -33,7 +32,8 @@ class JeepListController extends Controller
         $jeepcount = array_column($jeepcount, 'count');
 
         
-        return view('cms/admin/jeeplist')->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
+        return view("cms/admin/jeeplist")->with('user_id', $user_id)
+                            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
                             ->with('jeeplists', $jeeplists)
                             ->with('companylist', $companylist);
 
@@ -115,7 +115,7 @@ class JeepListController extends Controller
             ->where('tb_mf_jeep.plate_number', 'LIKE', '%'.$request->search.'%')
             ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->client_name.'%')
             ->where('tb_mf_client.is_archived','=',0)
-            ->paginate(10);
+            ->paginate(5);
             
             if($jeeplists)
             {
@@ -143,7 +143,7 @@ class JeepListController extends Controller
             ->select('tb_mf_client.client_name','tb_mf_jeep.plate_number')
             ->where('tb_mf_client.client_name', 'LIKE', '%'.$request->combosearch.'%')
             ->where('tb_mf_client.is_archived','=',0)
-            ->paginate(10);
+            ->paginate(5);
             
             if($jeeplists)
             {

@@ -115,12 +115,13 @@
                                         <td class="left">{{$driverlist->fullname}}</td>
                                         <td class="left">{{$driverlist->client_name}}</td>
                                         <td class="left">{{$driverlist->position}}</td>
-                               
+                                 
                                     </tr>
                                     @endforeach
-                                    {{$driverlists->links()}}
                                 </tbody>
+                                {{$driverlists->links()}}
                             </table>
+                            {{-- {{$driverlists->links()}} --}}
                         </div>
                     </div>
 

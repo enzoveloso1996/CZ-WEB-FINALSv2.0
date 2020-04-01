@@ -229,8 +229,8 @@
                                     </tr>
                                     @endforeach            
                                 </tbody>
+                                {{$tabledtl->links()}}
                             </table>
-                            {{$tabledtl->links()}}
                         </div>
                     </div>
                 </div>

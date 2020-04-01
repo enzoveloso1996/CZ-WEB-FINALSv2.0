@@ -111,7 +111,7 @@
                                 </tbody>
                                 {{$userslist->links()}}
                             </table>
-                            {{$userslist->links()}}
+                            {{-- {{$userslist->links()}} --}}
                         </div>
                     </div>
                 </div>
