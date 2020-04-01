@@ -28,6 +28,9 @@ Route::get('/adminlogin', function () {
     return view('cms/login');
 });
 
+Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
+Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@jeeptransactions']);
+
 Route::get('/cardtransactions', function () {
     return view('cms/admin/cardtransaction');
 });

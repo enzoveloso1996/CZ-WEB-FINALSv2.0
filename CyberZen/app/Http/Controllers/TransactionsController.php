@@ -8,6 +8,12 @@ use DB;
 
 class TransactionsController extends Controller
 {
+    public function jeeptransactions($user_id){
+
+        return view()->with();
+    }
+
+
     public function store(Request $request)
     {
         $this->validate($request, [
