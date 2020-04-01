@@ -29,14 +29,14 @@ Route::get('/adminlogin', function () {
 });
 
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
-Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@jeeptransactions']);
+Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
 
-Route::get('/cardtransactions', function () {
-    return view('cms/admin/cardtransaction');
-});
-Route::get('/jeeptransactions', function () {
-    return view('cms/admin/jeeptransaction');
-});
+// Route::get('/cardtransactions', function () {
+//     return view('cms/admin/cardtransaction');
+// });
+// Route::get('/jeeptransactions', function () {
+//     return view('cms/admin/jeeptransaction');
+// });
 
 Route::get('cms/admin/dashboard/{id}', ['as' => 'dashboard.index', 'uses' => 'SalesController@index']);
 Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
