@@ -13,7 +13,7 @@ class CardListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         //active
         $cardlisttbl = DB::table('tb_mf_carduser_records')
@@ -48,7 +48,8 @@ class CardListController extends Controller
 
         $activecards = array_column($activecards, 'count');
         
-        return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
+        return view('cms/teller/cardlist')->with('user_id', $user_id)
+                            ->with('cardlisttbl', $cardlisttbl)
                             ->with('activecards', json_encode($activecards, JSON_NUMERIC_CHECK))
                             ->with('cardsales', $cardsales)
                             ->with('cardlisttbl2', $cardlisttbl2)
