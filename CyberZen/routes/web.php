@@ -19,7 +19,7 @@ Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('client-login-check');
 Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@clientlogout']);
 Route::get('admin-login-check', 'ClientLoginController@adminlogin')->name('admin-login-check');
-Route::get('adminlogout/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
+Route::get('adminlogin/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
 Route::get('admin-register-index', 'ClientLoginController@register_index')->name('admin-register-index');
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
@@ -27,9 +27,10 @@ Route::put('admin-register', 'ClientLoginController@register')->name('admin-regi
 Route::get('/adminlogin', function () {
     return view('cms/login');
 });
-
-Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
-Route::resource('sales', 'SalesController');
+Route::get('cms/admin/dashboard/{id}', ['as' => 'dashboard.index', 'uses' => 'SalesController@index']);
+Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
+// Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
+// Route::resource('sales', 'SalesController');
 
 
 

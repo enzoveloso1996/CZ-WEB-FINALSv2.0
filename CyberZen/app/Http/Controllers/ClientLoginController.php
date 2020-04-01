@@ -151,6 +151,7 @@ class ClientLoginController extends Controller
             foreach ($hashpw as $hashpword) {
                 $hashpw = $hashpword->password;
                 $user_id = $hashpword->user_id;
+                $access_level = $hashpword->access_level_id;
             }
             if(Hash::check($request->password, $hashpw)){
                 DB::table('tb_users_log')
@@ -159,7 +160,11 @@ class ClientLoginController extends Controller
                     'action_id'     =>  4,
                     'remarks'       => 'Log In' 
                 ]);
-                return redirect()->route('dashboard', ['user_id' => $user_id]);
+                if($access_level == 1){
+                    return redirect()->route('dashboard.index', ['user_id' => $user_id]);
+                }
+                return redirect('cards/cms/teller/cardlist');
+
             }
             else{
                
@@ -175,8 +180,8 @@ class ClientLoginController extends Controller
     }
 
 
-    public function register_index($user_id)
-    {
+    public function register_index()
+    {   $user_id = 1;
         $access_level = DB::table('tb_access_level')->get();
         
         return view("/cms/register")->with('access_levels', $access_level)->with('user_id', $user_id);

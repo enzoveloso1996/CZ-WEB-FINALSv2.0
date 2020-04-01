@@ -13,7 +13,7 @@ class SalesController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         $monthlysale = DB::table('tb_tr_jeep_transactions')
         ->join("tb_mf_jeep","tb_mf_jeep.plate_number","=","tb_tr_jeep_transactions.jeep_plate_number")
@@ -68,7 +68,8 @@ class SalesController extends Controller
         $totalcardsActive = array_column($totalcardsActive, 'count');
         
 
-        return view('cms/admin/dashboard')->with('monthlysales', json_encode($monthlysales, JSON_NUMERIC_CHECK))
+        return view('cms/admin/dashboard')->with('user_id', $user_id)
+                                ->with('monthlysales', json_encode($monthlysales, JSON_NUMERIC_CHECK))
                                 ->with('month', json_encode($month, JSON_NUMERIC_CHECK))
                                 ->with('client', json_encode($client, JSON_NUMERIC_CHECK))
                                 ->with('clientnames', json_encode($client_name, JSON_NUMERIC_CHECK))

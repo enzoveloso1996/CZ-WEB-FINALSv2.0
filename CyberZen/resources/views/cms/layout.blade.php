@@ -76,7 +76,8 @@
         </style>
     </head>
     <body>
-        <?php $user_id = ""; ?>
+        
+        
         <!-- Left Panel -->
         <aside id="left-panel" class="left-panel">
             <nav class="navbar navbar-expand-sm navbar-default">
@@ -166,6 +167,7 @@
                         </li>
                         @endif
                     </ul>
+                    
                 </div>
             </nav>
         </aside>
@@ -266,7 +268,7 @@
             </div>
         </header>
         <!-- Header -->
-
+        <input type="text" name="user_id" value="{{$user_id}}">
         <!--Content-->
         <div class="clearfix">
             <div class="content">
