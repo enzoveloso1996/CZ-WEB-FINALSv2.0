@@ -16,7 +16,6 @@ class ClientListController extends Controller
     public function index($user_id)
     {   
         $tabledtl = DB::table('tb_mf_client')
-        ->select('client_id', 'client_name','contact_person', 'contact_number','client_address', 'client_email', 'keyword')
         ->where('is_archived','=',0)
         ->paginate(5);
 
@@ -124,12 +123,6 @@ class ClientListController extends Controller
                                                                             '</div>'.
                                                                             '<input type="text" class="form-control" name="client_email" id="client_email" placeholder="Client Email Address" aria-label="Client Email Address" aria-describedby="basic-addon1">'.
                                                                         '</div>'.
-                                                                        '<div class="input-group mb-3">'.
-                                                                            '<div class="input-group-prepend">'.
-                                                                                '<span class="input-group-text" id="basic-addon1" style="width: 200px;">keyword</span>'.
-                                                                            '</div>'.
-                                                                            '<input type="text" class="form-control" name="keyword" id="keyword" placeholder="Keyword" aria-label="Keyword" aria-describedby="basic-addon1">'.
-                                                                        '</div>'.
                                                                     '</div>'.
                                                                     
                                                                 '</div>'.
@@ -202,7 +195,6 @@ class ClientListController extends Controller
                                     'var client_address = button.data("client_address");'.
                                     'var contact_person = button.data("contact_person");'.
                                     'var contact_number = button.data("contact_number");'.
-                                    'var keyword = button.data("keyword");'.
                             
                                     'var modal = $(this);'.
                                     'modal.find(".modal-title").text("Are you sure to Edit " + client_name +"?");'.
@@ -211,9 +203,7 @@ class ClientListController extends Controller
                                     'modal.find("#client_address").val(client_address);'.
                                     'modal.find("#contact_person").val(contact_person);'.
                                     'modal.find("#contact_number").val(contact_number);'.
-                                    'modal.find("#client_name").val(client_name);'.
-                                    'modal.find("#keyword").val(keyword);'.
-                                    
+                                    'modal.find("#client_name").val(client_name);'.                               
                                 '});'.
                             '</script>';
 
@@ -250,33 +240,42 @@ class ClientListController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'client_name'       =>  'required|max:255',
-            'contact_person'    =>  'required',
-            'contact_number'    =>  'required',
-            'client_address'    =>  'required',
-            'client_email'      =>  'required',
-            'keyword'           =>  'required|max:50'
-        ]);
+        $unavailable = DB::table('tb_mf_client')
+        ->where('client_name', '=', $request->client_name)
+        ->get();
 
-        DB::table('tb_mf_client')
-        ->insert([
-            'client_name'       =>  $request->client_name,
-            'contact_person'    =>  $request->contact_person,
-            'contact_number'    =>  $request->contact_number,
-            'client_address'    =>  $request->client_address,
-            'client_email'      =>  $request->client_email,
-            'keyword'           =>  $request->keyword
-        ]);
+        foreach ($unavailable as $avail) {
+            $client = $avail->client_name;
+        }
+        if (empty($request->client_name) or empty($request->contact_person) or empty($request->contact_number) or empty($request->client_address) or empty($request->client_email)) {
+            return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status-alert', "Please complete details");
+
+        }
         
-        DB::table('tb_users_log')
-        ->insert([
-            'user_id'       =>  $request->user_id,
-            'action_id'     =>  1,
-            'remarks'       => 'Add Client '.$request->client_name
-        ]);
 
-        return redirect("jeeps/cms/admin/clientlist/$request->user_id");
+        if (empty($client)) {
+            DB::table('tb_mf_client')
+            ->insert([
+                'client_name'       =>  $request->client_name,
+                'contact_person'    =>  $request->contact_person,
+                'contact_number'    =>  $request->contact_number,
+                'client_address'    =>  $request->client_address,
+                'client_email'      =>  $request->client_email
+            
+            ]);
+            
+            DB::table('tb_users_log')
+            ->insert([
+                'user_id'       =>  $request->user_id,
+                'action_id'     =>  1,
+                'remarks'       => 'Add Client '.$request->client_name
+            ]);
+    
+            return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status', "Client is successfully registered!!");
+                
+        }
+        return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status-alert', "Client is already registered!!");
+        
     }
 
     /**
@@ -324,7 +323,7 @@ class ClientListController extends Controller
         DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $request->user_id,
-            'action_id'     =>  1,
+            'action_id'     =>  3,
             'remarks'       => 'Edit Client '.$request->client_name
         ]);
 
@@ -348,7 +347,7 @@ class ClientListController extends Controller
         DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $request->user_id,
-            'action_id'     =>  1,
+            'action_id'     =>  2,
             'remarks'       => 'Archived Client '.$client_name
         ]);
 

@@ -14,13 +14,14 @@ class ClientUserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {
         $users = DB::table('tb_mf_client_users')
         ->join("tb_mf_client", "tb_mf_client.client_id", "=", "tb_mf_client_users.client_id")
         ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
         ->where("tb_mf_client.is_archived", "=", "0")
-        ->get();
+        ->where("tb_mf_client_users.is_archived", "=", "0")
+        ->paginate(5);
 
         $clientname = DB::table('tb_mf_client')
         ->where("is_archived","=","0")
@@ -33,11 +34,11 @@ class ClientUserController extends Controller
         $fullname = DB::table('tb_mf_jeep_personnel')
         ->get();
 
-        return view('cms/admin/clientusers')
-            ->with('userslist', $users)
-            ->with('clientname', $clientname)
-            ->with('fullname', $fullname)
-            ->with('position', $position);
+        return view('cms/admin/clientusers')->with('user_id', $user_id)
+                                ->with('userslist', $users)
+                                ->with('clientname', $clientname)
+                                ->with('fullname', $fullname)
+                                ->with('position', $position);
     }
 
     public function search(Request $request)
@@ -51,7 +52,7 @@ class ClientUserController extends Controller
             ->join("tb_mf_position", "tb_mf_position.id", "=", "tb_mf_client_users.position_id")
             ->where("tb_mf_client.is_archived", "=", "0")
             ->where('firstname','LIKE','%'.$request->search."%")
-            ->get();
+            ->paginate(5);
    
                 foreach ($tabledtl as $key => $tabledtll) 
                 {
@@ -89,43 +90,70 @@ class ClientUserController extends Controller
      */
     public function store(Request $request)
     {
-        
+        if (empty($request->client_idtext) or empty($request->firstname) or empty($request->lastname) or empty($request->position_idtext) or empty($request->username) or empty($request->password)) {
+            return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Please complete details");
+        }
+
         $pass = Hash::make($request->password);
-            
-        DB::table('tb_mf_client_users')
-        ->insert([
-            'client_id'         =>  $request->client_idtext,
-            'firstname'         =>  $request->firstname,
-            'middlename'        =>  $request->middlename,
-            'lastname'          =>  $request->lastname,
-            'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
-            'position_id'       =>  $request->position_idtext,
-            'username'          =>  $request->username,
-            'password'          =>  $pass
-
-        ]);
-
-        $users_id = DB::table('tb_mf_client_users')
+        
+        $available = DB::table('tb_mf_client_users')
         ->where('username', '=', $request->username)
         ->get();
 
-        foreach($users_id as $user_id){
-            $userid = $user_id->user_id;
+        foreach ($unavailable as $avail) {
+            $username = $avail->username;
         }
 
-        DB::table('tb_mf_jeep_personnel')
-        ->insert([
-            'user_id'           =>  $userid,
-            'client_id'         =>  $request->client_idtext,
-            'firstname'         =>  $request->firstname,
-            'middlename'        =>  $request->middlename,
-            'lastname'          =>  $request->lastname,
-            'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
-            'position_id'       =>  $request->position_idtext,
-            'is_archived'       =>  "0"
-        ]);
+        
 
-        return redirect('jeeps/cms/admin/clientusers');
+        if (empty($available)) {
+
+            DB::table('tb_mf_client_users')
+            ->insert([
+                'client_id'         =>  $request->client_idtext,
+                'firstname'         =>  $request->firstname,
+                'middlename'        =>  $request->middlename,
+                'lastname'          =>  $request->lastname,
+                'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
+                'position_id'       =>  $request->position_idtext,
+                'username'          =>  $request->username,
+                'password'          =>  $pass
+    
+            ]);
+    
+            $users_id = DB::table('tb_mf_client_users')
+            ->where('username', '=', $request->username)
+            ->get();
+    
+            foreach($users_id as $user_id){
+                $userid = $user_id->user_id;
+            }
+    
+            DB::table('tb_mf_jeep_personnel')
+            ->insert([
+                'user_id'           =>  $userid,
+                'client_id'         =>  $request->client_idtext,
+                'firstname'         =>  $request->firstname,
+                'middlename'        =>  $request->middlename,
+                'lastname'          =>  $request->lastname,
+                'fullname'          =>  $request->firstname.' '.$request->middlename.' '.$request->lastname,
+                'position_id'       =>  $request->position_idtext,
+                'is_archived'       =>  "0"
+            ]);
+    
+            DB::table('tb_users_log')
+            ->insert([
+                'user_id'       =>  $request->user_id,
+                'action_id'     =>  1,
+                'remarks'       => 'Add Client User '.$request->username
+            ]);
+     
+            return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status', "Registered Successfully");
+                
+        }
+
+        return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Username already taken!!");
+
     }
 
     /**

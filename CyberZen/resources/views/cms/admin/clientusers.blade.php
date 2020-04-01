@@ -14,11 +14,7 @@
 </style>
 
 @section('content')
-@if (session('status'))
-<div class="alert alert-success">
-    {{ session('status') }}
-</div>
-@endif
+
 
     <!-- Breadcrumbs-->
     <div class="breadcrumbs">
@@ -46,7 +42,7 @@
         </div>
     </div>
     <!-- /.breadcrumbs-->
-
+    
     <div class="content">
         <div class="animated fadeIn">
             <div class="row">
@@ -56,6 +52,17 @@
                         <div class="card-header text-center">
                             <strong class="card-title">Client User Accounts</strong>
                         </div>
+                        @if (session('status-alert'))
+                            <div class="alert alert-danger">
+                                {{ session('status-alert') }}
+                            </div>
+                        @endif
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
                         <div class="container">
                             <div class="float-left p-3">
                                 <div class="input-group">
@@ -70,7 +77,9 @@
                             </div>
     
                         </div>
+                      
                         <div class="card-body">
+
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
                                 <thead>
                                     <tr>
@@ -79,6 +88,7 @@
                                         <th class="center">Company Name</th>
                                         <th class="center">Position</th>
                                         <th class="center">Username</th>
+                                      
                                       
                                     </tr>
                                 </thead>
@@ -91,19 +101,21 @@
                                         <td class="center">{{$userlist->client_name}}</td>
                                         <td class="center">{{$userlist->position}}</td>
                                         <td class="center">{{$userlist->username}}</td>
+                                       
                                         
                                         
                                     </tr>    
 
 
                                     @endforeach
-
                                 </tbody>
+                                {{$userslist->links()}}
                             </table>
+                            {{$userslist->links()}}
                         </div>
                     </div>
                 </div>
-
+                
 
             </div>
         </div><!-- .animated -->
@@ -125,7 +137,7 @@
                 </div>
                 <form action="{{Route('clientusers.store')}}" method="post">
                     @csrf
-                    
+                    <input type="hidden" name="user_id" value="{{$user_id}}">
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">

@@ -43,8 +43,11 @@ Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
 
 
 Route::prefix('cards')->group(function(){
-    Route::resource('cms/teller/cardlist', 'CardListController');
-    Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
+    Route::get('cms/teller/cardlist/{id}', ['as' => 'cardlist.index', 'uses' => 'CardListController@index']);
+    Route::resource('cardlist', 'SalesController', ['except' => ['index']]);
+    
+    // Route::resource('cms/teller/cardlist', 'CardListController');
+    // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
     Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
 
     Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
@@ -70,8 +73,11 @@ Route::prefix('jeeps')->group(function(){
 
     Route::get('/search-client','ClientListController@search');
 
-    Route::resource('cms/admin/clientusers', 'ClientUserController');
-    Route::get('/clientusers','ClientUserController@index')->name('clientusers');
+    Route::get('cms/admin/clientusers/{id}', ['as' => 'clientusers.index', 'uses' => 'ClientUserController@index']);
+    Route::resource('clientusers', 'ClientUserController', ['except' => ['index']]);
+
+    // Route::resource('cms/admin/clientusers', 'ClientUserController');
+    // Route::get('/clientusers','ClientUserController@index')->name('clientusers');
     Route::get('/search-user','ClientUserController@search');
 
     Route::resource('cms/admin/jeeplist', 'JeepListController');
