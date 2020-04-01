@@ -51,8 +51,12 @@ Route::prefix('cards')->group(function(){
 
 
 Route::prefix('jeeps')->group(function(){
-    Route::resource('cms/admin/clientlist', 'ClientListController');
-    Route::get('cms/admin/clientlist', 'ClientListController@index')->name('clientlist');
+    Route::get('cms/admin/clientlist/{id}', ['as' => 'clientlist.index', 'uses' => 'ClientListController@index']);
+    Route::resource('clientlist', 'ClientListController', ['except' => ['index']]);
+    
+
+    // Route::resource('cms/admin/clientlist', 'ClientListController');
+    // Route::get('cms/admin/clientlist', 'ClientListController@index')->name('clientlist');
 
     Route::patch('/client-archive', 'ClientListController@archive')->name('client-archive');
 

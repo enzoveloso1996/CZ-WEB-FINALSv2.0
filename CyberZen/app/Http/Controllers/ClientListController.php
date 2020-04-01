@@ -13,7 +13,7 @@ class ClientListController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index($user_id)
     {   
         $tabledtl = DB::table('tb_mf_client')
         ->select('client_id', 'client_name','contact_person', 'contact_number','client_address', 'client_email', 'keyword')
@@ -34,7 +34,8 @@ class ClientListController extends Controller
 
         $jeepcount = array_column($jeepcount,'count');
 
-        return view('cms/admin/clientlist')->with('tabledtl', $tabledtl)
+        return view("cms/admin/clientlist")->with('user_id', $user_id)
+                                ->with('tabledtl', $tabledtl)
                                 ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
                                 ->with('clientcount', json_encode($clientcount, JSON_NUMERIC_CHECK));
     }
@@ -105,9 +106,14 @@ class ClientListController extends Controller
             'keyword'           =>  $request->keyword
         ]);
         
-       
+        DB::table('tb_users_log')
+        ->insert([
+            'user_id'       =>  $request->user_id,
+            'action_id'     =>  1,
+            'remarks'       => 'Add Client '.$request->client_name
+        ]);
 
-        return redirect('jeeps/cms/admin/clientlist');
+        return redirect("jeeps/cms/admin/clientlist/$request->user_id");
     }
 
     /**
@@ -152,7 +158,15 @@ class ClientListController extends Controller
           
         ]);
 
-        return redirect('jeeps/cms/admin//clientlist');
+        DB::table('tb_users_log')
+        ->insert([
+            'user_id'       =>  $request->user_id,
+            'action_id'     =>  1,
+            'remarks'       => 'Edit Client '.$request->client_name
+        ]);
+
+
+        return redirect("jeeps/cms/admin/clientlist/$request->user_id");
     }
 
     public function archive(Request $request){
@@ -160,7 +174,22 @@ class ClientListController extends Controller
         ->where('client_id', $request->client_id)
         ->update(['is_archived' => 1]);
 
-        return redirect('jeeps/cms/admin//clientlist');
+        $client_name = DB::table('tb_mf_client')
+        ->where('client_id', '=', $request->client_id)
+        ->get();
+
+        foreach ($client_name as $clientname) {
+            $client_name = $clientname->client_name;
+        }
+
+        DB::table('tb_users_log')
+        ->insert([
+            'user_id'       =>  $request->user_id,
+            'action_id'     =>  1,
+            'remarks'       => 'Archived Client '.$client_name
+        ]);
+
+        return redirect("jeeps/cms/admin/clientlist/$request->user_id");
     }
     
     /**

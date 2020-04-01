@@ -98,6 +98,8 @@
                                                         @csrf
                                                         @method('PATCH')
 
+                                                        <input type="hidden" name="user_id" value="{{$user_id}}">
+
                                                         <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
                                                             data-client_name="{{$detail->client_name}}" 
                                                             data-client_id="{{$detail->client_id}}"
@@ -181,6 +183,8 @@
                                                         @csrf
                                                         @method('PATCH')
 
+                                                        <input type="hidden" name="user_id" value="{{$user_id}}">
+
                                                         <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
                                                             data-client_name="{{$detail->client_name}}" 
                                                             data-client_id="{{$detail->client_id}}">
@@ -250,7 +254,7 @@
                 </div>
                 <form action="{{route('clientlist.store')}}" method="post">
                     @csrf
-                    
+                    <input type="hidden" name="user_id" value="{{$user_id}}">
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">
