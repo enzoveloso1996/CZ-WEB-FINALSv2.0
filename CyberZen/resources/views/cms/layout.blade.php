@@ -130,13 +130,13 @@
                             </li>
                         @endif
                         <li class="menu-title">Tap Cards</li><!-- /.menu-title -->
-                        @if(Request::url() == 'http://127.0.0.1:8000/cards/cms/teller/cardlist')
+                        @if(Request::url() == "http://127.0.0.1:8000/cards/cms/teller/cardlist/{{$user_id}}")
                             <li class="active">
-                                <a href="/cards/cms/teller/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
+                                <a href="/cards/cms/teller/cardlist/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @else 
                             <li>
-                                <a href="/cards/cms/teller/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
+                                <a href="/cards/cms/teller/cardlist/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/cards/cms/teller/reload')
