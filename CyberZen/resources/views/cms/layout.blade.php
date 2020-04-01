@@ -92,6 +92,25 @@
                                 <a href="/cms/admin/dashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @endif
+                        <li class="menu-title">Reports</li><!-- /.menu-title -->
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist/{{$user_id}}')
+                            <li class="active">
+                                <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Card Transactions</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Card Transactions</a>
+                            </li>
+                        @endif
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers')
+                            <li class="active">
+                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/jeeps/cms/admin/clientusers"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
+                            </li>
+                        @endif
                         <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist/{{$user_id}}')
                             <li class="active">

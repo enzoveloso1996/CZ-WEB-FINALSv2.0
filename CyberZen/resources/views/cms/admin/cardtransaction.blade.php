@@ -21,7 +21,7 @@
             <div class="col-sm-4">
                 <div class="page-header float-left">
                     <div class="page-title">
-                        <h1>Jeep Transactions</h1>
+                        <h1>Card Transactions</h1>
                     </div>
                 </div>
             </div>
@@ -31,7 +31,7 @@
                         <ol class="breadcrumb text-right">
                             <li><a href="/dashboard">DASHBOARD</a></li>
                             <li><a href="#">REPORTS</a></li>
-                            <li class="active">JEEP TRANSACTIONS</li>
+                            <li class="active">CARD TRANSACTIONS</li>
                         </ol>
                     </div>
                 </div>

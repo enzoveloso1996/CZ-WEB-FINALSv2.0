@@ -27,6 +27,14 @@ Route::put('admin-register', 'ClientLoginController@register')->name('admin-regi
 Route::get('/adminlogin', function () {
     return view('cms/login');
 });
+
+Route::get('/cardtransactions', function () {
+    return view('cms/admin/cardtransaction');
+});
+Route::get('/jeeptransactions', function () {
+    return view('cms/admin/jeeptransaction');
+});
+
 Route::get('cms/admin/dashboard/{id}', ['as' => 'dashboard.index', 'uses' => 'SalesController@index']);
 Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
 // Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
