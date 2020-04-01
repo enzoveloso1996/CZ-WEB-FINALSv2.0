@@ -76,14 +76,16 @@
         </style>
     </head>
     <body>
-        <?php $user_id = ""; ?>
+        
+        
         <!-- Left Panel -->
         <aside id="left-panel" class="left-panel">
             <nav class="navbar navbar-expand-sm navbar-default">
                 <div id="main-menu" class="main-menu collapse navbar-collapse">
                     <ul class="nav navbar-nav">
-                        @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/dashboard')
+                        @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/dashboard/{{$user_id}}')
                             <li class="active">
+<<<<<<< HEAD
                                 <a href="/cms/admin/dashboard"><i class="menu-icon fa fa-bar-chart-o"></i>Dashboard </a>
                             </li>
                         @else
@@ -94,12 +96,23 @@
                         <li class="menu-title">E-Jeep</li>
                         <!-- /.menu-title -->
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist')
-                            <li class="active">
-                                <a href="/jeeps/cms/admin/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
+=======
+                                <a href="/cms/admin/dashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @else
                             <li>
-                                <a href="/jeeps/cms/admin/clientlist"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
+                                <a href="/cms/admin/dashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
+                            </li>
+                        @endif
+                        <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
+                        @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist/{{$user_id}}')
+>>>>>>> dev-ron
+                            <li class="active">
+                                <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers')
@@ -187,6 +200,7 @@
                         </li>
                         @endif
                     </ul>
+                    
                 </div>
             </nav>
         </aside>

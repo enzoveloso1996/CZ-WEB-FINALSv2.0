@@ -19,7 +19,7 @@ Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('client-login-check');
 Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@clientlogout']);
 Route::get('admin-login-check', 'ClientLoginController@adminlogin')->name('admin-login-check');
-Route::get('adminlogout/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
+Route::get('adminlogin/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
 Route::get('admin-register-index', 'ClientLoginController@register_index')->name('admin-register-index');
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
@@ -27,6 +27,7 @@ Route::put('admin-register', 'ClientLoginController@register')->name('admin-regi
 Route::get('/adminlogin', function () {
     return view('cms/login');
 });
+<<<<<<< HEAD
 
 Route::get('/jeeptransactions', function () {
     return view('cms/admin/jeeptransactions');
@@ -34,6 +35,12 @@ Route::get('/jeeptransactions', function () {
 
 Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 Route::resource('sales', 'SalesController');
+=======
+Route::get('cms/admin/dashboard/{id}', ['as' => 'dashboard.index', 'uses' => 'SalesController@index']);
+Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
+// Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
+// Route::resource('sales', 'SalesController');
+>>>>>>> dev-ron
 
 Route::prefix('cards')->group(function(){
     Route::resource('cms/teller/cardlist', 'CardListController');
@@ -52,8 +59,12 @@ Route::prefix('cards')->group(function(){
 
 
 Route::prefix('jeeps')->group(function(){
-    Route::resource('cms/admin/clientlist', 'ClientListController');
-    Route::get('cms/admin/clientlist', 'ClientListController@index')->name('clientlist');
+    Route::get('cms/admin/clientlist/{id}', ['as' => 'clientlist.index', 'uses' => 'ClientListController@index']);
+    Route::resource('clientlist', 'ClientListController', ['except' => ['index']]);
+    
+
+    // Route::resource('cms/admin/clientlist', 'ClientListController');
+    // Route::get('cms/admin/clientlist', 'ClientListController@index')->name('clientlist');
 
     Route::patch('/client-archive', 'ClientListController@archive')->name('client-archive');
 

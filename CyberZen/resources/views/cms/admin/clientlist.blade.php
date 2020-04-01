@@ -64,6 +64,8 @@
                                       <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
                                     </div>
                                     <input type="text" class="form-control" id="search-client" placeholder="Search.." aria-label="search" aria-describedby="basic-addon1">
+                                    <input type="hidden" id="searchuser_id" name="user_id" value="{{$user_id}}">
+
                                 </div>
                             </div>
                             <div class="float-right p-3">
@@ -97,6 +99,8 @@
                                                     <form action="{{route('clientlist.update',$detail->client_id)}}" method="post">
                                                         @csrf
                                                         @method('PATCH')
+
+                                                        <input type="hidden" name="user_id" value="{{$user_id}}">
 
                                                         <button type="button" class="btn-sx btn-success"  data-toggle="modal" data-target="#editModal" 
                                                             data-client_name="{{$detail->client_name}}" 
@@ -181,6 +185,8 @@
                                                         @csrf
                                                         @method('PATCH')
 
+                                                        <input type="hidden" name="user_id" value="{{$user_id}}">
+
                                                         <button type="button" class="btn-sx btn-danger"  data-toggle="modal" data-target="#deleteModal" 
                                                             data-client_name="{{$detail->client_name}}" 
                                                             data-client_id="{{$detail->client_id}}">
@@ -250,7 +256,7 @@
                 </div>
                 <form action="{{route('clientlist.store')}}" method="post">
                     @csrf
-                    
+                    <input type="hidden" name="user_id" value="{{$user_id}}">
                     <div class="form-group">
                         <div class="modal-body">
                             <div class="form-group">
@@ -310,12 +316,16 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script type="text/javascript">
+
     $('#search-client').on('keyup',function(){
         $value=$(this).val();
+        $user_id = $('#searchuser_id').val();
+        console.log($user_id);
+   
         $.ajax({
             type : 'get',
             url : '{{URL::to('jeeps/search-client')}}',
-            data:{'search':$value},
+            data:{  'search':$value,'user_id':$user_id},
             success:function(data){
                 $('tbody').html(data);
             }
@@ -328,12 +338,12 @@
 
 <script>
     $('#deleteModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget); // Button that triggered the modal
-        var client_name = button.data('client_name'); // Extract info from data-* attributes
+        var button = $(event.relatedTarget);
+
+        var client_name = button.data('client_name');
         var client_id = button.data('client_id');
-        // If necessary, you could initiate an AJAX request here (and then do the updating in a callback).
-        // Update the modal's content. We'll use jQuery here, but you could use a data binding library or other methods instead.
         var modal = $(this);
+
         modal.find('.modal-title').text('Delete ' + client_name +'?');
         modal.find('.modal-body').text('Are you sure to delete ' + client_name +'?');
         modal.find('#client_id').val(client_id);
