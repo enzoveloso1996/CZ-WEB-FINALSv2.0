@@ -76,7 +76,7 @@
         </style>
     </head>
     <body>
-        <div>{{$access_level = Request::get('access_level')}}</div>
+        {{$access_level = Request::get('access_level')}}
         
         <!-- Left Panel -->
         <aside id="left-panel" class="left-panel">
@@ -149,22 +149,22 @@
                             </li>
                         @endif
                         <li class="menu-title" id="tapcard">Tap Cards</li><!-- /.menu-title -->
-                        @if(Request::url() == "http://127.0.0.1:8000/cards/cms/teller/cardlist/{{$user_id}}")
+                        @if(Request::url() == "{{route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level])}}")
                             <li class="active" id="tapcard1">
-                                <a href="/cards/cms/teller/cardlist/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
+                                <a href="{{route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @else 
                             <li id="tapcard1">
-                                <a href="/cards/cms/teller/cardlist/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
+                                <a href="{{route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @endif
-                        @if(Request::url() == "http://127.0.0.1:8000/cards/cms/teller/reload/{{$user_id}}")
+                        @if(Request::url() == "{{route('reload', ['user_id' => $user_id, 'access_level' => $access_level])}}")
                             <li class="active" id="tapcard2">
-                                <a href="/cards/cms/teller/reload/{{$user_id}}"> <i class="menu-icon fa fa-flash"></i>Load Cards</a>
+                                <a href="{{route('reload', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-flash"></i>Load Cards</a>
                             </li>
                         @else
                             <li id="tapcard2">
-                                <a href="/cards/cms/teller/reload/{{$user_id}}"><i class="menu-icon fa fa-flash"></i>Load Cards</a>
+                                <a href="{{route('reload', ['user_id' => $user_id, 'access_level' => $access_level])}}"><i class="menu-icon fa fa-flash"></i>Load Cards</a>
                             </li>
                         @endif
                         <li class="menu-title" id="accounts">Account</li><!-- /.menu-title -->

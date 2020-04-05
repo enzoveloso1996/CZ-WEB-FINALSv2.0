@@ -46,9 +46,17 @@ class CardListController extends Controller
         ->select('cardtype_id','cardtype')
         ->get();
 
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $user_id)
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+
         $activecards = array_column($activecards, 'count');
         
         return view('cms/teller/cardlist')->with('user_id', $user_id)
+                            ->with('access_level', $access_level)
                             ->with('cardlisttbl', $cardlisttbl)
                             ->with('activecards', json_encode($activecards, JSON_NUMERIC_CHECK))
                             ->with('cardsales', $cardsales)
@@ -162,7 +170,14 @@ class CardListController extends Controller
         ->where('tb_mf_carduser_records.is_active', '=', 1)
         ->paginate(20);
 
-        return view("cms/teller/reload")->with('reload' , $reload)->with('user_id', $user_id);
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $user_id)
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+
+        return view("cms/teller/reload")->with('reload' , $reload)->with('user_id', $user_id)->with('access_level', $access_level);
             
     }
 
@@ -224,7 +239,8 @@ class CardListController extends Controller
         DB::table('tb_mf_carduser_records')->where('rfid_number', $data['id'])
                                             ->update(['card_balance'=> $data['tot2']]);
 
-        return redirect('cards/cms/teller/reload');
+        return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
+
     }
 
     /**
@@ -267,7 +283,7 @@ class CardListController extends Controller
         $reload = DB::table('tb_mf_carduser_records')->where('carduser_id',$request->id)
                                                     ->update(['is_hold'=>$request->hold]);
 
-        return redirect('cms/teller/reload');
+        return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
     }
 
     /**
