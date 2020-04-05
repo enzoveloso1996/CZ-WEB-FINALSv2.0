@@ -76,7 +76,7 @@
         </style>
     </head>
     <body>
-        
+        <div>{{$access_level = Request::get('access_level')}}</div>
         
         <!-- Left Panel -->
         <aside id="left-panel" class="left-panel">
@@ -84,96 +84,96 @@
                 <div id="main-menu" class="main-menu collapse navbar-collapse">
                     <ul class="nav navbar-nav">
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/dashboard/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="dashboard">
                                 <a href="/cms/admin/dashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @else
-                            <li>
+                            <li id="dashboard">
                                 <a href="/cms/admin/dashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @endif
-                        <li class="menu-title">Reports</li><!-- /.menu-title -->
+                        <li class="menu-title" id="reports">Reports</li><!-- /.menu-title -->
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/cardtransaction/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="reports1">
                                 <a href="/cms/admin/cardtransaction/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Card Transactions</a>
                             </li>
                         @else
-                            <li>
+                            <li id="reports1">
                                 <a href="/cms/admin/cardtransaction/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Card Transactions</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/jeeptransaction/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="reports2">
                                 <a href="/cms/admin/jeeptransaction/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
                             </li>
                         @else
-                            <li>
+                            <li id="reports2">
                                 <a href="/cms/admin/jeeptransaction/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
                             </li>
                         @endif
-                        <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
+                        <li class="menu-title" id="ejeep">E-Jeep</li><!-- /.menu-title -->
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientlist/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="ejeep1">
                                 <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
                             </li>
                         @else
-                            <li>
+                            <li id="ejeep1">
                                 <a href="/jeeps/cms/admin/clientlist/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Client Companies</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/clientusers/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="ejeep2">
                                 <a href="/jeeps/cms/admin/clientusers/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
                             </li>
                         @else
-                            <li>
+                            <li id="ejeep2">
                                 <a href="/jeeps/cms/admin/clientusers/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client User Accounts</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/jeeplist/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="ejeep3">
                                 <a href="/jeeps/cms/admin/jeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
                             </li>
                         @else 
-                            <li>
+                            <li id="ejeep3">
                                 <a href="/jeeps/cms/admin/jeeplist/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>E-Jeeps Registered</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist/{{$user_id}}')
-                            <li class="active">
+                            <li class="active" id="ejeep4">
                                 <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @else
-                            <li>
+                            <li id="ejeep4">
                                 <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @endif
-                        <li class="menu-title">Tap Cards</li><!-- /.menu-title -->
+                        <li class="menu-title" id="tapcard">Tap Cards</li><!-- /.menu-title -->
                         @if(Request::url() == "http://127.0.0.1:8000/cards/cms/teller/cardlist/{{$user_id}}")
-                            <li class="active">
+                            <li class="active" id="tapcard1">
                                 <a href="/cards/cms/teller/cardlist/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @else 
-                            <li>
+                            <li id="tapcard1">
                                 <a href="/cards/cms/teller/cardlist/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
                             </li>
                         @endif
                         @if(Request::url() == "http://127.0.0.1:8000/cards/cms/teller/reload/{{$user_id}}")
-                            <li class="active">
+                            <li class="active" id="tapcard2">
                                 <a href="/cards/cms/teller/reload/{{$user_id}}"> <i class="menu-icon fa fa-flash"></i>Load Cards</a>
                             </li>
                         @else
-                            <li>
+                            <li id="tapcard2">
                                 <a href="/cards/cms/teller/reload/{{$user_id}}"><i class="menu-icon fa fa-flash"></i>Load Cards</a>
                             </li>
                         @endif
-                        <li class="menu-title">Account</li><!-- /.menu-title -->
+                        <li class="menu-title" id="accounts">Account</li><!-- /.menu-title -->
                         @if(Request::path() == '/widgets')
-                            <li>
+                            <li id="adduser">
                                 <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @else 
-                            <li>
+                            <li id="adduser">
                                 <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @endif
@@ -319,5 +319,29 @@
         <script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/moment.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/fullcalendar@3.9.0/dist/fullcalendar.min.js"></script>
         <script type="text/javascript" src="{{ asset('new/js/init/fullcalendar-init.js') }}"></script>
+
+        <script>
+            $(document).ready(function(){
+                var access_level = <?php echo $access_level; ?>
+
+                if(access_level == 2){
+                    $('#dashboard').hide();
+                    $('#reports').hide();
+                    $('#reports1').hide();
+                    $('#reports2').hide();
+                    $('#ejeep').hide();
+                    $('#ejeep1').hide();
+                    $('#ejeep2').hide();
+                    $('#ejeep3').hide();
+                    $('#ejeep4').hide();
+                    // $('#tapcard').hide();
+                    // $('#tapcard1').hide();
+                    // $('#tapcard2').hide();
+                    $('#adduser').hide();
+                    
+               }
+                
+            });
+        </script>
     </body>
 </html>

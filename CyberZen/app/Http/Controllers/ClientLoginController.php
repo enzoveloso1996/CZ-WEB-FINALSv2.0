@@ -166,7 +166,7 @@ class ClientLoginController extends Controller
                     'remarks'       => 'Log In' 
                 ]);
                 if($access_level == 1){
-                    return redirect()->route('dashboard.index', ['user_id' => $user_id]);
+                    return redirect()->route('dashboard.index', ['user_id' => $user_id, 'access_level' => $access_level]);
                 }
                 return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
 
