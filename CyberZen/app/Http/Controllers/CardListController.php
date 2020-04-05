@@ -100,22 +100,22 @@ class CardListController extends Controller
                 $output="";
                 $cardlisttbl = array();
                 $cardlisttbl = DB::table('tb_mf_carduser_records')
-                ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-                ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
-                ->where('tb_mf_carduser_records.is_active','=',0)
+                // ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
+                // ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
+                // ->where('tb_mf_carduser_records.is_active','=',0)
                 ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
                 ->paginate(1);
             }else{
                 $output="";
             }
-
+            
             if($cardlisttbl)
             {
-                foreach ($cardlisttbl as $key => $cardlisttbll) {
+                foreach ($cardlisttbl as $cardlisttbll) {
                     $output.='<tr>'.
                     '<td class="left">'.$cardlisttbll->rfid_number.'</td>'.
                     '<td class="center">'.$cardlisttbll->card_balance.'</td>'.
-                    '<td class="left">'.$cardlisttbll->first_name.'</td>'.
+                    '<td class="left">'.$cardlisttbll->fullname.'</td>'.
                     '<td class="center"><button class="btn-sx btn-primary" data-toggle="modal" data-target="#holdcardModal" data-rfid='.$cardlisttbll->rfid_number.'><i class="fa fa-exclamation"></i></button>&nbsp;'.
                     '<button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i></button></td>'.
                     '</tr>';
@@ -154,7 +154,7 @@ class CardListController extends Controller
     }
     }
 
-    public function reload()
+    public function reload($user_id)
     {
         $reload = DB::table('tb_mf_carduser_records')
         ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
@@ -162,7 +162,7 @@ class CardListController extends Controller
         ->where('tb_mf_carduser_records.is_active', '=', 1)
         ->paginate(20);
 
-        return view('cms/teller/reload')->with('reload' , $reload);
+        return view("cms/teller/reload")->with('reload' , $reload)->with('user_id', $user_id);
             
     }
 

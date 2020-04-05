@@ -49,7 +49,9 @@ Route::prefix('cards')->group(function(){
     
     // Route::resource('cms/teller/cardlist', 'CardListController');
     // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
-    Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
+    
+    Route::get('cms/teller/reload/{id}', ['as' => 'reload', 'uses' => 'CardListController@reload']);
+    // Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
 
     Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
     Route::get('/searchLoad', 'CardListController@searchLoad');
