@@ -75,7 +75,7 @@
             }
         </style>
     </head>
-    <body>
+    <body id="admin-body">
         {{$access_level = Request::get('access_level')}}
         
         <!-- Left Panel -->
@@ -321,10 +321,13 @@
         <script type="text/javascript" src="{{ asset('new/js/init/fullcalendar-init.js') }}"></script>
 
         <script>
+            
+
             $(document).ready(function(){
                 var access_level = <?php echo $access_level; ?>
 
                 if(access_level == 2){
+                    
                     $('#dashboard').hide();
                     $('#reports').hide();
                     $('#reports1').hide();
@@ -334,14 +337,32 @@
                     $('#ejeep2').hide();
                     $('#ejeep3').hide();
                     $('#ejeep4').hide();
-                    // $('#tapcard').hide();
-                    // $('#tapcard1').hide();
-                    // $('#tapcard2').hide();
                     $('#adduser').hide();
                     
                }
                 
             });
+        </script>
+
+        <script>
+            document.getElementById("admin-body").onload = function() {checkuser()};
+            function checkuser(){
+                var access_level = <?php echo $access_level; ?>
+
+                if(access_level == 2){
+                    document.getElementById("dashboard").style.display = "none";
+                    document.getElementById("reports").style.display = "none";
+                    document.getElementById("reports1").style.display = "none";
+                    document.getElementById("reports2").style.display = "none";
+                    document.getElementById("ejeep").style.display = "none";
+                    document.getElementById("ejeep1").style.display = "none";
+                    document.getElementById("ejeep2").style.display = "none";
+                    document.getElementById("ejeep3").style.display = "none";
+                    document.getElementById("ejeep4").style.display = "none";
+                    document.getElementById("adduser").style.display = "none";
+
+                }
+            }
         </script>
     </body>
 </html>
