@@ -213,6 +213,7 @@
         $('#searchInactive').on('keyup',function(){
             $('tbody').empty();
             $value=$(this).val();
+            console.log($value);
             $.ajax({
                 type : 'get',
                 url : '{{URL::to('cards/searchInactive')}}',
@@ -220,7 +221,7 @@
                 success:function(data){
                     $('tbody').html(data);
                 },
-            });
+            }); 
                 if($('#searchInactive').val().length === 0) {
                     $('#result').css('display', 'block');
                 } else {

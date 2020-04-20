@@ -134,7 +134,7 @@ class ClientLoginController extends Controller
 
 
     public function adminlogout($user_id){
-        
+        session_write_close();
         DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $user_id,
