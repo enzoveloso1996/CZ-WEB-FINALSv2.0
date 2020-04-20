@@ -22,10 +22,11 @@ Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('cli
 Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@clientlogout']);
 Route::get('admin-login-check', 'ClientLoginController@adminlogin')->name('admin-login-check');
 Route::get('adminlogin/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
-Route::get('admin-register-index', 'ClientLoginController@register_index')->name('admin-register-index');
+
+Route::get('admin-register-index/{id}', ['as' => 'admin-register-index', 'uses' => 'ClientLoginController@register_index']);
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
-
+ 
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
 

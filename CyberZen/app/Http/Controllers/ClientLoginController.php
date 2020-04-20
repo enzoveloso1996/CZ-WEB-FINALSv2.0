@@ -185,11 +185,14 @@ class ClientLoginController extends Controller
     }
 
 
-    public function register_index()
-    {   $user_id = 1;
-        $access_level = DB::table('tb_access_level')->get();
-        
-        return view("/cms/register")->with('access_levels', $access_level)->with('user_id', $user_id);
+    public function register_index($user_id)
+    {   $access_level = DB::table('tb_access_level')->get();
+        $userlist = DB::table('tb_users')
+        ->join('tb_access_level', 'tb_access_level.id', '=', 'tb_users.access_level_id')
+        ->paginate(10);
+
+        return view("/cms/admin/adduser")->with('access_levels', $access_level)->with('user_id', $user_id)
+                        ->with('userslists', $userlist);
     }
 
     public function register(Request $request)
@@ -203,11 +206,11 @@ class ClientLoginController extends Controller
             'firstname'         =>  $request->firstname,  
             'middlename'        =>  $request->middlename,
             'lastname'          =>  $request->lastname,
-            'access_level_id'   =>  $request->accesslevel_id
+            'access_level_id'   =>  $request->access_level_text
         ]);
 
         
-        return redirect()->route('dashboard.index', ['id' => $user_id]);
+        return redirect()->route('admin-register-index', ['id' => $request->user_id]);
     }
 
 
