@@ -29,7 +29,6 @@ class CardListController extends Controller
         ->where('tb_mf_carduser_records.is_active', '=', 0)
         ->paginate(20);
 
-
         //total sales of card
         $cardsales = DB::table('tb_tr_card_transactions')
         ->select(DB::raw("SUM(amount) as total"))
@@ -46,6 +45,8 @@ class CardListController extends Controller
         ->select('cardtype_id','cardtype')
         ->get();
 
+        $activecards = array_column($activecards, 'count');
+        
         $access = DB::table('tb_users')
         ->where('user_id', '=', $user_id)
         ->get();
@@ -53,11 +54,9 @@ class CardListController extends Controller
             $access_level = $access_lvl->access_level_id;
         }
 
-        $activecards = array_column($activecards, 'count');
-        
-        return view('cms/teller/cardlist')->with('user_id', $user_id)
+        return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
+                            ->with('user_id', $user_id)
                             ->with('access_level', $access_level)
-                            ->with('cardlisttbl', $cardlisttbl)
                             ->with('activecards', json_encode($activecards, JSON_NUMERIC_CHECK))
                             ->with('cardsales', $cardsales)
                             ->with('cardlisttbl2', $cardlisttbl2)
@@ -106,24 +105,24 @@ class CardListController extends Controller
     {
             if(!empty($request->search)){
                 $output="";
-                $cardlisttbl = array();
-                $cardlisttbl = DB::table('tb_mf_carduser_records')
+                $cardlisttbl2 = array();
+                $cardlisttbl2 = DB::table('tb_mf_carduser_records')
                 ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
-                ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
+                ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
                 ->where('tb_mf_carduser_records.is_active','=',0)
                 ->where('tb_mf_carduser_records.rfid_number','LIKE','%'.$request->search."%")
                 ->paginate(1);
             }else{
                 $output="";
             }
-            
-            if($cardlisttbl)
+
+            if($cardlisttbl2)
             {
-                foreach ($cardlisttbl as $cardlisttbll) {
+                foreach ($cardlisttbl2 as $key => $cardlisttbll) {
                     $output.='<tr>'.
                     '<td class="left">'.$cardlisttbll->rfid_number.'</td>'.
                     '<td class="center">'.$cardlisttbll->card_balance.'</td>'.
-                    '<td class="left">'.$cardlisttbll->fullname.'</td>'.
+                    '<td class="left">'.$cardlisttbll->first_name.'</td>'.
                     '<td class="center"><button class="btn-sx btn-primary" data-toggle="modal" data-target="#holdcardModal" data-rfid='.$cardlisttbll->rfid_number.'><i class="fa fa-exclamation"></i></button>&nbsp;'.
                     '<button type="submit" value="Delete" class="btn-sx btn-danger"><i class="fa fa-trash"></i></button></td>'.
                     '</tr>';
@@ -162,7 +161,7 @@ class CardListController extends Controller
     }
     }
 
-    public function reload($user_id)
+    public function reload()
     {
         $reload = DB::table('tb_mf_carduser_records')
         ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
@@ -170,14 +169,7 @@ class CardListController extends Controller
         ->where('tb_mf_carduser_records.is_active', '=', 1)
         ->paginate(20);
 
-        $access = DB::table('tb_users')
-        ->where('user_id', '=', $user_id)
-        ->get();
-        foreach($access as $access_lvl){
-            $access_level = $access_lvl->access_level_id;
-        }
-
-        return view("cms/teller/reload")->with('reload' , $reload)->with('user_id', $user_id)->with('access_level', $access_level);
+        return view('cms/teller/reload')->with('reload' , $reload);
             
     }
 
@@ -239,8 +231,7 @@ class CardListController extends Controller
         DB::table('tb_mf_carduser_records')->where('rfid_number', $data['id'])
                                             ->update(['card_balance'=> $data['tot2']]);
 
-        return redirect()->route('cardlist.index', ['id' => $data['updated_by']]);
-
+        return redirect('cards/cms/teller/reload');
     }
 
     /**
@@ -283,7 +274,7 @@ class CardListController extends Controller
         $reload = DB::table('tb_mf_carduser_records')->where('carduser_id',$request->id)
                                                     ->update(['is_hold'=>$request->hold]);
 
-        return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
+        return redirect('cms/teller/reload');
     }
 
     /**
