@@ -148,37 +148,10 @@
                                 <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
                             </li>
                         @endif
-<<<<<<< HEAD
-                        <li class="menu-title">Reports</li>
-                        <!-- /.menu-title -->
-                        @if(Request::url() == 'http://127.0.0.1:8000/reports/cms/admin/salestransactions')
-                            <li class="active">
-                                <a href="/reports/cms/admin/salestransactions"> <i class="menu-icon fa fa-credit-card"></i>Card Transactions</a>
-                            </li>
-                        @else
-                            <li>
-                                <a href="/reports/cms/admin/salestransactions"> <i class="menu-icon fa fa-credit-card"></i>Card Transactions</a>
-                            </li>
-                        @endif
-                        @if(Request::url() == 'http://127.0.0.1:8000/reports/cms/admin/jeeptransactions')
-                            <li class="active">
-                                <a href="/reports/cms/admin/jeeptransactions"> <i class="menu-icon fa fa-bus"></i>Jeep Transactions</a>
-                            </li>
-                        @else
-                            <li>
-                                <a href="/reports/cms/admin/jeeptransactions"> <i class="menu-icon fa fa-bus"></i>Jeep Transactions</a>
-                            </li>
-                        @endif
-                        <li class="menu-title">Tap Cards</li><!-- /.menu-title -->
-                        @if(Request::url() == 'http://127.0.0.1:8000/cards/cms/teller/cardlist')
-                            <li class="active">
-                                <a href="/cards/cms/teller/cardlist"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
-=======
                         <li class="menu-title" id="tapcard">Tap Cards</li><!-- /.menu-title -->
                         @if(Request::url() == "{{route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level])}}")
                             <li class="active" id="tapcard1">
                                 <a href="{{route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-credit-card"></i>Cards</a>
->>>>>>> dev-ron
                             </li>
                         @else 
                             <li id="tapcard1">

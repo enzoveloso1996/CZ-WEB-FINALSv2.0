@@ -50,13 +50,6 @@ Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
 // Route::resource('sales', 'SalesController');
 
 Route::prefix('cards')->group(function(){
-<<<<<<< HEAD
-    Route::resource('cardlist', 'SalesController', ['except' => ['index']]);
-    Route::get('cms/teller/cardlist/{id}', ['as' => 'cardlist.index', 'uses' => 'CardListController@index']);
-    // Route::resource('cms/teller/cardlist', 'CardListController');
-    // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
-    Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
-=======
     Route::get('cms/teller/cardlist/{id}', ['as' => 'cardlist.index', 'uses' => 'CardListController@index']);
     Route::resource('cardlist', 'SalesController', ['except' => ['index']]);
     
@@ -65,7 +58,6 @@ Route::prefix('cards')->group(function(){
     
     Route::get('cms/teller/reload/{id}', ['as' => 'reload', 'uses' => 'CardListController@reload']);
     // Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
->>>>>>> dev-ron
 
     Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
     Route::get('/searchLoad', 'CardListController@searchLoad');

@@ -53,11 +53,7 @@ class CardListController extends Controller
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
-<<<<<<< HEAD
  
-=======
- 
->>>>>>> dev-ron
         return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
                             ->with('user_id', $user_id)
                             ->with('access_level', $access_level)
@@ -234,7 +230,7 @@ class CardListController extends Controller
             'rfid_number'           => $data['id'],    
             'transactiontype_id'    => 2,
             'amount'                => $data['amount2'],
-            'updated_by'            => $data['updated_by'],
+            'updated_by'            => $data['updated_by']
         ]);
 
         DB::table('tb_mf_carduser_records')->where('rfid_number', $data['id'])
