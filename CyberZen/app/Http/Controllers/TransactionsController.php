@@ -10,15 +10,14 @@ class TransactionsController extends Controller
 {
     public function jeeptransactions($user_id){
 
-        return view("cms/admin/jeeptransaction")->with('user_id', $user_id);
+        return view("cms/admin/jeeptransactions")->with('user_id', $user_id);
     }
 
     public function cardtransactions($user_id){
 
-        return view("cms/admin/cardtransaction")->with('user_id', $user_id);
+        return view("cms/admin/cardtransactions")->with('user_id', $user_id);
     }
-
-
+    
     public function store(Request $request)
     {
         $this->validate($request, [
@@ -37,7 +36,8 @@ class TransactionsController extends Controller
 
         DB::table('tb_mf_carduser_records')->where('rfid_number', $data['rfid_number'])
                                            ->update(['is_active'=> 1]);
+                                   
 
-        return redirect('cards/cms/teller/cardlist');
+        return redirect()->route('cardlist.index', ['id' => $data['updated_by']]);
     }
 }

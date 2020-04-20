@@ -239,7 +239,7 @@ class CardListController extends Controller
         DB::table('tb_mf_carduser_records')->where('rfid_number', $data['id'])
                                             ->update(['card_balance'=> $data['tot2']]);
 
-        return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
+        return redirect()->route('cardlist.index', ['id' => $data['updated_by']]);
 
     }
 
