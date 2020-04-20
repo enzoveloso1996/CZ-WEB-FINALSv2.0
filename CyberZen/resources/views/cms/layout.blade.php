@@ -177,6 +177,17 @@
                                 <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @endif
+
+                        @if(Request::path() == '/widgets')
+                            <li id="editaccount">
+                                <a href="{{Route('admin-editaccount-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Edit Account</a>
+                            </li>
+                        @else 
+                            <li id="editaccount">
+                                <a href="{{Route('admin-editaccount-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Edit Account</a>
+                            </li>
+                        @endif
+
                         <li>
                             <a href="{{Route('admin-logout-check', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>

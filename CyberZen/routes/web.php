@@ -26,6 +26,9 @@ Route::get('adminlogin/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLo
 Route::get('admin-register-index/{id}', ['as' => 'admin-register-index', 'uses' => 'ClientLoginController@register_index']);
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
+Route::get('admin-editaccount-index/{id}', ['as' => 'admin-editaccount-index', 'uses' => 'ClientLoginController@editaccount_index']);
+Route::put('admin-editaccount', 'ClientLoginController@editaccount')->name('admin-editaccount');
+Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_password')->name('admin-editaccount-password');
  
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);

@@ -213,6 +213,48 @@ class ClientLoginController extends Controller
         return redirect()->route('admin-register-index', ['id' => $request->user_id]);
     }
 
+    public function editaccount_index($user_id)
+    {   $access_level = DB::table('tb_access_level')->get();
+        $userlist = DB::table('tb_users')
+        ->join('tb_access_level', 'tb_access_level.id', '=', 'tb_users.access_level_id')
+        ->where('tb_users.user_id', '=', $user_id)
+        ->get();
+
+        return view("/cms/admin/editaccount")->with('access_levels', $access_level)->with('user_id', $user_id)
+                        ->with('userslists', $userlist);
+    }
+
+    public function editaccount(Request $request)
+    {
+        $password_hash = Hash::make($request->password);
+
+        DB::table('tb_users')
+        ->where('user_id', '=', $request->user_id)
+        ->update([
+            'username'          =>  $request->username,
+            'firstname'         =>  $request->firstname,  
+            'middlename'        =>  $request->middlename,
+            'lastname'          =>  $request->lastname
+        ]);
+        
+        
+        return redirect()->route('admin-register-index', ['id' => $request->user_id]);
+    }
+
+    public function editaccount_password(Request $request)
+    {
+        $password_hash = Hash::make($request->password);
+
+        DB::table('tb_users')
+        ->where('user_id', '=', $request->user_id)
+        ->update([
+            'password'          =>  $password_hash
+        ]);
+
+        
+        return redirect()->route('admin-register-index', ['id' => $request->user_id]);
+    }
+
 
 
 }
