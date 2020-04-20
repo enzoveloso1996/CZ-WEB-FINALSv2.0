@@ -123,10 +123,10 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Warning</h5>
+                                            <h5 class="modal-title">Information</h5>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are you sure you want to hold this card?</p>
+                                            <p>Are you sure you want to Activate this card?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <form method="post" action="{{ route('sold-card')}}">
@@ -134,7 +134,11 @@
                                                 @csrf
                                                 <input type="text" class="form-control" name="rfid_number" id="rfid_number" hidden>
                                                 <input type="text" class="form-control" name="updated_by" id="updated_by" value="{{$user_id}}" hidden>
+<<<<<<< HEAD
                                                 <button type="submit" class="btn btn-danger">Ok</button>
+=======
+                                                <button type="submit" class="btn btn-primary">Ok</button>
+>>>>>>> dev-ron
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                             </form>
                                         </div>

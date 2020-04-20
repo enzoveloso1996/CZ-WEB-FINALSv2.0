@@ -19,29 +19,53 @@ Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' 
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
 
 Route::get('/clientlogin', 'ClientLoginController@index');
+Route::get('/adminlogin', 'ClientLoginController@adminindex');
+
 Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('client-login-check');
 Route::get('clientlogout/{id}', ['as' => 'client-logout-check', 'uses' => 'ClientLoginController@clientlogout']);
 Route::get('admin-login-check', 'ClientLoginController@adminlogin')->name('admin-login-check');
 Route::get('adminlogin/{id}', ['as' => 'admin-logout-check', 'uses' => 'ClientLoginController@adminlogout']);
-Route::get('admin-register-index', 'ClientLoginController@register_index')->name('admin-register-index');
+
+Route::get('admin-register-index/{id}', ['as' => 'admin-register-index', 'uses' => 'ClientLoginController@register_index']);
 Route::put('admin-register', 'ClientLoginController@register')->name('admin-register');
 
+Route::get('admin-editaccount-index/{id}', ['as' => 'admin-editaccount-index', 'uses' => 'ClientLoginController@editaccount_index']);
+Route::put('admin-editaccount', 'ClientLoginController@editaccount')->name('admin-editaccount');
+Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_password')->name('admin-editaccount-password');
+ 
+Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
+Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
 
-Route::get('/adminlogin', function () {
-    return view('cms/login');
-});
+// Route::get('/cardtransactions', function () {
+//     return view('cms/admin/cardtransaction');
+// });
+// Route::get('/jeeptransactions', function () {
+//     return view('cms/admin/jeeptransaction');
+// });
+
 Route::get('cms/admin/dashboard/{id}', ['as' => 'dashboard.index', 'uses' => 'SalesController@index']);
 Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
 // Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 // Route::resource('sales', 'SalesController');
 
 Route::prefix('cards')->group(function(){
+<<<<<<< HEAD
     Route::resource('cardlist', 'SalesController', ['except' => ['index']]);
     Route::get('cms/teller/cardlist/{id}', ['as' => 'cardlist.index', 'uses' => 'CardListController@index']);
     // Route::resource('cms/teller/cardlist', 'CardListController');
     // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
     Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
+=======
+    Route::get('cms/teller/cardlist/{id}', ['as' => 'cardlist.index', 'uses' => 'CardListController@index']);
+    Route::resource('cardlist', 'SalesController', ['except' => ['index']]);
+    
+    // Route::resource('cms/teller/cardlist', 'CardListController');
+    // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
+    
+    Route::get('cms/teller/reload/{id}', ['as' => 'reload', 'uses' => 'CardListController@reload']);
+    // Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
+>>>>>>> dev-ron
 
     Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
     Route::get('/searchLoad', 'CardListController@searchLoad');
@@ -52,7 +76,7 @@ Route::prefix('cards')->group(function(){
     Route::get('/combo-sort','CardListController@combosearch');
 });
 
-
+ 
 
 Route::prefix('jeeps')->group(function(){
     Route::get('cms/admin/clientlist/{id}', ['as' => 'clientlist.index', 'uses' => 'ClientListController@index']);
@@ -66,17 +90,28 @@ Route::prefix('jeeps')->group(function(){
 
     Route::get('/search-client','ClientListController@search');
 
-    Route::resource('cms/admin/clientusers', 'ClientUserController');
-    Route::get('/clientusers','ClientUserController@index')->name('clientusers');
+    Route::get('cms/admin/clientusers/{id}', ['as' => 'clientusers.index', 'uses' => 'ClientUserController@index']);
+    Route::resource('clientusers', 'ClientUserController', ['except' => ['index']]);
+
+    // Route::resource('cms/admin/clientusers', 'ClientUserController');
+    // Route::get('/clientusers','ClientUserController@index')->name('clientusers');
     Route::get('/search-user','ClientUserController@search');
 
-    Route::resource('cms/admin/jeeplist', 'JeepListController');
-    Route::get('cms/admin/jeeplist', 'JeepListController@index')->name('jeeplist');
+    Route::get('cms/admin/jeeplist/{id}', ['as' => 'jeeplist.index', 'uses' => 'JeepListController@index']);
+    Route::resource('jeeplist', 'JeepListController', ['except' => ['index']]);
+
+    // Route::resource('cms/admin/jeeplist', 'JeepListController');
+    // Route::get('cms/admin/jeeplist', 'JeepListController@index')->name('jeeplist');
+    
     Route::get('/search-jeep','JeepListController@search');
     Route::get('/combo-search-jeep','JeepListController@combosearch');
 
-    Route::resource('cms/admin/driverlist', 'DriverListController');
-    Route::get('cms/admin/driverlist', 'DriverListController@index')->name('driverlist');
+    Route::get('cms/admin/driverlist/{id}', ['as' => 'driverlist.index', 'uses' => 'DriverListController@index']);
+    Route::resource('driverlist', 'DriverListController', ['except' => ['index']]);
+
+    // Route::resource('cms/admin/driverlist', 'DriverListController');
+    // Route::get('cms/admin/driverlist', 'DriverListController@index')->name('driverlist');
+
     Route::get('/search-driver','DriverListController@search');
     Route::get('/combo-search-driver','DriverListController@combosearch');
 });

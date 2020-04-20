@@ -101,7 +101,7 @@
                                         @method('POST') 
                                         @csrf
                                         <input type="text" class="form-control" name="id" id="id" hidden>
-                                        <input type="text" class="form-control" name="updated_by" id="updated_by" value="ron" hidden>
+                                        <input type="text" class="form-control" name="updated_by" id="updated_by" value="{{$user_id}}" hidden>
                                         <div class="container text-center">
                                             <h3 class="modal-title rfid" id="rfid"></h3>
                                         </div>

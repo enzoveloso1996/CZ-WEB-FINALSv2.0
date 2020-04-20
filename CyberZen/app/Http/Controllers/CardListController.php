@@ -53,7 +53,11 @@ class CardListController extends Controller
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
+<<<<<<< HEAD
 
+=======
+ 
+>>>>>>> dev-ron
         return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
                             ->with('user_id', $user_id)
                             ->with('access_level', $access_level)
@@ -161,15 +165,20 @@ class CardListController extends Controller
     }
     }
 
-    public function reload()
+    public function reload($user_id)
     {
         $reload = DB::table('tb_mf_carduser_records')
         ->join('tb_mf_cardtype', 'tb_mf_cardtype.cardtype_id', '=', 'tb_mf_carduser_records.cardtype_id')
         ->select('tb_mf_carduser_records.rfid_number', 'tb_mf_carduser_records.carduser_id', 'tb_mf_carduser_records.card_balance','tb_mf_carduser_records.last_name','tb_mf_carduser_records.first_name','tb_mf_carduser_records.middle_name', 'tb_mf_carduser_records.is_active', 'tb_mf_cardtype.cardtype')
         ->where('tb_mf_carduser_records.is_active', '=', 1)
         ->paginate(20);
-
-        return view('cms/teller/reload')->with('reload' , $reload);
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $user_id)
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+        return view('cms/teller/reload')->with('reload' , $reload)->with('user_id', $user_id)->with('access_level', $access_level);
             
     }
 
@@ -231,7 +240,14 @@ class CardListController extends Controller
         DB::table('tb_mf_carduser_records')->where('rfid_number', $data['id'])
                                             ->update(['card_balance'=> $data['tot2']]);
 
-        return redirect('cards/cms/teller/reload');
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $data['updated_by'])
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+
+        return redirect()->route('reload', ['id' => $data['updated_by'], 'access_level'=> $access_level]);
     }
 
     /**

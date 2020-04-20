@@ -15,11 +15,8 @@
 </style>
 
 @section('content')
-@if (session('status'))
-<div class="alert alert-success">
-    {{ session('status') }}
-</div>
-@endif
+
+
 
     <!-- Breadcrumbs-->
     <div class="breadcrumbs">
@@ -57,6 +54,17 @@
                         <div class="card-header text-center">
                             <strong class="card-title">E-JEEP COMPANIES</strong>
                         </div>
+                        @if (session('status-alert'))
+                            <div class="alert alert-danger">
+                                {{ session('status-alert') }}
+                            </div>
+                        @endif
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
+
                         <div class="container">
                             <div class="float-left p-3">
                                 <div class="input-group">
@@ -71,7 +79,6 @@
                             <div class="float-right p-3">
                                 <button type="submit" value="Edit" class="btn-sx btn-primary"  data-toggle="modal" data-target="#addModal" onclick=""><i class="fa fa-plus-square"></i>&nbsp; Add New Client Company</button>
                             </div>
-    
                         </div>
                         <div class="card-body">
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -108,7 +115,6 @@
                                                             data-contact_person="{{$detail->contact_person}}"
                                                             data-contact_number="{{$detail->contact_number}}"
                                                             data-client_address="{{$detail->client_address}}"
-                                                            data-keyword="{{$detail->keyword}}"
                                                             data-client_email = "{{$detail->client_email}}">
                                                             <i class="fa fa-edit" data-toggle="tooltip" title="Edit"></i>
                                                         </button>
@@ -157,13 +163,7 @@
                                                                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Client Email Address</span>
                                                                                     </div>
                                                                                     <input type="text" class="form-control" name="client_email" id="client_email" placeholder="Client Email Address" aria-label="Client Email Address" aria-describedby="basic-addon1">
-                                                                                </div>    
-                                                                                <div class="input-group mb-3">
-                                                                                    <div class="input-group-prepend">
-                                                                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">keyword</span>
-                                                                                    </div>
-                                                                                    <input type="text" class="form-control" name="keyword" id="keyword" placeholder="Keyword" aria-label="Keyword" aria-describedby="basic-addon1">
-                                                                                </div>    
+                                                                                </div>
                                                                             </div>
                                                                             
                                                                         </div>
@@ -229,8 +229,8 @@
                                     </tr>
                                     @endforeach            
                                 </tbody>
+                                {{$tabledtl->links()}}
                             </table>
-                            {{$tabledtl->links()}}
                         </div>
                     </div>
                 </div>
@@ -290,13 +290,7 @@
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Client Email Address</span>
                                     </div>
                                     <input type="text" class="form-control" name="client_email" placeholder="Client Email Address" aria-label="Client Email Address" aria-describedby="basic-addon1">
-                                </div>    
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text" id="basic-addon1" style="width: 200px;">keyword</span>
-                                    </div>
-                                    <input type="text" class="form-control" name="keyword" placeholder="Keyword" aria-label="Keyword" aria-describedby="basic-addon1">
-                                </div>    
+                                </div>
                             </div>
                         </div>
                         <div class="modal-footer"> 
@@ -360,7 +354,7 @@
         var client_address = button.data('client_address');
         var contact_person = button.data('contact_person');
         var contact_number = button.data('contact_number');
-        var keyword = button.data('keyword');
+    
  
         var modal = $(this);
         modal.find('.modal-title').text('Are you sure to Edit ' + client_name +'?');
@@ -370,7 +364,7 @@
         modal.find('#contact_person').val(contact_person);
         modal.find('#contact_number').val(contact_number);
         modal.find('#client_name').val(client_name);
-        modal.find('#keyword').val(keyword);
+     
         
     });
 </script>

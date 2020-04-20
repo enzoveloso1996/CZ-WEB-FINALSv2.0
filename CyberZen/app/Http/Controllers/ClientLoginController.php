@@ -18,7 +18,10 @@ class ClientLoginController extends Controller
     {
         return view('crm/company/clientlogin');
     }
-
+    public function adminindex()
+    {
+        return view('cms/login');
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -96,7 +99,7 @@ class ClientLoginController extends Controller
     }
 
     public function clientlogin(Request $request){
-
+        session_start();
         $hashpw = DB::table('tb_mf_client_users')
         ->where('username', '=', $request->username)
         ->get();
@@ -131,17 +134,19 @@ class ClientLoginController extends Controller
 
 
     public function adminlogout($user_id){
+        session_write_close();
         DB::table('tb_users_log')
         ->insert([
             'user_id'       =>  $user_id,
-            'action_id'     =>  4,
+            'action_id'     =>  5,
             'remarks'       => 'Log Out' 
         ]);
+      
         return redirect('/adminlogin');
     }
 
     public function adminlogin(Request $request){
-
+        session_start();
         $hashpw = DB::table('tb_users')
         ->where('username', '=', $request->username)
         ->get();
@@ -161,9 +166,9 @@ class ClientLoginController extends Controller
                     'remarks'       => 'Log In' 
                 ]);
                 if($access_level == 1){
-                    return redirect()->route('dashboard.index', ['user_id' => $user_id]);
+                    return redirect()->route('dashboard.index', ['user_id' => $user_id, 'access_level' => $access_level]);
                 }
-                return redirect('cards/cms/teller/cardlist');
+                return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
 
             }
             else{
@@ -180,11 +185,16 @@ class ClientLoginController extends Controller
     }
 
 
-    public function register_index()
-    {   $user_id = 1;
-        $access_level = DB::table('tb_access_level')->get();
+    public function register_index($user_id)
+    {  $access_level = DB::table('tb_access_level')
+        ->get();
         
-        return view("/cms/register")->with('access_levels', $access_level)->with('user_id', $user_id);
+        $userlist = DB::table('tb_users')
+        ->join('tb_access_level', 'tb_access_level.id', '=', 'tb_users.access_level_id')
+        ->paginate(10);
+ 
+        return view("/cms/admin/adduser")->with('access_levels', $access_level)->with('user_id', $user_id)
+                        ->with('userslists', $userlist);
     }
 
     public function register(Request $request)
@@ -198,11 +208,72 @@ class ClientLoginController extends Controller
             'firstname'         =>  $request->firstname,  
             'middlename'        =>  $request->middlename,
             'lastname'          =>  $request->lastname,
-            'access_level_id'   =>  $request->accesslevel_id
+            'access_level_id'   =>  $request->access_level_text
         ]);
 
         
-        return redirect()->route('dashboard.index', ['id' => $user_id]);
+        return redirect()->route('admin-register-index', ['id' => $request->user_id]);
+    }
+
+    public function editaccount_index($user_id)
+    {   
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $user_id)
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+        
+        $userlist = DB::table('tb_users')
+        ->join('tb_access_level', 'tb_access_level.id', '=', 'tb_users.access_level_id')
+        ->where('tb_users.user_id', '=', $user_id)
+        ->get();
+        
+        return view("/cms/admin/editaccount")->with('access_level', $access_level)->with('user_id', $user_id)
+                        ->with('userslists', $userlist);
+    }
+
+    public function editaccount(Request $request)
+    {
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $request->user_id)
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+        $password_hash = Hash::make($request->password);
+
+        DB::table('tb_users')
+        ->where('user_id', '=', $request->user_id)
+        ->update([
+            'username'          =>  $request->username,
+            'firstname'         =>  $request->firstname,  
+            'middlename'        =>  $request->middlename,
+            'lastname'          =>  $request->lastname
+        ]);
+        
+        
+        return redirect()->route('admin-register-index', ['id' => $request->user_id, 'access_levels' => $request->access_level]);
+    }
+
+    public function editaccount_password(Request $request)
+    {
+        $access = DB::table('tb_users')
+        ->where('user_id', '=', $request->user_id)
+        ->get();
+        foreach($access as $access_lvl){
+            $access_level = $access_lvl->access_level_id;
+        }
+        $password_hash = Hash::make($request->password);
+
+        DB::table('tb_users')
+        ->where('user_id', '=', $request->user_id)
+        ->update([
+            'password'          =>  $password_hash
+        ]);
+
+        
+        return redirect()->route('admin-register-index', ['id' => $request->user_id, 'access_level' => $access_level]);
     }
 
 
