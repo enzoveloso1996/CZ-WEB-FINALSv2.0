@@ -54,7 +54,7 @@ class CardListController extends Controller
             $access_level = $access_lvl->access_level_id;
         }
 <<<<<<< HEAD
-
+ 
 =======
  
 >>>>>>> dev-ron
