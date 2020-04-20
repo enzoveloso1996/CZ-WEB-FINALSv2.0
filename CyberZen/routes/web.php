@@ -50,7 +50,7 @@ Route::prefix('cards')->group(function(){
     // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
     Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
 
-    Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
+    Route::post('sold-card', 'TransactionsController@store')->name('sold-card');
     Route::get('/searchLoad', 'CardListController@searchLoad');
     Route::post('/reload-card', 'CardListController@store')->name('reload-card');
     Route::patch('/hold-card', 'CardListController@holdCard')->name('hold-card');
