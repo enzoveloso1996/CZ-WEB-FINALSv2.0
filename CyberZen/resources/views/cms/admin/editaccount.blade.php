@@ -33,7 +33,7 @@
                             <ol class="breadcrumb text-right">
                                 <li><a href="/dashboard">DASHBOARD</a></li>
                                 <li><a href="#">E-JEEP</a></li>
-                                <li class="active">Client User Accounts</li>
+                                <li class="active">Edit User Accounts</li>
                             </ol>
                         </div>
                     </div>
@@ -64,6 +64,8 @@
                                 @csrf
                                 @method('PUT')
                                 <input type="hidden" name="user_id" value="{{$user_id}}">
+                                <input type="hidden" name="access_level" value="{{$access_level}}">
+
                                 <div class="form-group">
                                     @foreach ($userslists as $userlist)
                                         
