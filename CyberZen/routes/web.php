@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
+Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
+
 Route::get('/clientlogin', 'ClientLoginController@index');
 Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('client-login-check');
@@ -27,24 +31,16 @@ Route::put('admin-register', 'ClientLoginController@register')->name('admin-regi
 Route::get('/adminlogin', function () {
     return view('cms/login');
 });
-<<<<<<< HEAD
-
-Route::get('/jeeptransactions', function () {
-    return view('cms/admin/jeeptransactions');
-});
-
-Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
-Route::resource('sales', 'SalesController');
-=======
 Route::get('cms/admin/dashboard/{id}', ['as' => 'dashboard.index', 'uses' => 'SalesController@index']);
 Route::resource('dashboard', 'SalesController', ['except' => ['index']]);
 // Route::get('cms/admin/dashboard', 'SalesController@index')->name('dashboard');
 // Route::resource('sales', 'SalesController');
->>>>>>> dev-ron
 
 Route::prefix('cards')->group(function(){
-    Route::resource('cms/teller/cardlist', 'CardListController');
-    Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
+    Route::resource('cardlist', 'SalesController', ['except' => ['index']]);
+    Route::get('cms/teller/cardlist/{id}', ['as' => 'cardlist.index', 'uses' => 'CardListController@index']);
+    // Route::resource('cms/teller/cardlist', 'CardListController');
+    // Route::get('cms/teller/cardlist', 'CardListController@index')->name('cardlist');
     Route::get('cms/teller/reload', 'CardListController@reload')->name('reload');
 
     Route::post('sold-card', 'TransactionsController@store')->name('sold-card');;
