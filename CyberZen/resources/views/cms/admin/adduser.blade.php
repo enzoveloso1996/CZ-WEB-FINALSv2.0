@@ -127,7 +127,7 @@
                                     </div>
                                     <select class="form-control" name="access_level" id="access_level_id">
                                         <option value="--">--</option>
-                                        @foreach ($access_levels as $access_level)
+                                        @foreach ($access_levels as $access_level) 
                                             <option id="{{$access_level->id}}">{{$access_level->access_level}}</option>
                                         @endforeach
                                     </select>

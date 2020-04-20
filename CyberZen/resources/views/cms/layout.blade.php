@@ -170,21 +170,21 @@
                         <li class="menu-title" id="accounts">Account</li><!-- /.menu-title -->
                         @if(Request::path() == '/widgets')
                             <li id="adduser">
-                                <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
+                                <a href="{{Route('admin-register-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @else 
                             <li id="adduser">
-                                <a href="{{Route('admin-register-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
+                                <a href="{{Route('admin-register-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
                             </li>
                         @endif
 
                         @if(Request::path() == '/widgets')
                             <li id="editaccount">
-                                <a href="{{Route('admin-editaccount-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Edit Account</a>
+                                <a href="{{Route('admin-editaccount-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-cogs"></i>Edit Account</a>
                             </li>
                         @else 
                             <li id="editaccount">
-                                <a href="{{Route('admin-editaccount-index', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-cogs"></i>Edit Account</a>
+                                <a href="{{Route('admin-editaccount-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-cogs"></i>Edit Account</a>
                             </li>
                         @endif
 

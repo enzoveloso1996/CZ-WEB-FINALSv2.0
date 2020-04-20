@@ -53,7 +53,7 @@ class CardListController extends Controller
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
-
+ 
         return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
                             ->with('user_id', $user_id)
                             ->with('access_level', $access_level)

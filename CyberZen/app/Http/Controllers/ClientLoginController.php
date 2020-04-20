@@ -186,17 +186,14 @@ class ClientLoginController extends Controller
 
 
     public function register_index($user_id)
-    {  $access = DB::table('tb_users')
-        ->where('user_id', '=', $user_id)
+    {  $access_level = DB::table('tb_access_level')
         ->get();
-        foreach($access as $access_lvl){
-            $access_level = $access_lvl->access_level_id;
-        }
+        
         $userlist = DB::table('tb_users')
         ->join('tb_access_level', 'tb_access_level.id', '=', 'tb_users.access_level_id')
         ->paginate(10);
-
-        return view("/cms/admin/adduser")->with('access_level', $access_level)->with('user_id', $user_id)
+ 
+        return view("/cms/admin/adduser")->with('access_levels', $access_level)->with('user_id', $user_id)
                         ->with('userslists', $userlist);
     }
 
@@ -219,12 +216,14 @@ class ClientLoginController extends Controller
     }
 
     public function editaccount_index($user_id)
-    {   $access = DB::table('tb_users')
+    {   
+        $access = DB::table('tb_users')
         ->where('user_id', '=', $user_id)
         ->get();
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
+        
         $userlist = DB::table('tb_users')
         ->join('tb_access_level', 'tb_access_level.id', '=', 'tb_users.access_level_id')
         ->where('tb_users.user_id', '=', $user_id)
