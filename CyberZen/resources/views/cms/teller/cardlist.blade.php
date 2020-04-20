@@ -123,18 +123,18 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h5 class="modal-title">Warning</h5>
+                                            <h5 class="modal-title">Information</h5>
                                         </div>
                                         <div class="modal-body">
-                                            <p>Are you sure you want to hold this card?</p>
+                                            <p>Are you sure you want to Activate this card?</p>
                                         </div>
                                         <div class="modal-footer">
                                             <form method="post" action="{{ route('sold-card')}}">
                                                 @method('POST')
                                                 @csrf
                                                 <input type="text" class="form-control" name="rfid_number" id="rfid_number" hidden>
-                                                <input type="text" class="form-control" name="updated_by" id="updated_by" value="ron" hidden>
-                                                <button type="submit" class="btn btn-danger">Ok</button>
+                                                <input type="text" class="form-control" name="updated_by" id="updated_by" value="{{$user_id}}" hidden>
+                                                <button type="submit" class="btn btn-primary">Ok</button>
                                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                                             </form>
                                         </div>
@@ -213,7 +213,6 @@
         $('#searchInactive').on('keyup',function(){
             $('tbody').empty();
             $value=$(this).val();
-            console.log($value);
             $.ajax({
                 type : 'get',
                 url : '{{URL::to('cards/searchInactive')}}',
@@ -221,7 +220,7 @@
                 success:function(data){
                     $('tbody').html(data);
                 },
-            }); 
+            });
                 if($('#searchInactive').val().length === 0) {
                     $('#result').css('display', 'block');
                 } else {

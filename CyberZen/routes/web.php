@@ -66,7 +66,7 @@ Route::prefix('cards')->group(function(){
     Route::get('/combo-sort','CardListController@combosearch');
 });
 
-
+ 
 
 Route::prefix('jeeps')->group(function(){
     Route::get('cms/admin/clientlist/{id}', ['as' => 'clientlist.index', 'uses' => 'ClientListController@index']);
