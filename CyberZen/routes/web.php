@@ -31,7 +31,7 @@ Route::put('admin-editaccount', 'ClientLoginController@editaccount')->name('admi
 Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_password')->name('admin-editaccount-password');
  
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeptransactions']);
-Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cardtransactions']);
+Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
 
 // Route::get('/cardtransactions', function () {
 //     return view('cms/admin/cardtransaction');

@@ -31,7 +31,6 @@ class JeepListController extends Controller
        
         $jeepcount = array_column($jeepcount, 'count');
 
-        
         return view("cms/admin/jeeplist")->with('user_id', $user_id)
                             ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
                             ->with('jeeplists', $jeeplists)

@@ -107,10 +107,8 @@
                                         <td class="center" id="ref"></td>
                                         <td class="left">{{$jeeplist->client_name}}</td>
                                         <td class="center">{{$jeeplist->plate_number}}</td>
-                               
                                     </tr>
                                     @endforeach
-                                   
                                 </tbody>
                                 {{$jeeplists->links()}}
                             </table>

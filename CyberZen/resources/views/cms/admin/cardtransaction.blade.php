@@ -71,19 +71,47 @@
             <div class="card-body">
                 <div class="float-left p-3">
                     <div class="input-group mb-1">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" id="searchLoad" placeholder="search" aria-label="search" aria-describedby="basic-addon1" autofocus>
                     </div>
+                </div>
+                <div class="float-right p-3">
+                    <input data-provide="datepicker">
+                    <input class="datepicker" data-date-format="yyyy-mm-dd">
+                    <div class="input-group date" data-provide="datepicker">
+                        <input type="text" class="form-control">
+                        <div class="input-group-addon">
+                            <span class="glyphicon glyphicon-th"></span>
+                        </div>
+                    </div>
+                    {{-- <select name="company-list" id="companylist" class="form-control">
+                        <option value="0">All</option>
+                        @foreach ($companylist as $list)
+                            <option id="{{$list->client_name}}" value="{{$list->client_id}}">{{$list->client_name}}</option>
+                        @endforeach    
+                    </select> --}}
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th class="center"></th>
+                            <th class="center">RFID</th>
+                            <th class="center">Transaction Type</th>
+                            <th class="center">Amount</th>
+                            <th class="center">Updated by</th>
+                            <th class="center">Date</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($cards as $card)                             
+                        <tr>
+                            <td class="center" id="ref"></td>
+                            <td class="left">{{$card->rfid_number}}</td>
+                            <td class="left">{{$card->transaction_type}}</td>
+                            <td class="center">{{$card->amount}}</td>
+                            <td class="left">{{$card->firstname}}</td>
+                            <td class="center">{{$card->created_at}}</td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
