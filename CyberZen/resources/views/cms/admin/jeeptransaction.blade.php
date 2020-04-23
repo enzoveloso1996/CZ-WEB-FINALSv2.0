@@ -72,7 +72,7 @@
             <div class="card-body">
                 <div class="float-left p-3">
                     <div class="input-group mb-1">
-                        <h6>Select date: <input id="dateinput" type="text"></h6>
+                        <h6>Select date: <input class="form-control" id="dateinput" type="text"></h6>
                     </div>
                 </div>
                 
@@ -81,6 +81,7 @@
                         <tr>
                             <th class="center"></th>
                             <th class="center">RFID</th>
+                            <th class="center">Company</th>
                             <th class="center">Total KM</th>
                             <th class="center">Fare</th>
                             <th class="center">Jeep Plate Number</th>
@@ -92,6 +93,7 @@
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$jeep->rfid_number}}</td>
+                            <td class="left">{{$jeep->client_name}}</td>
                             <td class="left">{{$jeep->totalKm}}</td>
                             <td class="center">{{$jeep->fare}}</td>
                             <td class="left">{{$jeep->jeep_plate_number}}</td>

@@ -77,7 +77,7 @@
                 </div>
                 <div class="float-left p-3">
                     <div class="input-group mb-1">
-                        <h6>Select date: <input id="dateinput" type="text"></h6>
+                        <h6>Select date: <input class="form-control" id="dateinput" type="text"></h6>
                     </div>
                 </div>
                 
