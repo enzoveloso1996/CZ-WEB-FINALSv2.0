@@ -75,15 +75,10 @@
                     <div class="input-group mb-1">
                     </div>
                 </div>
-                <div class="float-right p-3">
-                    <h6>Select date: <input id="dateinput" type="text"></h6>
-                    
-                    {{-- <select name="company-list" id="companylist" class="form-control">
-                        <option value="0">All</option>
-                        @foreach ($companylist as $list)
-                            <option id="{{$list->client_name}}" value="{{$list->client_id}}">{{$list->client_name}}</option>
-                        @endforeach    
-                    </select> --}}
+                <div class="float-left p-3">
+                    <div class="input-group mb-1">
+                        <h6>Select date: <input id="dateinput" type="text"></h6>
+                    </div>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">

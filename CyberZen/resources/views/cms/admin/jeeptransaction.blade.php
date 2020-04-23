@@ -1,4 +1,5 @@
 @extends('cms.layout')
+<link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 <style>
     table {
         counter-reset: rowNumber;
@@ -71,19 +72,32 @@
             <div class="card-body">
                 <div class="float-left p-3">
                     <div class="input-group mb-1">
-                        <div class="input-group-prepend">
-                          <span class="input-group-text" id="basic-addon1"><i class="fa fa-search"></i></span>
-                        </div>
-                        <input type="text" class="form-control" id="searchLoad" placeholder="search" aria-label="search" aria-describedby="basic-addon1" autofocus>
+                        <h6>Select date: <input id="dateinput" type="text"></h6>
                     </div>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
                         <tr>
+                            <th class="center"></th>
+                            <th class="center">RFID</th>
+                            <th class="center">Total KM</th>
+                            <th class="center">Fare</th>
+                            <th class="center">Jeep Plate Number</th>
+                            <th class="center">Date</th>
                         </tr>
                     </thead>
                     <tbody>
+                        @foreach ($jeeps as $jeep)                             
+                        <tr>
+                            <td class="center" id="ref"></td>
+                            <td class="left">{{$jeep->rfid_number}}</td>
+                            <td class="left">{{$jeep->totalKm}}</td>
+                            <td class="center">{{$jeep->fare}}</td>
+                            <td class="left">{{$jeep->jeep_plate_number}}</td>
+                            <td class="center">{{$jeep->created_at}}</td>
+                        </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -93,9 +107,13 @@
 
 
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $('#dateinput').datepicker({
+             dateFormat: 'yy-mm-dd' 
+        }).datepicker("setDate", new Date());
+    });
+</script>
 @endsection
