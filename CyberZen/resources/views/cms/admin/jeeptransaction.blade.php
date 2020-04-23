@@ -102,6 +102,7 @@
                         @endforeach
                     </tbody>
                 </table>
+                {{$jeeps->links()}}
             </div>
         </div>
     </div>
