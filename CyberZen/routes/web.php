@@ -14,6 +14,11 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/try', function () {
+    return view('cms/admin/try');
+});
+
 Route::get('/clientlogin', 'ClientLoginController@index');
 Route::get('/adminlogin', 'ClientLoginController@adminindex');
 

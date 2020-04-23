@@ -1,4 +1,6 @@
 @extends('cms.layout')
+<link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
+{{-- <link rel="stylesheet"  href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"> --}}
 <style>
     table {
         counter-reset: rowNumber;
@@ -74,14 +76,8 @@
                     </div>
                 </div>
                 <div class="float-right p-3">
-                    <input data-provide="datepicker">
-                    <input class="datepicker" data-date-format="yyyy-mm-dd">
-                    <div class="input-group date" data-provide="datepicker">
-                        <input type="text" class="form-control">
-                        <div class="input-group-addon">
-                            <span class="glyphicon glyphicon-th"></span>
-                        </div>
-                    </div>
+                    <h6>Select date: <input id="dateinput" type="text"></h6>
+                    
                     {{-- <select name="company-list" id="companylist" class="form-control">
                         <option value="0">All</option>
                         @foreach ($companylist as $list)
@@ -119,11 +115,13 @@
     </div>
 </div>
 
-
-
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-<script src="https://cdn.jsdelivr.net/npm/promise-polyfill"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.0/jquery.min.js"></script>
+<script src="https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script>
+    $(function() {
+        $('#dateinput').datepicker({
+             dateFormat: 'yy-mm-dd' 
+        }).datepicker("setDate", new Date());
+    });
+</script>
 @endsection
