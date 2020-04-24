@@ -6,6 +6,7 @@ use App\Transactions;
 use Illuminate\Http\Request;
 use DB;
 use Carbon\Carbon;
+use PDF;
 
 class TransactionsController extends Controller
 {
@@ -99,5 +100,8 @@ class TransactionsController extends Controller
 
         return view("cms/admin/jeeptransaction")->with('user_id', $user_id)
                                                 ->with('jeeps', $jeeps);
+    }
+    public function try(){
+        
     }
 }

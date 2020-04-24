@@ -16,7 +16,9 @@ Route::get('/', function () {
 });
 
 Route::get('/try', function () {
-    return view('cms/admin/try');
+    //return view('cms/admin/try');
+    $pdf = PDF::loadView('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
+    return $pdf->download('try.pdf');
 });
 
 Route::get('/clientlogin', 'ClientLoginController@index');
