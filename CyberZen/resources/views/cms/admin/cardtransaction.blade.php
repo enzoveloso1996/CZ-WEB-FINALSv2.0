@@ -116,7 +116,7 @@
     });
 </script>
 <script type="text/javascript">
-    $('#dateinput').on('keyup',function(){
+    $('#dateinput').on('change',function(){
         $('tbody').empty();
         $value=$(this).val();
         $.ajax({
