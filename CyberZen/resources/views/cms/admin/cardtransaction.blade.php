@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        {{-- @foreach ($cards as $card)                             
+                        @foreach ($cards as $card)                             
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$card->rfid_number}}</td>
@@ -98,7 +98,7 @@
                             <td class="left">{{$card->firstname}}</td>
                             <td class="center">{{$card->created_at}}</td>
                         </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                 </table>
             </div>
@@ -127,11 +127,6 @@
                 $('tbody').html(data);
             },
         });
-            // if($('#dateinput').val().length === 0) {
-            //     $('#result').css('display', 'block');
-            // } else {
-            //     $('#result').css('display', 'none');
-            // }
     });
 </script>
 @endsection
