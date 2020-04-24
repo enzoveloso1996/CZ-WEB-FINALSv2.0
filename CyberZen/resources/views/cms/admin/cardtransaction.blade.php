@@ -89,7 +89,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cards as $card)                             
+                        {{-- @foreach ($cards as $card)                             
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$card->rfid_number}}</td>
@@ -98,7 +98,7 @@
                             <td class="left">{{$card->firstname}}</td>
                             <td class="center">{{$card->created_at}}</td>
                         </tr>
-                        @endforeach
+                        @endforeach --}}
                     </tbody>
                 </table>
             </div>
@@ -113,6 +113,25 @@
         $('#dateinput').datepicker({
              dateFormat: 'yy-mm-dd' 
         }).datepicker("setDate", new Date());
+    });
+</script>
+<script type="text/javascript">
+    $('#dateinput').on('keyup',function(){
+        $('tbody').empty();
+        $value=$(this).val();
+        $.ajax({
+            type : 'get',
+            url : '{{URL::to('cardsbydate')}}',
+            data:{'search':$value},
+            success:function(data){
+                $('tbody').html(data);
+            },
+        });
+            // if($('#dateinput').val().length === 0) {
+            //     $('#result').css('display', 'block');
+            // } else {
+            //     $('#result').css('display', 'none');
+            // }
     });
 </script>
 @endsection

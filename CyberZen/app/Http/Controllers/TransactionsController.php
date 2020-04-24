@@ -56,6 +56,36 @@ class TransactionsController extends Controller
         return view("cms/admin/cardtransaction")->with('user_id', $user_id)
                                                 ->with('cards', $cards);
     }
+    public function cardsbydate($user_id)
+    {
+            if(!empty($request->search)){
+                $output="";
+                $cards = array();
+                $cards = DB::table('tb_tr_card_transactions')
+                ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
+                ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
+                ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
+                ->where('tb_tr_card_transactions.created_at','LIKE','%'.$request->search.'%')
+                ->paginate(20);
+            }else{
+                $output="";
+            }
+            
+            if($cards)
+            {
+                foreach ($cards as $key => $card) {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$card->rfid_number.'</td>'.
+                    '<td class="left">'.$card->transaction_type.'</td>'.
+                    '<td class="left">'.$card->amount.'</td>'.
+                    '<td class="left">'.$card->firstname.'</td>'.
+                    '<td class="left">'.$card->created_at.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+    }
     public function jeeps($user_id)
     {
         $jeeps = DB::table('tb_tr_jeep_transactions')
