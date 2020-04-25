@@ -15,11 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/try', function () {
-    //return view('cms/admin/try');
-    $pdf = PDF::loadView('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
-    return $pdf->download('try.pdf');
-});
+// Route::get('/try', function () {
+//     //return view('cms/admin/try');
+//     $pdf = PDF::loadView('cms/admin/try','TransactionsController@pdf');
+//     return $pdf->download('try.pdf');
+// });
+
+Route::get('/cms/admin/try', 'TransactionsController@try');
 
 Route::get('/clientlogin', 'ClientLoginController@index');
 Route::get('/adminlogin', 'ClientLoginController@adminindex');
@@ -40,6 +42,9 @@ Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_pass
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeps']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
 Route::get('cardsbydate','TransactionsController@cardsbydate');
+
+// Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
+// Route::get('/dynamic_pdf/pdf', 'TransactionsController@try');
 
 // Route::get('/cardtransactions', function () {
 //     return view('cms/admin/cardtransaction');

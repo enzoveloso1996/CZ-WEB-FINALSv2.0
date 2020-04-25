@@ -60,6 +60,84 @@ class TransactionsController extends Controller
         return view("cms/admin/cardtransaction")->with('user_id', $user_id)
                                                 ->with('cards', $cards);
     }
+    public function view(){
+        $cards_data = $this->pdf();
+        return view('cms/admin/try')->with('cards_data', $cards_data);
+    }
+    public function pdf()
+    {
+        $current_date_time = Carbon::today()->toDateString();
+        $cards = DB::table('tb_tr_card_transactions')
+        ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
+        ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
+        ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
+        // ->where('tb_tr_card_transactions.created_at','LIKE','%'.$current_date_time.'%')
+        ->paginate(20);
+
+        //return view("cms/admin/try")->with('cards', $cards);     
+        return $cards;
+        
+    }
+    public function try(){
+        $pdf = \App::make('dompdf.wrapper');
+        $pdf->loadHTML($this->convert_data_to_html());
+        return $pdf->download('invoice.pdf');
+    }
+    // function index()
+    // {
+    //     $cards_data = $this->cards_data();
+    //     return view('try')->with('cards_data', $cards_data);
+    // }
+    // public function cards_data()
+    // {
+    //     $current_date_time = Carbon::today()->toDateString();
+    //     $card_data = DB::table('tb_tr_card_transactions')
+    //     ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
+    //     ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
+    //     ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
+    //     // ->where('tb_tr_card_transactions.created_at','LIKE','%'.$current_date_time.'%')
+    //     ->paginate(20)
+    //     ->get();
+
+
+    //     return $card_data;
+                                                
+    // }
+    // public function try(){
+    //     $pdf = \App::make('dompdf.wrapper');
+    //     $pdf->loadHTML($this->convert_data_to_html());
+    //     return $pdf->stream();
+    // }
+    function convert_data_to_html()
+    {
+        $cards_data = $this->pdf();
+        $output = '
+            <h3 align="center">Customer Data</h3>
+            <table width="100%" style="border-collapse: collapse; border: 0px;">
+            <tr>
+            <th class="center"></th>
+            <th class="center">RFID</th>
+            <th class="center">Transaction Type</th>
+            <th class="center">Amount</th>
+            <th class="center">Updated by</th>
+            <th class="center">Date</th>
+            </tr>';  
+        foreach ($cards_data as $card)
+        {
+            $output .= '
+                <tr>
+                <td class="center" id="ref"></td>
+                <td class="left">'.$card->rfid_number.'</td>
+                <td class="left">'.$card->transaction_type.'</td>
+                <td class="center">'.$card->amount.'</td>
+                <td class="left">'.$card->firstname.'</td>
+                <td class="center">'.$card->created_at.'</td>
+                </tr>
+                ';
+        }
+        $output .= '</table>';
+        return $output;
+    }
     public function cardsbydate(Request $request)
     {
             if(!empty($request->search)){
@@ -100,8 +178,5 @@ class TransactionsController extends Controller
 
         return view("cms/admin/jeeptransaction")->with('user_id', $user_id)
                                                 ->with('jeeps', $jeeps);
-    }
-    public function try(){
-        
     }
 }
