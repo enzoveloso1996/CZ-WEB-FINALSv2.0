@@ -21,7 +21,8 @@ Route::get('/', function () {
 //     return $pdf->download('try.pdf');
 // });
 
-Route::get('/cms/admin/try', 'TransactionsController@try');
+Route::get('/cms/admin/try', 'TransactionsController@view');
+Route::get('/cms/admin/try/f', 'TransactionsController@trytry');
 
 Route::get('/clientlogin', 'ClientLoginController@index');
 Route::get('/adminlogin', 'ClientLoginController@adminindex');
@@ -41,6 +42,7 @@ Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_pass
  
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeps']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
+//Route::get('cms/admin/cardtransaction/pdf/{id}', ['as' => 'try.index', 'uses' => 'TransactionsController@trytry']);
 Route::get('cardsbydate','TransactionsController@cardsbydate');
 
 // Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);

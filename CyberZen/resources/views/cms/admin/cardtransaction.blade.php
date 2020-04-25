@@ -75,6 +75,7 @@
                     <div class="input-group mb-1">
                         <h6>Select date:<input class="form-control" id="dateinput" type="text"></h6>
                     </div>
+                <a class="btn btn-primary" href="{{ url('/cms/admin/try/f')}}" role="button">Download Report</a>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
