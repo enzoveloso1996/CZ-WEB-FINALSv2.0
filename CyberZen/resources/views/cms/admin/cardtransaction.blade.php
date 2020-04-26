@@ -115,6 +115,11 @@
              dateFormat: 'yy-mm-dd' 
         }).datepicker("setDate", new Date());
     });
+    $(function() {
+        $('#dateinput2').datepicker({
+             dateFormat: 'yy-mm-dd' 
+        }).datepicker("setDate", new Date());
+    });
 </script>
 <script type="text/javascript">
     $('#dateinput').on('change',function(){
@@ -125,6 +130,8 @@
             type : 'get',
             url : '{{URL::to('cardsbydate')}}',
             data:{'search':$value},
+            cache: false,
+            async: true,
             success:function(data){
                 $('tbody').html(data);
             },
@@ -140,6 +147,8 @@
             type : 'get',
             url : '{{URL::to('cardspdf')}}',
             data:{'search':$value},
+            cache: false,
+            async: true,
             success:function(data){
                 $('tbody').html(data);
             },
