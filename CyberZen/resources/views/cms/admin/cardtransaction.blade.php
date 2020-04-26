@@ -75,7 +75,7 @@
                     <div class="input-group mb-1">
                         <h6>Select date:<input class="form-control" id="dateinput" type="text"></h6>
                     </div>
-                <a class="btn btn-primary" href="{{ url('/cms/admin/try/f')}}" role="button">Download Report</a>
+                <a class="btn btn-primary" href="{{ url('/cardspdf')}}" role="button">Download Report</a>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -120,6 +120,7 @@
     $('#dateinput').on('change',function(){
         $('tbody').empty();
         $value=$(this).val();
+        console.log($value);
         $.ajax({
             type : 'get',
             url : '{{URL::to('cardsbydate')}}',
@@ -130,4 +131,19 @@
         });
     });
 </script>
+{{-- <script type="text/javascript">
+    $('#dateinput').on('change',function(){
+        $('tbody').empty();
+        $value=$(this).val();
+        console.log($value);
+        $.ajax({
+            type : 'get',
+            url : '{{URL::to('cardspdf')}}',
+            data:{'search':$value},
+            success:function(data){
+                $('tbody').html(data);
+            },
+        });
+    });
+</script> --}}
 @endsection

@@ -67,7 +67,7 @@ class TransactionsController extends Controller
         ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
         ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
         ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
-        // ->where('tb_tr_card_transactions.created_at','LIKE','%'.$current_date_time.'%')
+        ->where('tb_tr_card_transactions.created_at','LIKE','%'.$current_date_time.'%')
         ->paginate(20);
 
         //return view("cms/admin/try")->with('cards', $cards);     
@@ -83,13 +83,13 @@ class TransactionsController extends Controller
         $pdf->loadHTML($this->convert_data_to_html());
         return $pdf->download('invoice.pdf');
     }
-    public function trytry(){
+    public function cardspdf(Request $request){
         $current_date_time = Carbon::today()->toDateString();
         $data = DB::table('tb_tr_card_transactions')
         ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
         ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
         ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
-        // ->where('tb_tr_card_transactions.created_at','LIKE','%'.$current_date_time.'%')
+        ->where('tb_tr_card_transactions.created_at','LIKE','%'.$request->search.'%')
         ->paginate(20);
         // $cards_data = $this->pdf();
 
