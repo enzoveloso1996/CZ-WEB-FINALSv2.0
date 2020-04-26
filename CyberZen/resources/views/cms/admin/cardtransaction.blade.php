@@ -76,6 +76,7 @@
                         <h6>Select date:<input class="form-control" id="dateinput" type="text"></h6>
                     </div>
                 <a class="btn btn-primary" href="{{ url('/cardspdf')}}" role="button">Download Report</a>
+                {{-- href="{{route('cardspdf', ['date' => $date])}}" --}}
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -112,11 +113,6 @@
 <script>
     $(function() {
         $('#dateinput').datepicker({
-             dateFormat: 'yy-mm-dd' 
-        }).datepicker("setDate", new Date());
-    });
-    $(function() {
-        $('#dateinput2').datepicker({
              dateFormat: 'yy-mm-dd' 
         }).datepicker("setDate", new Date());
     });
