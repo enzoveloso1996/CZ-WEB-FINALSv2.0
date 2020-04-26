@@ -95,7 +95,7 @@ class TransactionsController extends Controller
 
         $pdf = PDF::loadView('/cms/admin/try' , $data);
         $fileName = $current_date_time;
-        $pdf->save(storage_path().$fileName.'.pdf');
+        //$pdf->save(storage_path('/Downloads').$fileName.'.pdf');
         return $pdf->download($fileName . '.pdf');
     }
     // function index()
