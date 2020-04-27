@@ -182,13 +182,15 @@ class TransactionsController extends Controller
     }
     public function cardspdf(){
         $current_date_time = Carbon::today()->toDateString();
-        //$qq = $this->cardsbydate($test);
         $data = DB::table('tb_tr_card_transactions')
         ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
         ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
         ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
-        //->where('tb_tr_card_transactions.created_at','LIKE','%'.$qq.'%')
         ->paginate(20);
+
+        $totalsales = DB::table('tb_tr_card_transactions')
+        ->select(DB::raw("SUM() as totalsales"))
+        ->get();
 
         $pdf = PDF::loadView('/cms/admin/try' , $data);
         $fileName = $current_date_time;
