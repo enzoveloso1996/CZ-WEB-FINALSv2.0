@@ -72,10 +72,13 @@
             </div>
             <div class="card-body">
                 <div class="float-left p-3">
+                <Form method="get" action="{{ url('cardspdf')}}">
                     <div class="input-group mb-1">
-                        <h6>Select date:<input class="form-control" id="dateinput" type="text"></h6>
+                        <h6>Select date:<input class="form-control" name="date" id="dateinput" type="text"></h6>
                     </div>
-                <a class="btn btn-primary" id="download_report" role="button">Download Report</a>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-primary" type="submit">Download Report</button>
+                </Form>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -90,15 +93,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cards as $card)                             
-                        <tr>
-                            <td class="center" id="ref"></td>
-                            <td class="left">{{$card->rfid_number}}</td>
-                            <td class="left">{{$card->transaction_type}}</td>
-                            <td class="center">{{$card->amount}}</td>
-                            <td class="left">{{$card->firstname}}</td>
-                            <td class="center">{{$card->created_at}}</td>
-                        </tr>
+                        @foreach ($cards as $card)                    
+                            <tr>
+                                <td class="center" id="ref"></td>
+                                <td class="left">{{$card->rfid_number}}</td>
+                                <td class="left">{{$card->transaction_type}}</td>
+                                <td class="center">{{$card->amount}}</td>
+                                <td class="left">{{$card->firstname}}</td>
+                                <td class="center">{{$card->created_at}}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
@@ -129,20 +132,6 @@
             async: true,
             success:function(data){
                 $('tbody').html(data);
-            },
-        });
-    });
-</script>
-<script>
-    $('#download_report').click(function(){
-        $date = $('#dateinput').val();
-        console.log($date);
-        $.ajax({
-            type    : 'get',
-            url     : '{{URL::to('cardspdf')}}',
-            data    : {'date':$date},
-            success : function(data){
-                console.log("success");
             },
         });
     });
