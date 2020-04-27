@@ -42,12 +42,8 @@ Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_pass
  
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeps']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
-<<<<<<< HEAD
-Route::get('cardspdf', 'TransactionsController@try')->name('cardspdf');
-=======
 //Route::get('cardspdf/{id}', ['as' => 'cardspdf', 'uses' => 'TransactionController@cardspdf']);
 Route::get('cardspdf', 'TransactionsController@cardspdf');
->>>>>>> dev-enzo-last
 Route::get('cardsbydate','TransactionsController@cardsbydate');
 
 // Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);

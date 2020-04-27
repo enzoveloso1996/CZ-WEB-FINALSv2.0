@@ -75,12 +75,7 @@
                     <div class="input-group mb-1">
                         <h6>Select date:<input class="form-control" id="dateinput" type="text"></h6>
                     </div>
-<<<<<<< HEAD
                 <a class="btn btn-primary" id="download_report" role="button">Download Report</a>
-=======
-                <a class="btn btn-primary" href="{{ url('/cardspdf')}}" role="button">Download Report</a>
-                {{-- href="{{route('cardspdf', ['date' => $date])}}" --}}
->>>>>>> dev-enzo-last
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
