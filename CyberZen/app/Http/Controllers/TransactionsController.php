@@ -189,11 +189,11 @@ class TransactionsController extends Controller
         ->where('tb_tr_card_transactions.created_at','LIKE','%'.$request->date.'%')
         ->paginate(20);
 
-        $totalsales = DB::table('tb_tr_card_transactions')
-        ->select(DB::raw("SUM() as totalsales"))
+        $totalcardsales = DB::table('tb_tr_card_transactions')
+        ->select(DB::raw("SUM(amount) as totalcardsales"))
         ->get();
 
-        $pdf = PDF::loadView('/cms/admin/try' , $data);
+        $pdf = PDF::loadView('/cms/admin/try' , $data,$totalcardsales);
         $fileName = $current_date_time;
         //$pdf->save(storage_path('/Downloads').$fileName.'.pdf');
         return $pdf->download($fileName . '.pdf');
