@@ -71,11 +71,16 @@
                 <h4>Card Transactions</h4>
             </div>
             <div class="card-body">
+                
                 <div class="float-left p-3">
                     <div class="input-group mb-1">
                         <h6>Select date:<input class="form-control" id="dateinput" type="text"></h6>
                     </div>
-                <a class="btn btn-primary" id="download_report" role="button">Download Report</a>
+                <form action="{{route('cardspdf')}}" method="get">
+                    <input type="text" name="date" id="date_input2">    
+                    <a class="btn btn-primary" id="" role="button">Download Report</a>
+                    <button type="submit">Download</button>
+                </form>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -120,6 +125,7 @@
     $('#dateinput').on('change',function(){
         $('tbody').empty();
         $value=$(this).val();
+        $('#date_input2').val($value);
         console.log($value);
         $.ajax({
             type : 'get',

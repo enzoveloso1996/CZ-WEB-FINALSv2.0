@@ -195,6 +195,7 @@ class TransactionsController extends Controller
         //$pdf->save(storage_path('/Downloads').$fileName.'.pdf');
         return $pdf->download($fileName . '.pdf');
     }
+    
     public function jeeps($user_id)
     {
         $jeeps = DB::table('tb_tr_jeep_transactions')
