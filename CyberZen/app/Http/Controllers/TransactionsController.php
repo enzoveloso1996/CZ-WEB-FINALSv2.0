@@ -193,6 +193,7 @@ class TransactionsController extends Controller
         //return $pdf->stream('/cms/admin/try' , $data);
         return $pdf->download($fileName . '.pdf');
     }
+    
     public function jeeps($user_id)
     {
         $jeeps = DB::table('tb_tr_jeep_transactions')
