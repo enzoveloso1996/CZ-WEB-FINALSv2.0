@@ -136,7 +136,6 @@
 <script>
     $('#download_report').click(function(){
         $date = $('#dateinput').val();
-
         console.log($date);
         $.ajax({
             type    : 'get',
@@ -145,27 +144,7 @@
             success : function(data){
                 console.log("success");
             },
-            // error   : function(data) {
-            //     console.log("error");
-            // }
         });
     });
 </script>
-{{-- <script type="text/javascript">
-    $('#dateinput').on('change',function(){
-        $('tbody').empty();
-        $value=$(this).val();
-        console.log($value);
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('cardspdf')}}',
-            data:{'search':$value},
-            cache: false,
-            async: true,
-            success:function(data){
-                $('tbody').html(data);
-            },
-        });
-    });
-</script> --}}
 @endsection

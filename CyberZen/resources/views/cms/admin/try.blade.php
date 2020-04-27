@@ -39,9 +39,9 @@
                         @endforeach
                     </tbody>
               </table>
-              @foreach ($totalsales as $totalsale)
+              {{-- @foreach ($totalsales as $totalsale)
                 <h1>{{ $totalsale->$totalsales}}</h1>
-              @endforeach
+              @endforeach --}}
         </div>
     </div>
 
