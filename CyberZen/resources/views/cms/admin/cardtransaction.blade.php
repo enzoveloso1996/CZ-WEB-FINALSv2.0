@@ -78,7 +78,7 @@
                     </div>
                 <form action="{{route('cardspdf')}}" method="get">
                     <input type="text" name="date" id="date_input2">    
-                    <a class="btn btn-primary" id="" role="button">Download Report</a>
+                    {{-- <a class="btn btn-primary" id="" role="button">Download Report</a> --}}
                     <button type="submit">Download</button>
                 </form>
                 </div>
