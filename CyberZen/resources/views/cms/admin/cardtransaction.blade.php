@@ -93,15 +93,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($cards as $card)                             
-                        <tr>
-                            <td class="center" id="ref"></td>
-                            <td class="left">{{$card->rfid_number}}</td>
-                            <td class="left">{{$card->transaction_type}}</td>
-                            <td class="center">{{$card->amount}}</td>
-                            <td class="left">{{$card->firstname}}</td>
-                            <td class="center">{{$card->created_at}}</td>
-                        </tr>
+                        @foreach ($cards as $card)                    
+                            <tr>
+                                <td class="center" id="ref"></td>
+                                <td class="left">{{$card->rfid_number}}</td>
+                                <td class="left">{{$card->transaction_type}}</td>
+                                <td class="center">{{$card->amount}}</td>
+                                <td class="left">{{$card->firstname}}</td>
+                                <td class="center">{{$card->created_at}}</td>
+                            </tr>
                         @endforeach
                     </tbody>
                 </table>
