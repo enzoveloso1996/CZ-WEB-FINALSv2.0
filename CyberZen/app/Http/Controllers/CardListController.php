@@ -54,13 +54,18 @@ class CardListController extends Controller
             $access_level = $access_lvl->access_level_id;
         }
  
-        return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
-                            ->with('user_id', $user_id)
-                            ->with('access_level', $access_level)
-                            ->with('activecards', json_encode($activecards, JSON_NUMERIC_CHECK))
-                            ->with('cardsales', $cardsales)
-                            ->with('cardlisttbl2', $cardlisttbl2)
-                            ->with('cardtypes' , $cardtypes);
+        if(session('login_status') == 'logged_in'){
+            return view('cms/teller/cardlist')->with('cardlisttbl', $cardlisttbl)
+            ->with('user_id', $user_id)
+            ->with('access_level', $access_level)
+            ->with('activecards', json_encode($activecards, JSON_NUMERIC_CHECK))
+            ->with('cardsales', $cardsales)
+            ->with('cardlisttbl2', $cardlisttbl2)
+            ->with('cardtypes' , $cardtypes);
+
+        }else{
+            return redirect('adminlogin');
+        }
     }
 
     public function searchActive(Request $request)
@@ -174,7 +179,13 @@ class CardListController extends Controller
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
-        return view('cms/teller/reload')->with('reload' , $reload)->with('user_id', $user_id)->with('access_level', $access_level);
+
+        if(session('login_status') == 'logged_in'){
+            return view('cms/teller/reload')->with('reload' , $reload)->with('user_id', $user_id)->with('access_level', $access_level);
+        }else{
+            return redirect('adminlogin');
+        }
+
             
     }
 
@@ -242,8 +253,12 @@ class CardListController extends Controller
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
+        if(session('login_status') == 'logged_in'){
+            return redirect()->route('reload', ['id' => $data['updated_by'], 'access_level'=> $access_level]);
+        }else{
+            return redirect('adminlogin');
+        }
 
-        return redirect()->route('reload', ['id' => $data['updated_by'], 'access_level'=> $access_level]);
     }
 
     /**
@@ -285,8 +300,12 @@ class CardListController extends Controller
     {
         $reload = DB::table('tb_mf_carduser_records')->where('carduser_id',$request->id)
                                                     ->update(['is_hold'=>$request->hold]);
-
-        return redirect('cms/teller/reload');
+                                                    
+        if(session('login_status') == 'logged_in'){
+            return redirect('cms/teller/reload');
+        }else{
+            return redirect('adminlogin');
+        }
     }
 
     /**

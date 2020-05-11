@@ -45,11 +45,16 @@ class ClientJeepController extends Controller
        
         $jeepcount = array_column($jeepcount, 'count');
 
+        if(session('login_status') == 'logged_in'){
+            return view('crm/company/client_jeep')->with('user_id', $id)->with('client_name', $client_name)
+            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
+            ->with('clientname', $clientname)
+            ->with('jeeplists', $jeeplists);
+        }else{
+            return redirect('clientlogin');
+        }
+
         
-        return view('crm/company/client_jeep')->with('user_id', $id)->with('client_name', $client_name)
-                            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
-                            ->with('clientname', $clientname)
-                            ->with('jeeplists', $jeeplists);
                             
     }
 
@@ -111,7 +116,12 @@ class ClientJeepController extends Controller
             'remarks'       => 'Add Ejeep with Plate Number "'.$request->platenumber.' " by '.$request->adduser_id
         ]);
 
-        return redirect("company/crm/company/clientjeeplist/$request->adduser_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientjeeplist/$request->adduser_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     }
 
     /**
@@ -159,7 +169,12 @@ class ClientJeepController extends Controller
             'remarks'       => 'edit Ejeep with Plate Number "'.$request->editoldplatenumber.' " to '.$request->editplatenumber
         ]);
 
-        return redirect("company/crm/company/clientjeeplist/$request->edituser_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientjeeplist/$request->edituser_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     }
 
     /**
@@ -186,6 +201,11 @@ class ClientJeepController extends Controller
         ]);
 
 
-        return redirect("company/crm/company/clientjeeplist/$request->deluser_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientjeeplist/$request->deluser_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     }
 }

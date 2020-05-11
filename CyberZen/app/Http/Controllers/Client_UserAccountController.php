@@ -71,12 +71,17 @@ class Client_UserAccountController extends Controller
         ->wherein('id',$position)
         ->get();      
             
-        
-
-        return view('crm/company/client_useraccount')->with('user_id', $id)->with('client_name', $client_name)
+        if(session('login_status') == 'logged_in'){
+            return view('crm/company/client_useraccount')->with('user_id', $id)->with('client_name', $client_name)
             ->with('userslist', $users)
             ->with('clientname', $clientname)
             ->with('position', $position);
+
+        }else{
+            return redirect('clientlogin');
+        }
+
+        
     }
 
     public function combosearch(Request $request)
@@ -237,7 +242,12 @@ class Client_UserAccountController extends Controller
             'remarks'       => 'Add User "'.$request->username.'" for company_id '.$request->client_idtext.' by '.$request->addcurrent_user_id
         ]);
 
-        return redirect("company/crm/company/clientuseraccount/$request->addcurrent_user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientuseraccount/$request->addcurrent_user_id");
+        }else{
+            return redirect('clientlogin');
+        }
+        
     }
 
     /**
@@ -306,7 +316,11 @@ class Client_UserAccountController extends Controller
             'remarks'       => 'Edit User "'.$request->editusername.'" for company_id '.$request->editclient_idtext.' by '.$cur_user_id
         ]);
 
-        return redirect("company/crm/company/clientuseraccount/$cur_user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientuseraccount/$cur_user_id");
+        }else{
+            return redirect('clientlogin');
+        }
     }
 
     public function archive(Request $request){
@@ -325,7 +339,12 @@ class Client_UserAccountController extends Controller
             'remarks'       => 'Archived User with user_id "'.$request->deluser_id.' " by '.$request->delcurrent_user_id
         ]);
 
-        return redirect("company/crm/company/clientuseraccount/$request->delcurrent_user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientuseraccount/$request->delcurrent_user_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     } 
 
     /**

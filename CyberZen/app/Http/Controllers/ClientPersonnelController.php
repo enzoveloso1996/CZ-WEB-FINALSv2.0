@@ -43,11 +43,17 @@ class ClientPersonnelController extends Controller
 
         $position = DB::table('tb_mf_position')
         ->get();      
-            
-        return view('crm/company/client_personnel')->with('user_id', $id)->with('client_name', $client_name)
+    
+        if(session('login_status') == 'logged_in'){
+            return view('crm/company/client_personnel')->with('user_id', $id)->with('client_name', $client_name)
             ->with('position', $position)    
             ->with('clientname', $clientname)    
             ->with('personnels', $personnels);
+        }else{
+            return redirect('clientlogin');
+        }
+
+
     }
 
     /**
@@ -80,7 +86,12 @@ class ClientPersonnelController extends Controller
             'is_archived'       =>  0
         ]);
 
-        return redirect("company/crm/company/clientpersonnel/$request->addcurrent_user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientpersonnel/$request->addcurrent_user_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     }
 
     /**
@@ -127,7 +138,12 @@ class ClientPersonnelController extends Controller
             
         ]);
 
-        return redirect("company/crm/company/clientpersonnel/$request->editcurrent_user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientpersonnel/$request->editcurrent_user_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     }
 
     public function archive(Request $request){
@@ -146,7 +162,12 @@ class ClientPersonnelController extends Controller
             'remarks'       => 'Archived User with user_id "'.$request->deluser_id.' " by '.$request->delcurrent_user_id
         ]);
 
-        return redirect("company/crm/company/clientpersonnel/$request->delcurrent_user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("company/crm/company/clientpersonnel/$request->delcurrent_user_id");
+        }else{
+            return redirect('clientlogin');
+        }
+
     } 
 
 

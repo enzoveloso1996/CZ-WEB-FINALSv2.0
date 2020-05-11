@@ -24,8 +24,8 @@ Route::get('/', function () {
 Route::get('/cms/admin/try', 'TransactionsController@view');
 
 
-Route::get('/clientlogin', 'ClientLoginController@index');
-Route::get('/adminlogin', 'ClientLoginController@adminindex');
+Route::get('/clientlogin', 'ClientLoginController@index')->name('client-login');
+Route::get('/adminlogin', 'ClientLoginController@adminindex')->name('admin-login');
 
 Route::resource('client-login', 'ClientLoginController');
 Route::get('client-login-check', 'ClientLoginController@clientlogin')->name('client-login-check');

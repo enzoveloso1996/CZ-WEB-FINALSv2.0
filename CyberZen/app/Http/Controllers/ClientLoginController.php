@@ -15,7 +15,7 @@ class ClientLoginController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {  
         return view('crm/company/clientlogin');
     }
     public function adminindex()
@@ -88,13 +88,15 @@ class ClientLoginController extends Controller
         //
     }
 
-    public function clientlogout($user_id){
+    public function clientlogout(Request $request, $user_id){
         DB::table('tb_mf_client_users_log')
         ->insert([
             'user_id'       =>  $user_id,
             'action_id'     =>  4,
             'remarks'       => 'Log Out' 
         ]);
+        
+        $request->session()->flush();
         return redirect('/clientlogin');
     }
 
@@ -117,6 +119,9 @@ class ClientLoginController extends Controller
                     'action_id'     =>  4,
                     'remarks'       => 'Log In' 
                 ]);
+
+                $request->session()->put('login_status', "logged_in");
+                $request->session()->put('user_id', $user_id);
                 return redirect()->route('clientdashboard.index', ['id' => $user_id]);
             }
             else{
@@ -133,7 +138,7 @@ class ClientLoginController extends Controller
     }
 
 
-    public function adminlogout($user_id){
+    public function adminlogout(Request $request, $user_id){
         session_write_close();
         DB::table('tb_users_log')
         ->insert([
@@ -141,7 +146,8 @@ class ClientLoginController extends Controller
             'action_id'     =>  5,
             'remarks'       => 'Log Out' 
         ]);
-      
+
+        $request->session()->flush();
         return redirect('/adminlogin');
     }
 
@@ -166,6 +172,9 @@ class ClientLoginController extends Controller
                     'remarks'       => 'Log In' 
                 ]);
                 if($access_level == 1){
+                    $request->session()->put('login_status', "logged_in");
+                    $request->session()->put('user_id', $user_id);
+                    
                     return redirect()->route('dashboard.index', ['user_id' => $user_id, 'access_level' => $access_level]);
                 }
                 return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);

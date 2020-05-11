@@ -33,10 +33,15 @@ class ClientListController extends Controller
 
         $jeepcount = array_column($jeepcount,'count');
 
-        return view("cms/admin/clientlist")->with('user_id', $user_id)
-                                ->with('tabledtl', $tabledtl)
-                                ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
-                                ->with('clientcount', json_encode($clientcount, JSON_NUMERIC_CHECK));
+        if(session('login_status') == 'logged_in'){
+            return view("cms/admin/clientlist")->with('user_id', $user_id)
+            ->with('tabledtl', $tabledtl)
+            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
+            ->with('clientcount', json_encode($clientcount, JSON_NUMERIC_CHECK));
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
 
     public function search(Request $request)
@@ -270,11 +275,22 @@ class ClientListController extends Controller
                 'action_id'     =>  1,
                 'remarks'       => 'Add Client '.$request->client_name
             ]);
+
+            if(session('login_status') == 'logged_in'){
+                return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status', "Client is successfully registered!!");
+            }else{
+                return redirect('adminlogin');
+            }
     
-            return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status', "Client is successfully registered!!");
                 
         }
-        return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status-alert', "Client is already registered!!");
+
+        if(session('login_status') == 'logged_in'){
+            return redirect("jeeps/cms/admin/clientlist/$request->user_id")->with('status-alert', "Client is already registered!!");
+        }else{
+            return redirect('adminlogin');
+        }
+
         
     }
 
@@ -328,7 +344,12 @@ class ClientListController extends Controller
         ]);
 
 
-        return redirect("jeeps/cms/admin/clientlist/$request->user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("jeeps/cms/admin/clientlist/$request->user_id");
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
 
     public function archive(Request $request){
@@ -351,7 +372,12 @@ class ClientListController extends Controller
             'remarks'       => 'Archived Client '.$client_name
         ]);
 
-        return redirect("jeeps/cms/admin/clientlist/$request->user_id");
+        if(session('login_status') == 'logged_in'){
+            return redirect("jeeps/cms/admin/clientlist/$request->user_id");
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
     
     /**

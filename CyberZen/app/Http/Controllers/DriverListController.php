@@ -34,10 +34,16 @@ class DriverListController extends Controller
         $drivercount = array_column($drivercount, 'count');
 
         
-        return view("cms/admin/driverlist")->with('user_id', $user_id)
-                            ->with('drivercount', json_encode($drivercount, JSON_NUMERIC_CHECK))
-                            ->with('driverlists', $driverlists)
-                            ->with('companylist', $companylist);
+        if(session('login_status') == 'logged_in'){
+            return view("cms/admin/driverlist")->with('user_id', $user_id)
+            ->with('drivercount', json_encode($drivercount, JSON_NUMERIC_CHECK))
+            ->with('driverlists', $driverlists)
+            ->with('companylist', $companylist);
+        }else{
+            return redirect('adminlogin');
+        }
+
+
 
     }
 

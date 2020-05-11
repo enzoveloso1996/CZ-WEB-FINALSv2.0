@@ -67,18 +67,22 @@ class SalesController extends Controller
 
         $totalcardsActive = array_column($totalcardsActive, 'count');
         
+        if(session('login_status') == 'logged_in'){
+            return view('cms/admin/dashboard')->with('user_id', $user_id)
+            ->with('monthlysales', json_encode($monthlysales, JSON_NUMERIC_CHECK))
+            ->with('month', json_encode($month, JSON_NUMERIC_CHECK))
+            ->with('client', json_encode($client, JSON_NUMERIC_CHECK))
+            ->with('clientnames', json_encode($client_name, JSON_NUMERIC_CHECK))
+            ->with('clientsales', json_encode($clientsales, JSON_NUMERIC_CHECK))
+            ->with('totalsales', $totalsales)
+            ->with('cardsales', $cardsales)
+            ->with('transtype', json_encode($transtype, JSON_NUMERIC_CHECK))
+            ->with('cardtotalsales', json_encode($cardtotalsales, JSON_NUMERIC_CHECK))
+            ->with('activecards', json_encode($totalcardsActive, JSON_NUMERIC_CHECK));
+        }else{
+            return redirect('adminlogin');
+        }
 
-        return view('cms/admin/dashboard')->with('user_id', $user_id)
-                                ->with('monthlysales', json_encode($monthlysales, JSON_NUMERIC_CHECK))
-                                ->with('month', json_encode($month, JSON_NUMERIC_CHECK))
-                                ->with('client', json_encode($client, JSON_NUMERIC_CHECK))
-                                ->with('clientnames', json_encode($client_name, JSON_NUMERIC_CHECK))
-                                ->with('clientsales', json_encode($clientsales, JSON_NUMERIC_CHECK))
-                                ->with('totalsales', $totalsales)
-                                ->with('cardsales', $cardsales)
-                                ->with('transtype', json_encode($transtype, JSON_NUMERIC_CHECK))
-                                ->with('cardtotalsales', json_encode($cardtotalsales, JSON_NUMERIC_CHECK))
-                                ->with('activecards', json_encode($totalcardsActive, JSON_NUMERIC_CHECK));
     }
 
     /**

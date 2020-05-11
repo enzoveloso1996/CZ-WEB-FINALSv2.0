@@ -79,18 +79,22 @@ class ClientDashboardController extends Controller
         $cardtype = array_column($faresales, 'cardtype');
         $faresale = array_column($faresales, 'totalsales');
 
- 
-        return view('crm/company/clientdashboard')->with('user_id', $id)->with('client_name', $client_name)
-                    ->with('totalsales', $totalsales)
-                    ->with('totalcardusers', $cardusers)
-                    ->with('monthyear', json_encode($monthyear, JSON_NUMERIC_CHECK))
-                    ->with('monthlysales', json_encode($monthlysale, JSON_NUMERIC_CHECK))
-                    ->with('faresales', json_encode($faresale, JSON_NUMERIC_CHECK))
-                    ->with('cardtype', json_encode($cardtype, JSON_NUMERIC_CHECK))
-                    ->with('year', json_encode($year, JSON_NUMERIC_CHECK))
-                    ->with('yearlysales', json_encode($yearlysale, JSON_NUMERIC_CHECK));
+        if(session('login_status') == 'logged_in'){
+            return view('crm/company/clientdashboard')->with('user_id', $id)->with('client_name', $client_name)
+            ->with('totalsales', $totalsales)
+            ->with('totalcardusers', $cardusers)
+            ->with('monthyear', json_encode($monthyear, JSON_NUMERIC_CHECK))
+            ->with('monthlysales', json_encode($monthlysale, JSON_NUMERIC_CHECK))
+            ->with('faresales', json_encode($faresale, JSON_NUMERIC_CHECK))
+            ->with('cardtype', json_encode($cardtype, JSON_NUMERIC_CHECK))
+            ->with('year', json_encode($year, JSON_NUMERIC_CHECK))
+            ->with('yearlysales', json_encode($yearlysale, JSON_NUMERIC_CHECK));
+        }else{
+            return redirect('clientlogin');
+        }
 
-                }
+
+    }
 
     // public function index_value($value){
     //     $totalsales = DB::table('tb_tr_jeep_transactions')

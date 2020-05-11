@@ -34,11 +34,16 @@ class ClientUserController extends Controller
         $fullname = DB::table('tb_mf_jeep_personnel')
         ->get();
 
-        return view('cms/admin/clientusers')->with('user_id', $user_id)
-                                ->with('userslist', $users)
-                                ->with('clientname', $clientname)
-                                ->with('fullname', $fullname)
-                                ->with('position', $position);
+        if(session('login_status') == 'logged_in'){
+            return view('cms/admin/clientusers')->with('user_id', $user_id)
+            ->with('userslist', $users)
+            ->with('clientname', $clientname)
+            ->with('fullname', $fullname)
+            ->with('position', $position);
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
 
     public function search(Request $request)
@@ -148,11 +153,21 @@ class ClientUserController extends Controller
                 'remarks'       => 'Add Client User '.$request->username
             ]);
      
-            return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status', "Registered Successfully");
+            if(session('login_status') == 'logged_in'){
+                return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status', "Registered Successfully");
+            }else{
+                return redirect('adminlogin');
+            }
+    
                 
         }
 
-        return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Username already taken!!");
+        if(session('login_status') == 'logged_in'){
+            return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Username already taken!!");
+        }else{
+            return redirect('adminlogin');
+        }
+
 
     }
 

@@ -13,12 +13,22 @@ class TransactionsController extends Controller
     private $x;
     public function jeeptransactions($user_id){
 
-        return view("cms/admin/jeeptransaction")->with('user_id', $user_id);
+        if(session('login_status') == 'logged_in'){
+            return view("cms/admin/jeeptransaction")->with('user_id', $user_id);
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
 
     public function cardtransactions($user_id){
 
-        return view("cms/admin/cardtransaction")->with('user_id', $user_id);
+        if(session('login_status') == 'logged_in'){
+            return view("cms/admin/cardtransaction")->with('user_id', $user_id);
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
     
     public function store(Request $request)
@@ -46,7 +56,13 @@ class TransactionsController extends Controller
         foreach($access as $access_lvl){
             $access_level = $access_lvl->access_level_id;
         }
-        return redirect()->route('cardlist.index', ['id' => $data['updated_by'], 'access_level'=> $access_level]);
+
+        if(session('login_status') == 'logged_in'){
+            return redirect()->route('cardlist.index', ['id' => $data['updated_by'], 'access_level'=> $access_level]);
+        }else{
+            return redirect('adminlogin');
+        }
+
     }
     public function cards($user_id)
     {
@@ -204,7 +220,13 @@ class TransactionsController extends Controller
         ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
         ->paginate(20);
 
-        return view("cms/admin/jeeptransaction")->with('user_id', $user_id)
-                                                ->with('jeeps', $jeeps);
+        if(session('login_status') == 'logged_in'){
+            return view("cms/admin/jeeptransaction")->with('user_id', $user_id)
+            ->with('jeeps', $jeeps);
+        }else{
+            return redirect('adminlogin');
+        }
+
+
     }
 }

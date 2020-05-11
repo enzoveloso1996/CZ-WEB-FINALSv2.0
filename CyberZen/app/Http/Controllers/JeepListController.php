@@ -31,10 +31,15 @@ class JeepListController extends Controller
        
         $jeepcount = array_column($jeepcount, 'count');
 
-        return view("cms/admin/jeeplist")->with('user_id', $user_id)
-                            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
-                            ->with('jeeplists', $jeeplists)
-                            ->with('companylist', $companylist);
+        if(session('login_status') == 'logged_in'){
+            return view("cms/admin/jeeplist")->with('user_id', $user_id)
+            ->with('jeepcount', json_encode($jeepcount, JSON_NUMERIC_CHECK))
+            ->with('jeeplists', $jeeplists)
+            ->with('companylist', $companylist);
+        }else{
+            return redirect('adminlogin');
+        }
+
 
     }
 
