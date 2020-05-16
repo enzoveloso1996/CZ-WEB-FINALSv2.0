@@ -70,11 +70,33 @@
                 <h4>Jeep Transactions</h4>
             </div>
             <div class="card-body">
-                <div class="float-left p-3">
-                    <div class="input-group mb-1">
-                        <h6>Select date: <input class="form-control" id="dateinput" type="text"></h6>
+                <Form method="get" action="{{ url('jeepspdf')}}">
+                    <div class="row">
+                        <div class="col-3">
+                            <div class="float-left">
+                                <h6>Date:</h6>
+                                <input class="form-control" name="date" id="dateinput" type="text">
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="float-left p-0">
+                                <h6>Company:</h6>
+                                <select name="company" id="companylist" class="form-control">
+                                    <option value="">All</option>
+                                    @foreach ($companylist as $company)
+                                        <option id="{{$company->client_name}}" value="{{$company->client_id}}">{{$company->client_name}}</option>
+                                    @endforeach    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-3">
+                            <div class="float-right p-3">
+                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                                <button class="btn btn-primary" type="submit">Download Report</button>
+                            </div>
+                        </div>
                     </div>
-                </div>
+                </Form>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
                     <thead>
@@ -84,12 +106,13 @@
                             <th class="center">Company</th>
                             <th class="center">Total KM</th>
                             <th class="center">Fare</th>
-                            <th class="center">Jeep Plate Number</th>
+                            <th class="center">Plate Number</th>
                             <th class="center">Date</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($jeeps as $jeep)                             
+                        @foreach ($jeeps as $jeep)                 
+
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$jeep->rfid_number}}</td>
@@ -104,6 +127,7 @@
                 </table>
                 {{$jeeps->links()}}
             </div>
+            </div>
         </div>
     </div>
 </div>
@@ -117,6 +141,23 @@
         $('#dateinput').datepicker({
              dateFormat: 'yy-mm-dd' 
         }).datepicker("setDate", new Date());
+    });
+</script>
+<script type="text/javascript">
+    $('#dateinput').on('change',function(){
+        $('tbody').empty();
+        $value=$(this).val();
+        console.log($value);
+        $.ajax({
+            type : 'get',
+            url : '{{URL::to('jeepsbydate')}}',
+            data:{'search':$value},
+            cache: false,
+            async: true,
+            success:function(data){
+                $('tbody').html(data);
+            },
+        });
     });
 </script>
 @endsection
