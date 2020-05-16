@@ -77,11 +77,9 @@
                     <div class="input-group mb-1">
                         <h6>Select date:<input class="form-control" name="date" id="dateinput" type="text"></h6>
                     </div>
-                <form action="{{route('cardspdf')}}" method="get">
-                    <input type="text" name="date" id="date_input2">    
-                    {{-- <a class="btn btn-primary" id="" role="button">Download Report</a> --}}
-                    <button type="submit">Download</button>
-                </form>
+                    <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                    <button class="btn btn-primary" type="submit">Download Report</button>
+                </Form>
                 </div>
                 
                 <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -140,39 +138,4 @@
         });
     });
 </script>
-{{-- <script>
-    $('#download_report').click(function(){
-        $date = $('#dateinput').val();
-
-        console.log($date);
-        $.ajax({
-            type    : 'get',
-            url     : '{{URL::to('cardspdf')}}',
-            data    : {'date':$date},
-            success : function(data){
-                console.log("success");
-            },
-            // error   : function(data) {
-            //     console.log("error");
-            // }
-        });
-    });
-</script> --}}
-{{-- <script type="text/javascript">
-    $('#dateinput').on('change',function(){
-        $('tbody').empty();
-        $value=$(this).val();
-        console.log($value);
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('cardspdf')}}',
-            data:{'search':$value},
-            cache: false,
-            async: true,
-            success:function(data){
-                $('tbody').html(data);
-            },
-        });
-    });
-</script> --}}
 @endsection
