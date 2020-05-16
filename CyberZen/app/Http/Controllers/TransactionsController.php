@@ -74,6 +74,9 @@ class TransactionsController extends Controller
         ->where('tb_tr_card_transactions.created_at','LIKE','%'.$current_date_time.'%')
         ->paginate(20);
 
+        if(session('login_status') <> 'logged_in'){
+            return redirect('adminlogin');
+        }    
         return view("cms/admin/cardtransaction")->with('user_id', $user_id)
                                                 ->with('cards', $cards);
     }
