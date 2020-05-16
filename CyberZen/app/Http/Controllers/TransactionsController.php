@@ -80,6 +80,7 @@ class TransactionsController extends Controller
         return view("cms/admin/cardtransaction")->with('user_id', $user_id)
                                                 ->with('cards', $cards);
     }
+    
     public function pdf()
     {
         $current_date_time = Carbon::today()->toDateString();
