@@ -191,6 +191,18 @@
                                     <input type="hidden" name="position_idtext" id="position_id_" value="">
                                 </div>    
 
+                                {{-- @if (session('status-alert'))
+                                <div class="alert alert-danger">
+                                    {{ session('status-alert') }}
+                                </div>
+                                @endif
+                                @if (session('status'))
+                                    <div class="alert alert-success">
+                                        {{ session('status') }}
+                                    </div>
+                                @endif --}}
+                                <div class="err"></div>
+
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Username</span>
@@ -277,8 +289,23 @@
         });
        
     </script>
-
-
+    <script type="text/javascript">
+        $('#username_id').on('change',function(){
+            $('tbody').empty();
+            $value=$(this).val();
+            console.log($value);
+            $.ajax({
+                type : 'get',
+                url : '{{URL::to('jeeps/usernamecheck')}}',
+                data:{'check':$value},
+                cache: false,
+                async: true,
+                success:function(data){
+                    $('#err').html(data);
+                },
+            });
+        });
+    </script>
 @endsection
 
 

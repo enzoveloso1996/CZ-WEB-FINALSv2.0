@@ -105,6 +105,7 @@ Route::prefix('jeeps')->group(function(){
     // Route::resource('cms/admin/clientusers', 'ClientUserController');
     // Route::get('/clientusers','ClientUserController@index')->name('clientusers');
     Route::get('/search-user','ClientUserController@search');
+    Route::get('/usernamecheck','ClientUserController@usernamecheck');
 
     Route::get('cms/admin/jeeplist/{id}', ['as' => 'jeeplist.index', 'uses' => 'JeepListController@index']);
     Route::resource('jeeplist', 'JeepListController', ['except' => ['index']]);
