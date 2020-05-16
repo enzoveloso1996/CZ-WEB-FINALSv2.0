@@ -105,7 +105,7 @@ class ClientUserController extends Controller
         ->where('username', '=', $request->username)
         ->get();
 
-        foreach ($unavailable as $avail) {
+        foreach ($available as $avail) {
             $username = $avail->username;
         }
 
