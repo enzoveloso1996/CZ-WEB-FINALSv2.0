@@ -70,7 +70,7 @@
                 <h4>Jeep Transactions</h4>
             </div>
             <div class="card-body">
-                <Form method="get" action="{{ url('jeepspdf')}}">
+                <Form method="get" action="{{ url('company/transactionspdf')}}">
                     <div class="row">
                         <div class="col-3">
                             <div class="float-left">
@@ -78,13 +78,11 @@
                                 <input class="form-control" name="date" id="dateinput" type="text">
                             </div>
                         </div>
-                        <div class="col-6">
-                        </div>
-                        <div class="col-3">
-                            <div class="float-right p-3">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-primary" type="submit">Download Report</button>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 p-3">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-primary" type="submit">Download Report</button>
                         </div>
                     </div>
                 </Form>
@@ -94,7 +92,6 @@
                         <tr>
                             <th class="center"></th>
                             <th class="center">RFID</th>
-                            <th class="center">Company</th>
                             <th class="center">Total KM</th>
                             <th class="center">Fare</th>
                             <th class="center">Plate Number</th>
@@ -107,7 +104,6 @@
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$jeep->rfid_number}}</td>
-                            <td class="left">{{$jeep->client_name}}</td>
                             <td class="left">{{$jeep->totalKm}}</td>
                             <td class="center">{{$jeep->fare}}</td>
                             <td class="left">{{$jeep->jeep_plate_number}}</td>
@@ -141,8 +137,8 @@
         console.log($value);
         $.ajax({
             type : 'get',
-            url : '{{URL::to('jeepsbydate')}}',
-            data:{'search':$value},
+            url : '{{URL::to('company/transactionsbydate')}}',
+            data:{'date':$value},
             cache: false,
             async: true,
             success:function(data){

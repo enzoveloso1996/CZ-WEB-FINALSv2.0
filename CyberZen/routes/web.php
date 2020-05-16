@@ -148,4 +148,6 @@ Route::prefix('company')->group(function(){
     Route::get('/search-personnel','ClientPersonnelController@search');
 
     Route::get('crm/company/jeeptransactions/{id}', ['as' => 'jeeptransactions', 'uses' => 'ClientDashboardController@jeeps']);
+    Route::get('transactionsbydate','ClientDashboardController@transactionsbydate');
+    Route::get('transactionspdf','ClientDashboardController@transactionspdf');
 });

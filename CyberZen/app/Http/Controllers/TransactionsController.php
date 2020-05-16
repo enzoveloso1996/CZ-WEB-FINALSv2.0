@@ -307,7 +307,6 @@ class TransactionsController extends Controller
                 ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
                 ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
                 ->where('tb_tr_jeep_transactions.created_at','LIKE','%'.$date.'%')
-                ->where('tb_mf_client.client_id','=',$company)
                 ->paginate(20);
 
         $pdf = PDF::loadView('/cms/admin/tryjeep' , $data);
