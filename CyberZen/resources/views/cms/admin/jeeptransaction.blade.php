@@ -82,7 +82,6 @@
                             <div class="float-left p-0">
                                 <h6>Company:</h6>
                                 <select name="company" id="companylist" class="form-control">
-                                    <option value="">All</option>
                                     @foreach ($companylist as $company)
                                         <option id="{{$company->client_name}}" value="{{$company->client_id}}">{{$company->client_name}}</option>
                                     @endforeach    
@@ -147,11 +146,32 @@
     $('#dateinput').on('change',function(){
         $('tbody').empty();
         $value=$(this).val();
+        $company=$('#companylist').val();
         console.log($value);
+        console.log($company);
         $.ajax({
             type : 'get',
             url : '{{URL::to('jeepsbydate')}}',
-            data:{'search':$value},
+            data:{'search':$value, 'company': $company},
+            cache: false,
+            async: true,
+            success:function(data){
+                $('tbody').html(data);
+            },
+        });
+    });
+</script>
+<script type="text/javascript">
+    $('#companylist').on('change',function(){
+        $('tbody').empty();
+        $company=$(this).val();
+        $value=$('#dateinput').val();
+        console.log($value);
+        console.log($company);
+        $.ajax({
+            type : 'get',
+            url : '{{URL::to('jeepsbycompany')}}',
+            data:{'search':$value, 'company': $company},
             cache: false,
             async: true,
             success:function(data){

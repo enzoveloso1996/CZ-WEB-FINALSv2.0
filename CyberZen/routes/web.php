@@ -47,6 +47,7 @@ Route::get('cardspdf', 'TransactionsController@cardspdf');
 Route::get('jeepspdf', 'TransactionsController@jeepspdf');
 Route::get('cardsbydate','TransactionsController@cardsbydate');
 Route::get('jeepsbydate','TransactionsController@jeepsbydate');
+Route::get('jeepsbycompany','TransactionsController@jeepsbycompany');
 
 // Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
 // Route::get('/dynamic_pdf/pdf', 'TransactionsController@try');
