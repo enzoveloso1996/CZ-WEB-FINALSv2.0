@@ -91,6 +91,16 @@
                                 <a href="/company/crm/company/clientdashboard/{{$user_id}}"><i class="menu-icon fa fa-laptop"></i>Dashboard </a>
                             </li>
                         @endif
+                        <li class="menu-title">Reports</li><!-- /.menu-title -->
+                        @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/jeeptransactions/{{$user_id}}')
+                            <li class="active">
+                                <a href="/company/crm/company/jeeptransactions/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
+                            </li>
+                        @else
+                            <li>
+                                <a href="/company/crm/company/jeeptransactions/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
+                            </li>
+                        @endif
                         <li class="menu-title">E-Jeep</li><!-- /.menu-title -->
                         
                         @if(Request::url() == 'http://127.0.0.1:8000/company/crm/company/clientuseraccount/{{$user_id}}')

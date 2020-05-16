@@ -101,13 +101,13 @@ class ClientUserController extends Controller
 
         $pass = Hash::make($request->password);
         
-        $available = DB::table('tb_mf_client_users')
-        ->where('username', '=', $request->username)
-        ->get();
+        // $available = DB::table('tb_mf_client_users')
+        // ->where('username', '=', $request->username)
+        // ->get();
 
-        foreach ($unavailable as $avail) {
-            $username = $avail->username;
-        }
+        // foreach ($available as $avail) {
+        //     $username = $avail->username;
+        // }
 
         
 
@@ -162,11 +162,11 @@ class ClientUserController extends Controller
                 
         }
 
-        if(session('login_status') == 'logged_in'){
-            return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Username already taken!!");
-        }else{
-            return redirect('adminlogin');
-        }
+        // if(session('login_status') == 'logged_in'){
+        //     return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Username already taken!!");
+        // }else{
+        //     return redirect('adminlogin');
+        // }
 
 
     }
