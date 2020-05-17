@@ -96,20 +96,20 @@
                         <li class="menu-title" id="reports">Reports</li><!-- /.menu-title -->
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/cardtransaction/{{$user_id}}')
                             <li class="active" id="reports1">
-                                <a href="/cms/admin/cardtransaction/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Card Transactions</a>
+                                <a href="/cms/admin/cardtransaction/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Card Transactions</a>
                             </li>
                         @else
                             <li id="reports1">
-                                <a href="/cms/admin/cardtransaction/{{$user_id}}"> <i class="menu-icon fa fa-suitcase"></i>Card Transactions</a>
+                                <a href="/cms/admin/cardtransaction/{{$user_id}}"> <i class="menu-icon fa fa-credit-card"></i>Card Transactions</a>
                             </li>
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/cms/admin/jeeptransaction/{{$user_id}}')
                             <li class="active" id="reports2">
-                                <a href="/cms/admin/jeeptransaction/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
+                                <a href="/cms/admin/jeeptransaction/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>Jeep Transactions</a>
                             </li>
                         @else
                             <li id="reports2">
-                                <a href="/cms/admin/jeeptransaction/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Jeep Transactions</a>
+                                <a href="/cms/admin/jeeptransaction/{{$user_id}}"> <i class="menu-icon fa fa-bus"></i>Jeep Transactions</a>
                             </li>
                         @endif
                         <li class="menu-title" id="ejeep">E-Jeep</li><!-- /.menu-title -->
@@ -142,11 +142,11 @@
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist/{{$user_id}}')
                             <li class="active" id="ejeep4">
-                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client Personnels</a>
                             </li>
                         @else
                             <li id="ejeep4">
-                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client Personnels</a>
                             </li>
                         @endif
                         <li class="menu-title" id="tapcard">Tap Cards</li><!-- /.menu-title -->
@@ -171,11 +171,11 @@
                         <li class="menu-title" id="accounts">Account</li><!-- /.menu-title -->
                         @if(Request::path() == '/widgets')
                             <li id="adduser">
-                                <a href="{{Route('admin-register-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
+                                <a href="{{Route('admin-register-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-plus-square"></i>Add User</a>
                             </li>
                         @else 
                             <li id="adduser">
-                                <a href="{{Route('admin-register-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-cogs"></i>Add User</a>
+                                <a href="{{Route('admin-register-index', ['user_id' => $user_id, 'access_level' => $access_level])}}"> <i class="menu-icon fa fa-plus-square"></i>Add User</a>
                             </li>
                         @endif
 
