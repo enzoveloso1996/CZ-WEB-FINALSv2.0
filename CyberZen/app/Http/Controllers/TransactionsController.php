@@ -80,6 +80,7 @@ class TransactionsController extends Controller
         return view("cms/admin/cardtransaction")->with('user_id', $user_id)
                                                 ->with('cards', $cards);
     }
+    
     public function pdf()
     {
         $current_date_time = Carbon::today()->toDateString();
@@ -176,8 +177,6 @@ class TransactionsController extends Controller
                 ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
                 ->where('tb_tr_card_transactions.created_at','LIKE','%'.$request->search.'%')
                 ->paginate(20);
-
-                $test = $request->search;
             }else{
                 $output="";
             }
@@ -197,9 +196,11 @@ class TransactionsController extends Controller
                 return Response($output);
             }
     }
+
     public function cardspdf(Request $request){
         $current_date_time = Carbon::today()->toDateString();
         $date=$request->get('date');
+        $company=$request->get('company');
         $data = DB::table('tb_tr_card_transactions')
         ->join('tb_users', 'tb_users.user_id', '=', 'tb_tr_card_transactions.updated_by')
         ->join('tb_mf_transactiontype', 'tb_mf_transactiontype.transactiontype_id', '=', 'tb_tr_card_transactions.transactiontype_id')
@@ -208,26 +209,107 @@ class TransactionsController extends Controller
         ->paginate(20);
 
         $pdf = PDF::loadView('/cms/admin/try' , $data);
-        $fileName = $current_date_time;
+        $fileName = 'CT-'.$current_date_time;
         //return $pdf->stream('/cms/admin/try' , $data);
         return $pdf->download($fileName . '.pdf');
     }
     
     public function jeeps($user_id)
     {
+        $companylist = DB::table('tb_mf_client')
+        ->where('is_archived','=',0)
+        ->get();
+
+        $current_date_time = Carbon::today()->toDateString();
         $jeeps = DB::table('tb_tr_jeep_transactions')
-        ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
-        ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
-        ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
-        ->paginate(20);
+                ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
+                ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+                ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
+                ->where('tb_tr_jeep_transactions.created_at','LIKE','%'.$current_date_time.'%')
+                ->paginate(20);
 
-        if(session('login_status') == 'logged_in'){
-            return view("cms/admin/jeeptransaction")->with('user_id', $user_id)
-            ->with('jeeps', $jeeps);
-        }else{
-            return redirect('adminlogin');
-        }
+        return view("cms/admin/jeeptransactions")->with('user_id', $user_id)
+                                                ->with('jeeps', $jeeps)
+                                                ->with('companylist', $companylist);
+    }
+    public function jeepsbydate(Request $request)
+    {
+            if(!empty($request->search) && !empty($request->company)){
+                $output="";
+                $jeeps = array();
+                $jeeps = DB::table('tb_tr_jeep_transactions')
+                ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
+                ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+                ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
+                ->where('tb_tr_jeep_transactions.created_at','LIKE','%'.$request->search.'%')
+                ->where('tb_mf_client.client_id','=',$request->company)
+                ->paginate(20);
+            }else{
+                $output="";
+            }
+            
+            if($jeeps)
+            {
+                foreach ($jeeps as $key => $jeep) {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$jeep->rfid_number.'</td>'.
+                    '<td class="left">'.$jeep->client_name.'</td>'.
+                    '<td class="left">'.$jeep->totalKm.'</td>'.
+                    '<td class="left">'.$jeep->fare.'</td>'.
+                    '<td class="left">'.$jeep->jeep_plate_number.'</td>'.
+                    '<td class="left">'.$jeep->created_at.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+    }
+    public function jeepsbycompany(Request $request)
+    {
+            if(!empty($request->search) && !empty($request->company)){
+                $output="";
+                $jeeps = array();
+                $jeeps = DB::table('tb_tr_jeep_transactions')
+                ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
+                ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+                ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
+                ->where('tb_tr_jeep_transactions.created_at','LIKE','%'.$request->search.'%')
+                ->where('tb_mf_client.client_id','=',$request->company)
+                ->paginate(20);
+            }else{
+                $output="";
+            }
+            
+            if($jeeps)
+            {
+                foreach ($jeeps as $key => $jeep) {
+                    $output.='<tr>'.
+                    '<td class="center" id="ref"></td>'.
+                    '<td class="left">'.$jeep->rfid_number.'</td>'.
+                    '<td class="left">'.$jeep->client_name.'</td>'.
+                    '<td class="left">'.$jeep->totalKm.'</td>'.
+                    '<td class="left">'.$jeep->fare.'</td>'.
+                    '<td class="left">'.$jeep->jeep_plate_number.'</td>'.
+                    '<td class="left">'.$jeep->created_at.'</td>'.
+                    '</tr>';
+                } 
+                return Response($output);
+            }
+    }
+    public function jeepspdf(Request $request){
+        $current_date_time = Carbon::today()->toDateString();
+        $date=$request->get('date');
+        $company=$request->get('company');
+        $data = DB::table('tb_tr_jeep_transactions')
+                ->join('tb_mf_jeep', 'tb_mf_jeep.plate_number', '=', 'tb_tr_jeep_transactions.jeep_plate_number')
+                ->join('tb_mf_client', 'tb_mf_client.client_id', '=', 'tb_mf_jeep.client_id')
+                ->select('tb_tr_jeep_transactions.rfid_number','tb_mf_jeep.plate_number','tb_mf_jeep.client_id','tb_mf_client.client_id','tb_mf_client.client_name','tb_tr_jeep_transactions.totalKm','tb_tr_jeep_transactions.fare','tb_tr_jeep_transactions.jeep_plate_number','tb_tr_jeep_transactions.created_at')
+                ->where('tb_tr_jeep_transactions.created_at','LIKE','%'.$date.'%')
+                ->paginate(20);
 
-
+        $pdf = PDF::loadView('/cms/admin/tryjeep' , $data);
+        $fileName = 'JT-'.$current_date_time;
+        //return $pdf->stream('/cms/admin/try' , $data);
+        return $pdf->download($fileName . '.pdf');
     }
 }

@@ -42,9 +42,12 @@ Route::put('admin-editaccount-password', 'ClientLoginController@editaccount_pass
  
 Route::get('cms/admin/jeeptransaction/{id}', ['as' => 'jeeptransaction', 'uses' => 'TransactionsController@jeeps']);
 Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
-//Route::get('cardspdf/{id}?date={date}', ['as' => 'cardspdf', 'uses' => 'TransactionController@cardspdf']);
-Route::get('cardspdf', 'TransactionsController@cardspdf')->name('cardspdf');
+//Route::get('cardspdf/{id}', ['as' => 'cardspdf', 'uses' => 'TransactionController@cardspdf']);
+Route::get('cardspdf', 'TransactionsController@cardspdf');
+Route::get('jeepspdf', 'TransactionsController@jeepspdf');
 Route::get('cardsbydate','TransactionsController@cardsbydate');
+Route::get('jeepsbydate','TransactionsController@jeepsbydate');
+Route::get('jeepsbycompany','TransactionsController@jeepsbycompany');
 
 // Route::get('cms/admin/cardtransaction/{id}', ['as' => 'cardtransaction', 'uses' => 'TransactionsController@cards']);
 // Route::get('/dynamic_pdf/pdf', 'TransactionsController@try');
@@ -102,6 +105,7 @@ Route::prefix('jeeps')->group(function(){
     // Route::resource('cms/admin/clientusers', 'ClientUserController');
     // Route::get('/clientusers','ClientUserController@index')->name('clientusers');
     Route::get('/search-user','ClientUserController@search');
+    Route::get('/usernamecheck','ClientUserController@usernamecheck');
 
     Route::get('cms/admin/jeeplist/{id}', ['as' => 'jeeplist.index', 'uses' => 'JeepListController@index']);
     Route::resource('jeeplist', 'JeepListController', ['except' => ['index']]);
@@ -144,4 +148,7 @@ Route::prefix('company')->group(function(){
     Route::patch('/client-personnel-archive', 'ClientPersonnelController@archive')->name('client-personnel-archive');
     Route::get('/search-personnel','ClientPersonnelController@search');
 
+    Route::get('crm/company/jeeptransactions/{id}', ['as' => 'jeeptransactions', 'uses' => 'ClientDashboardController@jeeps']);
+    Route::get('transactionsbydate','ClientDashboardController@transactionsbydate');
+    Route::get('transactionspdf','ClientDashboardController@transactionspdf');
 });

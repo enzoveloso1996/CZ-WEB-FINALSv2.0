@@ -33,7 +33,11 @@
 					<span class="login100-form-title p-b-51">
 						lOGIN
 					</span>
-					
+					@if (session('status'))
+					<div class="alert alert-danger">
+						{{ session('status') }}
+					</div>
+					@endif
 					<div class="wrap-input100 validate-input m-b-16" data-validate = "Username is required">
 						<input class="input100" type="text" name="username" placeholder="Username">
 						<span class="focus-input100"></span>
@@ -64,11 +68,6 @@
 							Login
 						</button>
 					</div>
-					@if (session('status'))
-					<div class="alert alert-danger">
-						{{ session('status') }}
-					</div>
-					@endif
 				</form>
 			</div>
 		</div>

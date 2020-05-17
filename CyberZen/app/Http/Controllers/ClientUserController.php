@@ -100,16 +100,6 @@ class ClientUserController extends Controller
         }
 
         $pass = Hash::make($request->password);
-        
-        // $available = DB::table('tb_mf_client_users')
-        // ->where('username', '=', $request->username)
-        // ->get();
-
-        // foreach ($available as $avail) {
-        //     $username = $avail->username;
-        // }
-
-        
 
         // if (empty($available)) {
 
@@ -162,13 +152,23 @@ class ClientUserController extends Controller
                 
         // }
 
-        // if(session('login_status') == 'logged_in'){
-        //     return redirect("jeeps/cms/admin/clientusers/$request->user_id")->with('status-alert', "Username already taken!!");
-        // }else{
-        //     return redirect('adminlogin');
-        // }
-
-
+    }
+    public function usernamecheck(Request $request){
+        if(!empty($request->ajax()))
+        {
+                $tabledtl=DB::table('tb_mf_client_users')
+                            ->select('tb_mf_client_users'.'username')
+                            ->where('username','=',$request->user)
+                            ->count();
+                if($tabledtl > 0){
+                    echo '<span class="text-danger"><i class="fa fa-exclamation"></i>  Username is already taken</span>';
+                } else {
+                    echo '<span class="text-success"><i class="fa fa-check"></i>  Username is available</span>';
+                }
+        }else
+        {
+            echo '<span class="text-success"></span>';
+        }
     }
 
     /**

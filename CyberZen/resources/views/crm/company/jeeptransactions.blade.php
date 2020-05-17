@@ -1,4 +1,4 @@
-@extends('cms.layout')
+@extends('crm.company.layout')
 <link href="https://code.jquery.com/ui/1.10.4/themes/smoothness/jquery-ui.css" rel="stylesheet">
 <style>
     table {
@@ -70,7 +70,7 @@
                 <h4>Jeep Transactions</h4>
             </div>
             <div class="card-body">
-                <Form method="get" action="{{ url('jeepspdf')}}">
+                <Form method="get" action="{{ url('company/transactionspdf')}}">
                     <div class="row">
                         <div class="col-3">
                             <div class="float-left">
@@ -78,21 +78,11 @@
                                 <input class="form-control" name="date" id="dateinput" type="text">
                             </div>
                         </div>
-                        <div class="col-6">
-                            <div class="float-left p-0">
-                                <h6>Company:</h6>
-                                <select name="company" id="companylist" class="form-control">
-                                    @foreach ($companylist as $company)
-                                        <option id="{{$company->client_name}}" value="{{$company->client_id}}">{{$company->client_name}}</option>
-                                    @endforeach    
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-3">
-                            <div class="float-right p-3">
-                                <input type="hidden" name="_token" value="{{ csrf_token() }}">
-                                <button class="btn btn-primary" type="submit">Download Report</button>
-                            </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-3 p-3">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <button class="btn btn-primary" type="submit">Download Report</button>
                         </div>
                     </div>
                 </Form>
@@ -102,7 +92,6 @@
                         <tr>
                             <th class="center"></th>
                             <th class="center">RFID</th>
-                            <th class="center">Company</th>
                             <th class="center">Total KM</th>
                             <th class="center">Fare</th>
                             <th class="center">Plate Number</th>
@@ -115,7 +104,6 @@
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$jeep->rfid_number}}</td>
-                            <td class="left">{{$jeep->client_name}}</td>
                             <td class="left">{{$jeep->totalKm}}</td>
                             <td class="center">{{$jeep->fare}}</td>
                             <td class="left">{{$jeep->jeep_plate_number}}</td>
@@ -146,32 +134,11 @@
     $('#dateinput').on('change',function(){
         $('tbody').empty();
         $value=$(this).val();
-        $company=$('#companylist').val();
         console.log($value);
-        console.log($company);
         $.ajax({
             type : 'get',
-            url : '{{URL::to('jeepsbydate')}}',
-            data:{'search':$value, 'company': $company},
-            cache: false,
-            async: true,
-            success:function(data){
-                $('tbody').html(data);
-            },
-        });
-    });
-</script>
-<script type="text/javascript">
-    $('#companylist').on('change',function(){
-        $('tbody').empty();
-        $company=$(this).val();
-        $value=$('#dateinput').val();
-        console.log($value);
-        console.log($company);
-        $.ajax({
-            type : 'get',
-            url : '{{URL::to('jeepsbycompany')}}',
-            data:{'search':$value, 'company': $company},
+            url : '{{URL::to('company/transactionsbydate')}}',
+            data:{'date':$value},
             cache: false,
             async: true,
             success:function(data){
