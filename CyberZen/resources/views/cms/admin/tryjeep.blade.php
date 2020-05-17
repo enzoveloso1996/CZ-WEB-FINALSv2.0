@@ -9,9 +9,9 @@
     <title>Hello, world!</title>
   </head>
   <body>
-    {{-- <div class="navbar-header">
-      <img id="logo-header" src="{{ asset('new/img/logo.png') }}" alt="Logo">
-    </div> --}}
+    <div class="navbar-header">
+      <img id="logo-header" src="{{ asset ('new/img/header.jpg') }}" alt="Logo">
+    </div>
     <div class="container">
         <div class="row">
                 <table class="table table-sm">

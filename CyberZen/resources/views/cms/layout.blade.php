@@ -142,11 +142,11 @@
                         @endif
                         @if(Request::url() == 'http://127.0.0.1:8000/jeeps/cms/admin/driverlist/{{$user_id}}')
                             <li class="active" id="ejeep4">
-                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client Personnels</a>
                             </li>
                         @else
                             <li id="ejeep4">
-                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-plus-square"></i>Client Personnels</a>
+                                <a href="/jeeps/cms/admin/driverlist/{{$user_id}}"> <i class="menu-icon fa fa-user"></i>Client Personnels</a>
                             </li>
                         @endif
                         <li class="menu-title" id="tapcard">Tap Cards</li><!-- /.menu-title -->
