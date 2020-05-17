@@ -148,8 +148,7 @@ class ClientUserController extends Controller
             }else{
                 return redirect('adminlogin');
             }
-    
-                
+
         }
 
     }

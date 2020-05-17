@@ -228,7 +228,7 @@ class TransactionsController extends Controller
                 ->where('tb_tr_jeep_transactions.created_at','LIKE','%'.$current_date_time.'%')
                 ->paginate(20);
 
-        return view("cms/admin/jeeptransactions")->with('user_id', $user_id)
+        return view("cms/admin/jeeptransaction")->with('user_id', $user_id)
                                                 ->with('jeeps', $jeeps)
                                                 ->with('companylist', $companylist);
     }
