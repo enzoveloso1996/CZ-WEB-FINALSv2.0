@@ -23,7 +23,7 @@
                 <div class="col-sm-4">
                     <div class="page-header float-left">
                         <div class="page-title">
-                            <h1>Client User Accounts</h1>
+                            <h1>Admin/Teller User Accounts</h1>
                         </div>
                     </div>
                 </div>
@@ -33,7 +33,7 @@
                             <ol class="breadcrumb text-right">
                                 <li><a href="/dashboard">DASHBOARD</a></li>
                                 <li><a href="#">E-JEEP</a></li>
-                                <li class="active">Client User Accounts</li>
+                                <li class="active">Admin/Teller User Accounts</li>
                             </ol>
                         </div>
                     </div>
