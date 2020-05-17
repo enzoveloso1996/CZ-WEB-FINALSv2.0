@@ -8,12 +8,48 @@
 
     <title>Hello, world!</title>
   </head>
+  <style>
+   @page {
+       margin: 0cm 0cm;
+   }
+
+   /** Define now the real margins of every page in the PDF **/
+   body {
+       margin-top: 3cm;
+       margin-left: 2cm;
+       margin-right: 2cm;
+       margin-bottom: 2cm;
+   }
+
+   /** Define the header rules **/
+   header {
+       position: fixed;
+       top: 0cm;
+       left: 0cm;
+       right: 0cm;
+       height: 3cm;
+   }
+
+   /** Define the footer rules **/
+   footer {
+       position: fixed;
+       bottom: 0cm;
+       left: 0cm;
+       right: 0cm;
+       height: 2cm;
+   }
+  </style>
   <body>
-    <div class="navbar-header">
-      <img id="logo-header" src="{{ asset ('new/img/header.jpg') }}" alt="Logo">
-    </div>
-    <div class="container">
-        <div class="row">
+    <header>
+      <img id="logo-header" src="{{ base_path() }}/public/new/img/header.jpg" width="100%" height="100%" alt="Logo"/>
+    </header>
+
+    <footer>
+    </footer>
+
+    <main>
+        <div class="container">
+            <div class="row">
                 <table class="table table-sm">
                     <thead class="thead-light">
                         <tr>
@@ -27,7 +63,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($data as $jeep)                             
+                        @foreach ($data as $jeep)
                         <tr>
                             <td class="center" id="ref"></td>
                             <td class="left">{{$jeep->rfid_number}}</td>
@@ -40,8 +76,14 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
         </div>
-    </div>
-    
+        {{-- <p style="page-break-after: always;">
+            Content Page 1
+        </p>
+        <p style="page-break-after: never;">
+            Content Page 2
+        </p> --}}
+    </main>
   </body>
 </html>
