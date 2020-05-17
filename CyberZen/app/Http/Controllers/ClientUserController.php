@@ -154,23 +154,17 @@ class ClientUserController extends Controller
 
     }
     public function usernamecheck(Request $request){
-        if(!empty($request->check)){
-            $output="";
-            $users = array();
-            $users = DB::table('tb_mf_client_users')
-                    ->get();
-
-            $userscount = $users->count();
-        }else{
-            $output="";
-        }
-        
-        if($userscount == 0)
+        if($request->ajax())
         {
-            return "Username not available!";
-            // $output.=$output.='<tr>'.
-            // '<td class="center" id="ref"></td>';
-            // return Response($output);
+                $tabledtl=DB::table('tb_mf_client_users')
+                            ->select('tb_mf_client_users'.'username')
+                            ->where('username','=',$request->user)
+                            ->count();
+                if($tabledtl > 0){
+                    echo '<span class="text-danger">*Username is already taken</span>';
+                } else {
+                    echo '<span class="text-success">*Username is available</span>';
+                }
         }
     }
 

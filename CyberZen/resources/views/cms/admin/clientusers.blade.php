@@ -77,7 +77,7 @@
                             </div>
     
                         </div>
-                      
+
                         <div class="card-body">
 
                             <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -191,25 +191,15 @@
                                     <input type="hidden" name="position_idtext" id="position_id_" value="">
                                 </div>    
 
-                                {{-- @if (session('status-alert'))
-                                <div class="alert alert-danger">
-                                    {{ session('status-alert') }}
-                                </div>
-                                @endif
-                                @if (session('status'))
-                                    <div class="alert alert-success">
-                                        {{ session('status') }}
-                                    </div>
-                                @endif --}}
-                                <div class="err"></div>
+                                <span id="availability" class="p-0"></span>
 
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Username</span>
                                     </div>
                                     <input type="text" name="username" id="username_id" placeholder="Username" class="form-control">
-                                 
-                                </div>    
+                                </div>
+
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="basic-addon1" style="width: 200px;">Password</span>
@@ -289,22 +279,20 @@
         });
        
     </script>
-    <script type="text/javascript">
-        $('#username_id').on('change',function(){
-            $('tbody').empty();
+    <script>
+        $('#username_id').on('blur',function(){
             $value=$(this).val();
             console.log($value);
             $.ajax({
                 type : 'get',
                 url : '{{URL::to('jeeps/usernamecheck')}}',
-                data:{'check':$value},
-                cache: false,
-                async: true,
+                data:{'user':$value},
                 success:function(data){
-                    $('#err').html(data);
+                    $('#availability').html(data);
                 },
+                error: function(data) {console.log(err);}
             });
-        });
+        })
     </script>
 @endsection
 

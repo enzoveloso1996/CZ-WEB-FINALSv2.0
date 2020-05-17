@@ -177,8 +177,6 @@ class TransactionsController extends Controller
                 ->select('tb_tr_card_transactions.rfid_number','tb_tr_card_transactions.transactiontype_id','tb_mf_transactiontype.transaction_type','tb_tr_card_transactions.amount','tb_users.user_id','tb_users.firstname','tb_tr_card_transactions.created_at')
                 ->where('tb_tr_card_transactions.created_at','LIKE','%'.$request->search.'%')
                 ->paginate(20);
-
-                $test = $request->search;
             }else{
                 $output="";
             }
