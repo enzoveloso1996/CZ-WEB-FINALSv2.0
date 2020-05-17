@@ -283,7 +283,11 @@
         $('#username_id').on('blur',function(){
             $value=$(this).val();
             console.log($value);
-            $.ajax({
+            if($value == ""){
+                document.getElementById('availability').innerHTML = '';
+            }
+            else {
+                $.ajax({
                 type : 'get',
                 url : '{{URL::to('jeeps/usernamecheck')}}',
                 data:{'user':$value},
@@ -292,6 +296,7 @@
                 },
                 error: function(data) {console.log(err);}
             });
+            }
         })
     </script>
 @endsection
