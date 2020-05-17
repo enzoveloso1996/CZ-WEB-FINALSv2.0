@@ -152,7 +152,7 @@ class ClientLoginController extends Controller
     }
 
     public function adminlogin(Request $request){
-        session_start();
+
         $hashpw = DB::table('tb_users')
         ->where('username', '=', $request->username)
         ->get();
@@ -177,6 +177,8 @@ class ClientLoginController extends Controller
                     
                     return redirect()->route('dashboard.index', ['user_id' => $user_id, 'access_level' => $access_level]);
                 }
+                $request->session()->put('login_status', "logged_in");
+                $request->session()->put('user_id', $user_id);
                 return redirect()->route('cardlist.index', ['user_id' => $user_id, 'access_level' => $access_level]);
 
             }
