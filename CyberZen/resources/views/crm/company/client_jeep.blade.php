@@ -29,7 +29,7 @@
                 <div class="page-header float-right">
                     <div class="page-title">
                         <ol class="breadcrumb text-right">
-                            <li><a href="/dashboard">DASHBOARD</a></li>
+                            <li><a href="/dashboard/{{$user_id}}">DASHBOARD</a></li>
                             @foreach ($clientname as $client)
                             <li><a href="#">{{$client->client_name}}</a></li>                                    
                             @endforeach
