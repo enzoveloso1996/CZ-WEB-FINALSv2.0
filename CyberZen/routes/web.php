@@ -152,3 +152,44 @@ Route::prefix('company')->group(function(){
     Route::get('transactionsbydate','ClientDashboardController@transactionsbydate');
     Route::get('transactionspdf','ClientDashboardController@transactionspdf');
 });
+
+
+Route::get('/', 'WebLoginController@index')->name('home');
+Route::get('web-login', 'WebLoginController@login')->name('web-login');
+Route::get('web-logout', 'WebLoginController@logout')->name('web-logout');
+Route::get('web-bal-check', 'WebLoginController@web_bal_check')->name('web-bal-check');
+Route::get('webregistration', 'WebRegController@index')->name('web-registration');
+Route::get('websuccessreg', 'WebRegController@reg_success')->name('web-reg-success');
+
+// Route::resource('web-reg', 'WebRegController');
+
+Route::get('/trans/{id}', 'WebTransactionController@index')->name('transaction');
+Route::patch('web-edit-pw', ['as' => 'web-edit-pw', 'uses' => 'WebTransactionController@editpw']);
+Route::patch('web-edit-profile', ['as' => 'web-edit-profile', 'uses' => 'WebTransactionController@edit_profile']);
+Route::resource('web-transaction', 'WebTransactionController',  ['except' => ['index']]);
+
+
+Route::get('mob-login-index', 'MobileLoginController@index')->name('mob-login-index');
+Route::get('mob-login', 'MobileLoginController@login')->name('mob-login');
+Route::get('mob-logout', 'MobileLoginController@logout')->name('mob-logout');
+
+
+Route::get('mtrans/{id}', 'MobileTransactionController@index')->name('m-transaction');
+Route::resource('mobile-transaction', 'MobileTransactionController',  ['except' => ['index']]);
+
+Route::get('mprofile/{id}','MobProfileController@index')->name('profile-index');
+Route::get('mob-profile-change','MobProfileController@profile_change')->name('mob-profile-change');
+Route::get('mpassword/{id}', 'MobProfileController@pass_index')->name('password-index');
+Route::get('mob-password-change','MobProfileController@change_password')->name('mob-change-pass');
+
+Route::get('/mobileregistration', 'MobileRegController@index')->name('mob-registration');
+Route::get('/mob-reg-success', 'MobileRegController@reg_success')->name('mob-reg-success');
+Route::resource('mobile-reg', 'MobileRegController');
+
+Route::get('/mobilelogin', 'MobileLoginController@index');
+Route::resource('mobile-reg', 'MobileLoginController');
+
+
+Route::get('/mbal', 'MobileBalanceController@index')->name('m-bal');
+Route::get('/mbal-check', 'MobileBalanceController@balance_check')->name('m-bal-check');
+
