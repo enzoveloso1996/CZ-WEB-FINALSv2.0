@@ -264,7 +264,7 @@ class ClientLoginController extends Controller
         ]);
         
         
-        return redirect()->route('admin-register-index', ['id' => $request->user_id, 'access_levels' => $request->access_level]);
+        return redirect()->route('admin-editaccount-index', ['id' => $request->user_id, 'access_levels' => $request->access_level]);
     }
 
     public function editaccount_password(Request $request)
@@ -284,7 +284,7 @@ class ClientLoginController extends Controller
         ]);
 
         
-        return redirect()->route('admin-register-index', ['id' => $request->user_id, 'access_level' => $access_level]);
+        return redirect()->route('admin-editaccount-index', ['id' => $request->user_id, 'access_level' => $access_level]);
     }
 
 
