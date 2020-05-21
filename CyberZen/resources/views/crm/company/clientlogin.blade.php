@@ -19,7 +19,30 @@
     <link href="{{ asset('log/vendor/select2/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('log/vendor/daterangepicker/daterangepicker.css') }}" rel="stylesheet">
 	<link href="{{ asset('log/css/util.css') }}" rel="stylesheet">
-    <link href="{{ asset('log/css/main.css') }}" rel="stylesheet">
+	<link href="{{ asset('log/css/main.css') }}" rel="stylesheet">
+	
+	<style>
+		body{
+			background-image: url('image/tapsakay.jpg');
+			background-repeat: no-repeat;
+			background-size: 100%;
+			padding: 0px;
+		}
+
+		.wrap-login100{
+			padding: 10px;
+
+		}
+
+		.logo-cz{
+			width: 100px;
+			height: 100px;
+			margin-right: 10px;
+			margin-top: auto;
+			margin-bottom: auto;
+		}
+
+	</style>
 </head>
 <body>
 	
@@ -30,9 +53,16 @@
 					@csrf
 					@method('GET')
 				
-					<span class="login100-form-title p-b-51">
-						lOGIN
-					</span>
+					<div class="row">
+						<div class="col-4">
+							<img src="{{asset('image/Group 145@2x.png')}}" class="logo-cz" alt="">
+						</div>
+						<div class="col-8">
+							<span class="login100-form-title p-b-51 mt-4">
+								<h1>Tapsakay</h1>
+							</span>
+						</div>
+					</div>
 					@if (session('status'))
 					<div class="alert alert-danger">
 						{{ session('status') }}
