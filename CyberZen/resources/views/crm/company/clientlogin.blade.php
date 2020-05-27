@@ -86,11 +86,7 @@
 								Remember me
 							</label>
 						</div> --}}
-						<div>
-							<a href="#" class="txt1">
-								Forgot password?
-							</a>
-						</div>
+						
 					</div>
 
 					<div class="container-login100-form-btn m-t-17">

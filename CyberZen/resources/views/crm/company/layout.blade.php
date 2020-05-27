@@ -132,16 +132,7 @@
                         @endif
                         
                         <li class="menu-title">Account</li><!-- /.menu-title -->
-                        @if(Request::path() == '/widgets')
-                            <li>
-                                <a href="widgets.html"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
-                            </li>
-                        @else 
-                            <li>
-                                <a href="widgets.html"> <i class="menu-icon fa fa-cogs"></i>Settings</a>
-                            </li>
-                        @endif 
-                        
+                       
                         <li>
                             <a href="{{Route('client-logout-check', ['user_id' => $user_id])}}"> <i class="menu-icon fa fa-sign-in"></i>Logout</a>
                         </li>
