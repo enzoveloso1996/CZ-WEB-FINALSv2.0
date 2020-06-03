@@ -100,12 +100,14 @@ class WebLoginController extends Controller
             foreach($result as $row){
                 $hashpw = $row->password;
                 $carduser_id = $row->carduser_id;
+                $is_hold = $row->is_hold;
             }
             
             
             if(Hash::check($password,$hashpw )){
                 $request->session()->flash('msg_value', 2);     
                 $request->session()->put('login_status', "logged_in");
+                $request->session()->put('card_status', $is_hold);
                 $request->session()->put('carduser_id', $carduser_id);
                 return redirect("/trans/$carduser_id");
             }

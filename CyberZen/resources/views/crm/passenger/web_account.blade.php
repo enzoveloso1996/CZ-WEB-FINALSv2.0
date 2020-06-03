@@ -138,6 +138,9 @@
         @else
         
         @endif
+
+
+        
         <div class="row">
             <div class="col-sm">
                 <div class="container" id="customer-profile">
@@ -146,11 +149,17 @@
                         {{-- auth customer name --}}
                         <p>Hello {{$item->first_name}}, welcome back </p>
                     </div>
+                    @if (session('card_status') == 1)
+                    <p class=" text-danger font-weight-bolder">
+                        Your Card is currently on-hold, Please update your new Card Number!
+                    </p>
+                    @endif
                     <div class="alert alert-success" id="customer-card-balance">
                         {{-- Auth Customer balance --}}
                         <strong>P {{$item->card_balance}}</strong>
                     </div>
                     @endforeach
+            
                     <div class="row customer-transaction">
                         <div class="col-6"  id="last-load-trans">
                             <div class="alert alert-success" id="LLT">

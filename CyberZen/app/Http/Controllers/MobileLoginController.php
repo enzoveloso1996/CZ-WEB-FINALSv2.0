@@ -99,12 +99,14 @@ class MobileLoginController extends Controller
             foreach($result as $row){
                 $hashpw = $row->password;
                 $carduser_id = $row->carduser_id;
+                $is_hold = $row->is_hold;
             }
             
             
             if(Hash::check($password,$hashpw )){
                 $request->session()->put('login_status', "logged_in");
                 $request->session()->put('carduser_id', $carduser_id);
+                $request->session()->put('card_status', $is_hold);
                 return redirect("mtrans/$carduser_id");
             }
             else{
