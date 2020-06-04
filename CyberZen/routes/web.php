@@ -183,6 +183,8 @@ Route::get('mprofile/{id}','MobProfileController@index')->name('profile-index');
 Route::get('mob-profile-change','MobProfileController@profile_change')->name('mob-profile-change');
 Route::get('mpassword/{id}', 'MobProfileController@pass_index')->name('password-index');
 Route::get('mob-password-change','MobProfileController@change_password')->name('mob-change-pass');
+Route::patch('mob-hold-card','MobProfileController@hold_card')->name('mob-hold-card');
+Route::patch('mob-change-cardnumber','MobProfileController@hold_card')->name('mob-change-cardnumber');
 
 Route::get('/mobileregistration', 'MobileRegController@index')->name('mob-registration');
 Route::get('/mob-reg-success', 'MobileRegController@reg_success')->name('mob-reg-success');

@@ -117,5 +117,78 @@
 
     </div>
 
+    <div class="container pb-3">
+        <p class="text mt-3"><strong>Lost this card? You can hold this card and transfer
+                your balance to your new card.</strong></p>
+        @if (session('card_status') == 0)
+        <button class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal"
+            type="button">Hold</button>                                
+        @endif
+    </div>
+
+
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title" id="exampleModalLabel">Are you sure?</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{route('mob-hold-card')}}" method="post">
+                    @csrf
+                    @method('PATCH')
+                    
+                    <input type="hidden" name="carduser_id" value="{{$item->carduser_id}}">
+
+                    <div class="container p-5">
+                        <div class="alert alert-danger">
+                            <span class="text-danger">Are you sure you want to hold this card? This action cannot be undone.
+                                This will permanently hold your card.</span><br>
+                        </div>
+                        <span>To continue please enter this code <span id="random"></span></span>
+                        <input type="hidden" name="code" value="" id="random_input">
+                        <input type="text" name="code_input" class="form-control" id="code">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    </div>    
+                </form>
+            </div>
+        </div>
+    </div>
+
 </div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script>
+    function send() {
+        const sendto = document.getElementById("card-number").value;
+        const amounts = document.getElementById("amounts")
+
+        if (sendto.length == 10) {
+            amounts.style.display = "block";
+        } else {
+            amounts.style.display = "none";
+        }
+    }
+
+
+
+
+    function random_item(items) {
+        return items[Math.floor(Math.random() * items.length)];
+    }
+
+    var items = [254, 45, 212, 365, 254, 123, 849, 578, 345, 111];
+    var rand = random_item(items);
+
+    $("#random").append(rand);
+    $("#random_input").val(rand);
+</script>
+
 @endsection 

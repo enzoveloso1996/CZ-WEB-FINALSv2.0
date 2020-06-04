@@ -100,8 +100,12 @@ class MobileLoginController extends Controller
                 $hashpw = $row->password;
                 $carduser_id = $row->carduser_id;
                 $is_hold = $row->is_hold;
+                $is_archived = $row->is_archived;
             }
             
+            if ($is_archived == 1){
+                return redirect('/');                
+            }
             
             if(Hash::check($password,$hashpw )){
                 $request->session()->put('login_status', "logged_in");

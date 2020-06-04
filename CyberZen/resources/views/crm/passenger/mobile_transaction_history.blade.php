@@ -166,6 +166,15 @@
                     {{-- auth customer name --}}
                     <p id="M.Welcome">Hello {{$item->first_name}}, welcome back </p>
                 </div>
+                @if (session('card_status') == 1)
+                <span class="text-danger">
+                    Your Card is currently on-hold, Please update your new Card Number
+                    <a class="text-danger font-weight-bolder" href="javascript:viod{0}" data-toggle="modal"
+                        data-target="#change-card-number" type="button">
+                        here.
+                    </a>
+                </span>
+                @endif
                 <div class="alert alert-success" id="mobile-customer-card-balance">
                     <p class="currentbalance-label">CURRENT BALANCE</p>
                     {{-- Auth Customer balance --}}
@@ -180,6 +189,38 @@
        
     </div>
  
+    <div class="modal fade" id="change-card-number" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <span class="modal-title" id="exampleModalLabel">Change card number</span>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <form action="{{route('web-change-cardnumber')}}" method="post">
+                    @csrf
+                    @method('PATCH')
+                    <div class="container p-5">
+                        <input type="hidden" name="carduser_id" value="{{$item->carduser_id}}">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Old card number:</label>
+                            <input type="number" class="form-control" placeholder="xxxxxxxxxx" required name="old_card_number">
+                        </div>
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">New card number:</label>
+                            <input type="number" class="form-control" placeholder="xxxxxxxxxx" required name="new_card_number">
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 
     <div class="row mobile-customer-transaction">
         <div class="col-6"  id="m-last-load-trans">
