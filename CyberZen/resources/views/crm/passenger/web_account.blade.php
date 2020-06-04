@@ -166,7 +166,7 @@
                     {{-- auth customer name --}}
                     <p>Hello {{$item->first_name}}, welcome back </p>
                 </div>
-                {{-- @if (session('card_status') == 1) --}}
+                @if (session('card_status') == 1)
                 <span class="text-danger">
                     Your Card is currently on-hold, Please update your new Card Number
                     <a class="text-danger font-weight-bolder" href="javascript:viod{0}" data-toggle="modal"
@@ -174,7 +174,7 @@
                         here.
                     </a>
                 </span>
-                {{-- @endif --}}
+                @endif
                 <div class="alert alert-success" id="customer-card-balance">
                     {{-- Auth Customer balance --}}
                     <strong>P {{$item->card_balance}}</strong>
@@ -296,8 +296,10 @@
                         <div class="container pb-3">
                             <p class="text mt-3"><strong>Lost this card? You can hold this card and transfer
                                     your balance to your new card.</strong></p>
+                            @if (session('card_status') == 0)
                             <button class="btn btn-outline-dark" data-toggle="modal" data-target="#exampleModal"
-                                type="button">Hold</button>
+                                type="button">Hold</button>                                
+                            @endif
                         </div>
 
                     </div>
@@ -345,18 +347,26 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="container p-5">
-                <div class="alert alert-danger">
-                    <span class="text-danger">Are you sure you want to hold this card? This action cannot be undone.
-                        This will permanently hold your card.</span><br>
+            <form action="{{route('web-hold-card')}}" method="post">
+                @csrf
+                @method('PATCH')
+                
+                <input type="hidden" name="carduser_id" value="{{$item->carduser_id}}">
+
+                <div class="container p-5">
+                    <div class="alert alert-danger">
+                        <span class="text-danger">Are you sure you want to hold this card? This action cannot be undone.
+                            This will permanently hold your card.</span><br>
+                    </div>
+                    <span>To continue please enter this code <span id="random"></span></span>
+                    <input type="hidden" name="code" value="" id="random_input">
+                    <input type="text" name="code_input" class="form-control" id="code">
                 </div>
-                <span>To continue please enter this code <span id="random"></span></span>
-                <input type="text" class="form-control" id="code">
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Confirm</button>
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-            </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>    
+            </form>
         </div>
     </div>
 </div>
@@ -375,7 +385,7 @@
                 <form>
                     <div class="form-group">
                         <label for="formGroupExampleInput">Send to:</label>
-                        <input type="text" class="form-control" id="card-number" placeholder="xxxxxxxxxx"
+                        <input type="number" class="form-control" id="card-number" placeholder="xxxxxxxxxx"
                             onkeyup="send()">
                     </div>
                     <div id="amounts" style="display: none;">
@@ -410,22 +420,25 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="container p-5">
-            <form>
+            <form action="{{route('web-change-cardnumber')}}" method="post">
+                @csrf
+                @method('PATCH')
+                <div class="container p-5">
+                    <input type="hidden" name="carduser_id" value="{{$item->carduser_id}}">
                     <div class="form-group">
                         <label for="formGroupExampleInput">Old card number:</label>
-                        <input type="text" class="form-control" placeholder="xxxxx-xxxxx" required>
+                        <input type="number" class="form-control" placeholder="xxxxxxxxxx" required name="old_card_number">
                     </div>
                     <div class="form-group">
                         <label for="formGroupExampleInput">New card number:</label>
-                        <input type="text" class="form-control" placeholder="xxxxx-xxxxx" required>
+                        <input type="number" class="form-control" placeholder="xxxxxxxxxx" required name="new_card_number">
                     </div>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Confirm</button>
+                </div>
             </form>
-                <button type="button" class="btn btn-primary">Confirm</button>
-            </div>
         </div>
     </div>
 </div>
@@ -454,6 +467,7 @@
     var rand = random_item(items);
 
     $("#random").append(rand);
+    $("#random_input").val(rand);
 </script>
 
 

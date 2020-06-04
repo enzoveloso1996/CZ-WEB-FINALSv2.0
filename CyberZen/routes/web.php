@@ -166,6 +166,8 @@ Route::get('websuccessreg', 'WebRegController@reg_success')->name('web-reg-succe
 Route::get('/trans/{id}', 'WebTransactionController@index')->name('transaction');
 Route::patch('web-edit-pw', ['as' => 'web-edit-pw', 'uses' => 'WebTransactionController@editpw']);
 Route::patch('web-edit-profile', ['as' => 'web-edit-profile', 'uses' => 'WebTransactionController@edit_profile']);
+Route::patch('web-hold-card', ['as' => 'web-hold-card', 'uses' => 'WebTransactionController@hold_card']);
+Route::patch('web-change-cardnumber', ['as' => 'web-change-cardnumber', 'uses' => 'WebTransactionController@change_cardnumber']);
 Route::resource('web-transaction', 'WebTransactionController',  ['except' => ['index']]);
 
 

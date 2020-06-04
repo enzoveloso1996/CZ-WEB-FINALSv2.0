@@ -101,17 +101,21 @@ class WebLoginController extends Controller
                 $hashpw = $row->password;
                 $carduser_id = $row->carduser_id;
                 $is_hold = $row->is_hold;
+                $is_archived = $row->is_archived;
             }
             
-            
+            if ($is_archived == 1){
+                return redirect('/');                
+            }
             if(Hash::check($password,$hashpw )){
-                $request->session()->flash('msg_value', 2);     
+                $request->session()->flash('msg_value', 1); 
+                $request->session()->flash('password_msg', 'Login Successful');     
                 $request->session()->put('login_status', "logged_in");
                 $request->session()->put('card_status', $is_hold);
                 $request->session()->put('carduser_id', $carduser_id);
                 return redirect("/trans/$carduser_id");
             }
-            else{
+            else{   
                 return redirect('/');
             }
         }

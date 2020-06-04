@@ -178,9 +178,86 @@ class WebTransactionController extends Controller
             $request->session()->flash('password_msg', "Please enter your current password First!");
             $request->session()->flash('msg_value', 0);
         }
-
-
-        
+    
         return redirect("/trans/$request->carduser_id")->with('status', 'logged_in');
     }
+
+
+    public function hold_card(Request $request){
+        $code = $request->code;
+        $input = $request->code_input;
+
+        if($code == $input){
+            DB::table('tb_mf_carduser_records')
+                ->where('carduser_id', '=', $request->carduser_id)
+                ->update([
+                    'is_hold' => 1
+                ]);
+
+                $request->session()->put('card_status', 1);
+                return redirect("/trans/$request->carduser_id");
+        }
+    }
+
+    public function change_cardnumber(Request $request){
+        $old_card_number = $request->old_card_number;
+        $new_card_number = $request->new_card_number;
+
+        $account = DB::table('tb_mf_carduser_records')
+            ->where('carduser_id', '=', $request->carduser_id)
+            ->get();
+
+        foreach ($account as $row) {
+            $card_balance = $row->card_balance;
+            $status = $row->status;
+            $last_name = $row->last_name;
+            $first_name = $row->first_name;
+            $middle_name = $row->middle_name;
+            $fullname = $row->fullname;
+            $password = $row->password;
+            $email_address = $row->email_address;
+            $contact_number = $row->contact_number;
+            $cardtype_id = $row->cardtype_id;
+            $is_student = $row->is_student;
+        }
+
+        $account2 = DB::table('tb_mf_carduser_records')
+            ->where('rfid_number', '=', $new_card_number)
+            ->get();
+
+        foreach ($account2 as $row2) {
+            $card_balance2 = $row2->card_balance;
+        }
+
+        DB::table('tb_mf_carduser_records')
+            ->where('rfid_number', '=', $new_card_number)
+            ->update([
+                'card_balance' => $card_balance + $card_balance2,
+                'status' => $status,
+                'last_name' => $last_name,
+                'first_name' => $first_name,
+                'middle_name' => $middle_name,
+                'fullname' => $fullname,
+                'password' => $password,
+                'email_address' => $email_address,
+                'contact_number' => $contact_number,
+                'cardtype_id' => $cardtype_id,
+                'is_student' => $is_student
+            ]);
+        
+        DB::table('tb_mf_carduser_records')
+            ->where('rfid_number', '=', $old_card_number)
+            ->update([
+                'card_balance' => 0,
+                'is_archived' => 1
+            ]);
+            
+        $request->session()->forget('login_status');
+        $request->session()->flash('msg_status', 1);
+        return redirect("/");
+
+    }
+
+    
+
 }

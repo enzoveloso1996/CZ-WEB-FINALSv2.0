@@ -685,6 +685,11 @@ padding-top:0px;
 
 {{-- Home --}}
 <div class="container-fluid" id="WEBSITE">
+    @if (session('msg_status') == 1)
+    <p class=" text-success">
+        Changing Card Number Success, Please Logged In again.
+    </p>
+    @endif
     <div class="container HOME" id="homesection">
         <div class="container-xl" id="home-container">
                     {{-- Text 1 --}}
