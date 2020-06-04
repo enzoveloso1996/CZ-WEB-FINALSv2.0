@@ -166,11 +166,15 @@
                     {{-- auth customer name --}}
                     <p>Hello {{$item->first_name}}, welcome back </p>
                 </div>
-                @if (session('card_status') == 1)
-                <p class=" text-danger font-weight-bolder">
-                    Your Card is currently on-hold, Please update your new Card Number!
-                </p>
-                @endif
+                {{-- @if (session('card_status') == 1) --}}
+                <span class="text-danger">
+                    Your Card is currently on-hold, Please update your new Card Number
+                    <a class="text-danger font-weight-bolder" href="javascript:viod{0}" data-toggle="modal"
+                        data-target="#change-card-number" type="button">
+                        here.
+                    </a>
+                </span>
+                {{-- @endif --}}
                 <div class="alert alert-success" id="customer-card-balance">
                     {{-- Auth Customer balance --}}
                     <strong>P {{$item->card_balance}}</strong>
@@ -368,30 +372,59 @@
                 </button>
             </div>
             <div class="container p-5">
-            <form>
-                <div class="form-group">
-                    <label for="formGroupExampleInput">Send to:</label>
-                    <input type="text" class="form-control" id="card-number"
-                        placeholder="xxxxxxxxxx" onkeyup="send()">
-                </div>
-                <div id="amounts" style="display: none;">
+                <form>
                     <div class="form-group">
-                        <label for="formGroupExampleInput">Amount:</label>
-                        <input type="text" class="form-control" id="card-number"
-                            placeholder="0">
+                        <label for="formGroupExampleInput">Send to:</label>
+                        <input type="text" class="form-control" id="card-number" placeholder="xxxxxxxxxx"
+                            onkeyup="send()">
                     </div>
-                    <div class="form-group d-flex justify-content-center">
-                        <button class="btn btn-outline-primary">20</button>
-                        <button class="btn btn-outline-primary">50</button>
-                        <button class="btn btn-outline-primary">100</button>
-                        <button class="btn btn-outline-primary">200</button>
+                    <div id="amounts" style="display: none;">
+                        <div class="form-group">
+                            <label for="formGroupExampleInput">Amount:</label>
+                            <input type="text" class="form-control" id="card-number" placeholder="0">
+                        </div>
+                        <div class="form-group d-flex justify-content-center">
+                            <button class="btn btn-outline-primary">20</button>
+                            <button class="btn btn-outline-primary">50</button>
+                            <button class="btn btn-outline-primary">100</button>
+                            <button class="btn btn-outline-primary">200</button>
+                        </div>
                     </div>
-                </div>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-primary">Confirm</button>
-            </form>
+                </form>
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="change-card-number" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="modal-title" id="exampleModalLabel">Change card number</span>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="container p-5">
+            <form>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">Old card number:</label>
+                        <input type="text" class="form-control" placeholder="xxxxx-xxxxx" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="formGroupExampleInput">New card number:</label>
+                        <input type="text" class="form-control" placeholder="xxxxx-xxxxx" required>
+                    </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+            </form>
+                <button type="button" class="btn btn-primary">Confirm</button>
             </div>
         </div>
     </div>
@@ -403,13 +436,13 @@
         const sendto = document.getElementById("card-number").value;
         const amounts = document.getElementById("amounts")
 
-        if(sendto.length == 10){
+        if (sendto.length == 10) {
             amounts.style.display = "block";
         } else {
             amounts.style.display = "none";
         }
     }
-    
+
 
 
 
