@@ -106,7 +106,7 @@ class MobProfileController extends Controller
                 ]);
 
                 $request->session()->put('card_status', 1);
-                return redirect("/trans/$request->carduser_id");
+                return redirect("/mtrans/$request->carduser_id");
         }
     }
 
